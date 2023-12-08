@@ -240,5 +240,6 @@ bool MCheckDot::keyVisuable()
 
 qint32 MCheckDot::check()
 {
+	*KeyText = "A";
 	return 0;
 }

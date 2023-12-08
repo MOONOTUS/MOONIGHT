@@ -1,8 +1,10 @@
 #include "MWidget.h"
+#include"MCheckDot.h"
 
 MWidget::MWidget(QWidget* parent)
 	: QWidget(parent)
 {
+	CheckDotList = new QMap<QString, MCheckDot*>;
 	this->OriSize = new QSize(1920, 1080);
 	ifShowBackImage = new bool(false);
 	ifShowBackBackImage = new bool(false);
@@ -109,6 +111,16 @@ bool MWidget::showBackImage()
 bool MWidget::showBackBackImage()
 {
 	return *ifShowBackBackImage;
+}
+
+void MWidget::setCheckDotList(QMap<QString, MCheckDot*>*& checkdotlist)
+{
+	CheckDotList = checkdotlist;
+}
+
+QMap<QString, MCheckDot*>*& MWidget::checkDotList()
+{
+	return CheckDotList;
 }
 
 QSize MWidget::oriSize()

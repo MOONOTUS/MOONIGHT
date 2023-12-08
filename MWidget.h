@@ -2,6 +2,8 @@
 
 #include"MCenter.h"
 
+class MCheckDot;
+
 class MWidget : public QWidget
 {
 	Q_OBJECT
@@ -15,6 +17,7 @@ private:
 	QColor* backCoverColor;
 	QColor* backColor;
 	QSize* OriSize;
+	QMap<QString, MCheckDot*>* CheckDotList;
 	bool* ifShowBackImage;
 	bool* ifShowBackBackImage;
 
@@ -32,5 +35,7 @@ public:
 	void setShowBackBackImage(bool show);
 	bool showBackImage();
 	bool showBackBackImage();
+	void setCheckDotList(QMap<QString, MCheckDot*>*& checkdotlist);
+	QMap<QString, MCheckDot*>*& checkDotList();
 	QSize oriSize();
 };

@@ -9,8 +9,8 @@ TestDemo_Rotate_Class::TestDemo_Rotate_Class(MOONIGHT_Qt* parent)
 	parent->Ui()->central->setShowBackBackImage(true);
 	parent->Ui()->central->setBackCoverColor(QColor(0, 0, 0, 196));
 	parent->repaint();
-	parent->Ui()->CheckDotList->insert("O", new MCheckDot(parent->Ui()->central));
-	parent->Ui()->CheckDotList->value("O")->show();
+	parent->Ui()->central->checkDotList()->insert("M", new MCheckDot(parent->Ui()->central));
+	parent->Ui()->central->checkDotList()->value("M")->show();
 	this->parent = parent;
 	angel = new qreal(0.0);
 	r = new qreal(0.0);
@@ -37,11 +37,11 @@ void TestDemo_Rotate_Class::rotateCheckDot()
 {
 	qreal* x = new qreal(*r * qCos(*angel));
 	qreal* y = new qreal(*r * qSin(*angel));
-	parent->Ui()->CheckDotList->value("O")->dotLine()->setAngel(*angel * 180 / phi);
+	parent->Ui()->central->checkDotList()->value("M")->dotLine()->setAngel(*angel * 180 / phi);
 	QPoint newpoint = QPoint(parent->Ui()->central->oriSize().width()/2 + *x, parent->Ui()->central->oriSize().height()/2 + *y);
-	parent->Ui()->CheckDotList->value("O")->setPoint(newpoint);
-	parent->Ui()->CheckDotList->value("O")->setKey(Qt::Key_O, "A");
-	parent->Ui()->CheckDotList->value("O")->setKeyVisuable(true);
+	parent->Ui()->central->checkDotList()->value("M")->setPoint(newpoint);
+	parent->Ui()->central->checkDotList()->value("M")->setKey(Qt::Key_M, "M");
+	parent->Ui()->central->checkDotList()->value("M")->setKeyVisuable(true);
 	parent->repaint();
 	QCoreApplication::processEvents();
 	*angel += 2 * phi / 180;
