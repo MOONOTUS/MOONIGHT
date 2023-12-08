@@ -9,6 +9,8 @@ TestDemo_Rotate_Class::TestDemo_Rotate_Class(MOONIGHT_Qt* parent)
 	parent->Ui()->central->setShowBackBackImage(true);
 	parent->Ui()->central->setBackCoverColor(QColor(0, 0, 0, 196));
 	parent->repaint();
+	parent->Ui()->CheckDotList->insert("O", new MCheckDot(parent->Ui()->central));
+	parent->Ui()->CheckDotList->value("O")->show();
 	this->parent = parent;
 	angel = new qreal(0.0);
 	r = new qreal(0.0);
@@ -35,8 +37,6 @@ void TestDemo_Rotate_Class::rotateCheckDot()
 {
 	qreal* x = new qreal(*r * qCos(*angel));
 	qreal* y = new qreal(*r * qSin(*angel));
-	parent->Ui()->CheckDotList->insert("O", new MCheckDot(parent->Ui()->central));
-	parent->Ui()->CheckDotList->value("O")->show();
 	parent->Ui()->CheckDotList->value("O")->dotLine()->setAngel(*angel * 180 / phi);
 	QPoint newpoint = QPoint(parent->Ui()->central->oriSize().width()/2 + *x, parent->Ui()->central->oriSize().height()/2 + *y);
 	parent->Ui()->CheckDotList->value("O")->setPoint(newpoint);
