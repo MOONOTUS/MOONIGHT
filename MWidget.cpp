@@ -4,6 +4,7 @@
 MWidget::MWidget(QWidget* parent)
 	: QWidget(parent)
 {
+	Parent = parent;
 	CheckDotList = new QMap<QString, MCheckDot*>;
 	this->OriSize = new QSize(1920, 1080);
 	ifShowBackImage = new bool(false);
@@ -126,4 +127,9 @@ QMap<QString, MCheckDot*>*& MWidget::checkDotList()
 QSize MWidget::oriSize()
 {
 	return *OriSize;
+}
+
+QWidget*& MWidget::MParent()
+{
+	return Parent;
 }

@@ -12,6 +12,7 @@ protected:
 	void paintEvent(QPaintEvent* event);
 
 private:
+	QWidget* Parent;
 	QPixmap* backImage;
 	QPixmap* backBackImage;
 	QColor* backCoverColor;
@@ -38,4 +39,5 @@ public:
 	void setCheckDotList(QMap<QString, MCheckDot*>*& checkdotlist);
 	QMap<QString, MCheckDot*>*& checkDotList();
 	QSize oriSize();
+	QWidget*& MParent();
 };

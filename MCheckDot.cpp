@@ -19,7 +19,7 @@ MCheckDot::MCheckDot(MWidget *parent)
 	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	this->setFont(QFont("Microsoft YaHei Ui", *Radium, *Width - 2));
 
-	connect
+	parent->MParent()->connect
 	(
 		this,
 		SIGNAL(touched()),
@@ -68,12 +68,14 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 	event->accept();
 }
 
-void MCheckDot::keyPressEvent(QKeyEvent* key)
+void MCheckDot::keyPressEvent(QKeyEvent* event)
 {
-	if (key->key() == *Key)
+	setKey(Qt::Key_A, "A");
+	if (event->key() == *Key)
 	{
 		emit(touched());
 	}
+	releaseKeyboard();
 }
 
 void MCheckDot::paintDot(QPainter* paint)
@@ -240,6 +242,6 @@ bool MCheckDot::keyVisuable()
 
 qint32 MCheckDot::check()
 {
-	*KeyText = "A";
+	setKey(Qt::Key_A, "A");
 	return 0;
 }

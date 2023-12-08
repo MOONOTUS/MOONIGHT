@@ -21,7 +21,7 @@ class MCheckDot  : public QPushButton
 
 protected:
 	void paintEvent(QPaintEvent* event);
-	void keyPressEvent(QKeyEvent* key);
+	void keyPressEvent(QKeyEvent* event);
 
 	void paintDot(QPainter* paint);
 	void paintDotLine(QPainter* paint);
