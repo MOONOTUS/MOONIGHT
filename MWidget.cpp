@@ -11,6 +11,7 @@ MWidget::MWidget(QWidget* parent)
 	ifShowBackBackImage = new bool(false);
 	backColor = new  QColor(245, 245, 245);
 	backCoverColor = new QColor(255, 255, 255, 0);
+	time_ms = new qint64(0);
 }
 
 MWidget::~MWidget()
@@ -132,4 +133,19 @@ QSize MWidget::oriSize()
 QWidget*& MWidget::MParent()
 {
 	return Parent;
+}
+
+void MWidget::setTime(qint64 ms)
+{
+	time_ms = new qint64(ms);
+}
+
+qint64 MWidget::time()
+{
+	return *time_ms;
+}
+
+void MWidget::timeAdd_ms()
+{
+	(*time_ms)++;
 }

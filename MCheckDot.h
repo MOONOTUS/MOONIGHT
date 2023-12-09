@@ -31,11 +31,12 @@ signals:
 	void touched();
 
 public slots:
-	qint32 check();
+	void check();
 
 private:
 	MCheckDotLine* DotLine;
 	QMap<qint64, MNote*>* NoteList;
+	QMap<qint64, MNote*>::iterator* NoteListPtr;
 	QMap<qint64, qint32*>* NoteCheckList;
 	bool* Visuable;
 	QPoint* Point;
@@ -76,7 +77,9 @@ public:
 	void setKey(qint32 key, QString keytext);
 	qint32 key();
 	QString keyText();
-	QMap<qint64, MNote*>*& notelist();
+	QMap<qint64, MNote*>*& noteList();
+	void noteListFlush();
+	QMap<qint64, qint32*>*& noteCheckList();
 	MWidget*& MParent();
 	void setKeyVisuable(bool visuable);
 	bool keyVisuable();

@@ -13,6 +13,7 @@ MCheckDot::MCheckDot(MWidget *parent)
 	Point = new QPoint(parent->width() / 2, parent->height() / 2);
 	DotLine = new MCheckDotLine(this);
 	NoteList = new QMap<qint64, MNote*>;
+	NoteListPtr = new QMap<qint64, MNote*>::iterator(NoteList->begin());
 	NoteCheckList = new QMap<qint64, qint32*>;
 	KeyVisuable = new bool(false);
 	this->setGeometry(0,0,parent->width(),parent->height());
@@ -70,7 +71,6 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 
 void MCheckDot::keyPressEvent(QKeyEvent* event)
 {
-	setKey(Qt::Key_A, "A");
 	if (event->key() == *Key)
 	{
 		emit(touched());
@@ -220,9 +220,19 @@ QString MCheckDot::keyText()
 	return *KeyText;
 }
 
-QMap<qint64, MNote*>*& MCheckDot::notelist()
+QMap<qint64, MNote*>*& MCheckDot::noteList()
 {
 	return NoteList;
+}
+
+void MCheckDot::noteListFlush()
+{
+	NoteListPtr = new QMap<qint64, MNote*>::iterator(NoteList->begin());
+}
+
+QMap<qint64, qint32*>*& MCheckDot::noteCheckList()
+{
+	return NoteCheckList;
 }
 
 MWidget*& MCheckDot::MParent()
@@ -240,8 +250,8 @@ bool MCheckDot::keyVisuable()
 	return *KeyVisuable;
 }
 
-qint32 MCheckDot::check()
+void MCheckDot::check()
 {
-	setKey(Qt::Key_A, "A");
-	return 0;
+	//if(NoteListPtr->value()->time())
+	//(*NoteListPtr)++;
 }

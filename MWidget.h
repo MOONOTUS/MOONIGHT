@@ -11,6 +11,11 @@ class MWidget : public QWidget
 protected:
 	void paintEvent(QPaintEvent* event);
 
+signals:
+
+public slots:
+	void timeAdd_ms();
+
 private:
 	QWidget* Parent;
 	QPixmap* backImage;
@@ -21,6 +26,7 @@ private:
 	QMap<QString, MCheckDot*>* CheckDotList;
 	bool* ifShowBackImage;
 	bool* ifShowBackBackImage;
+	qint64* time_ms;
 
 public:
 	MWidget(QWidget* parent = nullptr);
@@ -40,4 +46,6 @@ public:
 	QMap<QString, MCheckDot*>*& checkDotList();
 	QSize oriSize();
 	QWidget*& MParent();
+	void setTime(qint64 ms);
+	qint64 time();
 };
