@@ -10,6 +10,7 @@ class MCheckDot  : public QPushButton
 {
 	Q_OBJECT
 
+public:
 #define strictperfect 0x1111
 #define preperfect 0x1011
 #define lagperfect 0x0011
@@ -22,6 +23,7 @@ class MCheckDot  : public QPushButton
 protected:
 	void paintEvent(QPaintEvent* event);
 	void keyPressEvent(QKeyEvent* event);
+	void keyReleaseEvent(QKeyEvent* event);
 
 	void paintDot(QPainter* paint);
 	void paintDotLine(QPainter* paint);
@@ -29,15 +31,19 @@ protected:
 
 signals:
 	void touched();
+	void released();
+	void misschecked();
 
 public slots:
 	void check();
+	void aftercheck();
+	void misscheck();
 
 private:
 	MCheckDotLine* DotLine;
 	QMap<qint64, MNote*>* NoteList;
-	QMap<qint64, MNote*>::iterator* NoteListPtr;
-	QMap<qint64, qint32*>* NoteCheckList;
+	qint64* NextTime;
+	QMap<qint64, qint32>* NoteCheckList;
 	bool* Visuable;
 	QPoint* Point;
 	qreal* Radium;
@@ -51,6 +57,13 @@ private:
 	qreal* VRadium;
 	qreal* VWidth;
 	bool* KeyVisuable;
+	QSet<qint32>* KeyPressingList;
+	bool* HoldPressing;
+	qint64* HoldPressed;
+	qreal* Speed;
+	qreal* VSpeed;
+	qreal* LineRadium;
+	qreal* VLineRadium;
 
 
 public:
@@ -78,10 +91,15 @@ public:
 	qint32 key();
 	QString keyText();
 	QMap<qint64, MNote*>*& noteList();
-	void noteListFlush();
-	QMap<qint64, qint32*>*& noteCheckList();
+	void setNextTime(qint64 time_ms);
+	qint64 nextTime();
+	QMap<qint64, qint32>*& noteCheckList();
 	MWidget*& MParent();
 	void setKeyVisuable(bool visuable);
 	bool keyVisuable();
+	void setSpeed(qreal speed_px);
+	qreal speed();
+	void setLineRadium(qreal lineradium);
+	qreal lineRadium();
 
 };

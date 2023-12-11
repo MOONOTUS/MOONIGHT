@@ -13,9 +13,15 @@ MCheckDot::MCheckDot(MWidget *parent)
 	Point = new QPoint(parent->width() / 2, parent->height() / 2);
 	DotLine = new MCheckDotLine(this);
 	NoteList = new QMap<qint64, MNote*>;
-	NoteListPtr = new QMap<qint64, MNote*>::iterator(NoteList->begin());
-	NoteCheckList = new QMap<qint64, qint32*>;
+	NextTime = new qint64(0);
+	NoteCheckList = new QMap<qint64, qint32>;
 	KeyVisuable = new bool(false);
+	KeyPressingList = new QSet<qint32>;
+	HoldPressing = new bool(false);
+	Speed = new qreal(10.0);
+	VSpeed = new qreal(*Speed * parent->width() / parent->oriSize().width());
+	LineRadium = new qreal(2500.0);
+	VLineRadium = new qreal(*LineRadium * parent->width() / parent->oriSize().width());
 	this->setGeometry(0,0,parent->width(),parent->height());
 	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	this->setFont(QFont("Microsoft YaHei Ui", *Radium, *Width - 2));
@@ -26,6 +32,20 @@ MCheckDot::MCheckDot(MWidget *parent)
 		SIGNAL(touched()),
 		this,
 		SLOT(check())
+	);
+	parent->MParent()->connect
+	(
+		this,
+		SIGNAL(released()),
+		this,
+		SLOT(aftercheck())
+	);
+	parent->MParent()->connect
+	(
+		this,
+		SIGNAL(misschecked()),
+		this,
+		SLOT(misscheck())
 	);
 
 }
@@ -47,6 +67,8 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 	VPoint = new QPoint(Point->x() * this->size().width() / Parent->oriSize().width(), Point->y() * this->size().height() / Parent->oriSize().height());
 	VWidth = new qreal(*Width * Parent->width() / Parent->oriSize().width());
 	VRadium = new qreal(*Radium * Parent->width() / Parent->oriSize().width());
+	VSpeed = new qreal(10.0 * Parent->width() / Parent->oriSize().width());
+	VLineRadium = new qreal(*LineRadium * Parent->width() / Parent->oriSize().width());
 	this->setFont(QFont("Microsoft YaHei Ui", *VRadium, *VWidth - 2));
 	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	QPainter* paint = new QPainter(this);
@@ -61,19 +83,56 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 	{
 		paintDot(paint);
 	}
-	//if (!NoteList->isEmpty())
-	//{
-	//	paintNote(paint);
-	//}
+	if (!NoteList->isEmpty())
+	{
+		paintNote(paint);
+	}
+	if (*NextTime - Parent->time() < -250)
+	{
+		emit(misschecked());
+	}
 
 	event->accept();
 }
 
 void MCheckDot::keyPressEvent(QKeyEvent* event)
 {
-	if (event->key() == *Key)
+	KeyPressingList->insert(event->key());
+	if (KeyPressingList->contains(*Key))
 	{
 		emit(touched());
+	}
+	if (NoteList->contains(*NextTime))
+	{
+		if (NoteList->value(*NextTime)->type() == beat)
+		{
+			if ((KeyPressingList->contains(*Key) && KeyPressingList->contains(NoteList->value(*NextTime)->beatKey())) || (KeyPressingList->contains(*Key) && KeyPressingList->contains(NoteList->value(*NextTime)->beatKey())))
+			{
+				emit(touched());
+			}
+		}
+		else
+		{
+			if (KeyPressingList->contains(*Key))
+			{
+				emit(touched());
+			}
+		}
+	}
+	else
+	{
+		qDebug() << "MOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)\n";
+	}
+	releaseKeyboard();
+}
+
+void MCheckDot::keyReleaseEvent(QKeyEvent* event)
+{
+	KeyPressingList->remove(event->key());
+	if (HoldPressing)
+	{
+		HoldPressing = new bool(false);
+		emit(released());
 	}
 	releaseKeyboard();
 }
@@ -101,14 +160,14 @@ void MCheckDot::paintDotLine(QPainter* paint)
 	QLineF line01, line02;
 	line01.setP1(*VPoint);
 	line02.setP1(*VPoint);
-	line01.setAngle(-DotLine->angle());
-	line02.setAngle(-(DotLine->angle() - 180));
+	line01.setAngle(DotLine->angle());
+	line02.setAngle((DotLine->angle() - 180));
 	line01.setLength(*VRadium);
 	line02.setLength(*VRadium);
 	lineU.setP1(line01.p2());
 	lineD.setP1(line02.p2());
-	lineU.setAngle(-DotLine->angle());
-	lineD.setAngle(-(DotLine->angle() - 180));
+	lineU.setAngle(DotLine->angle());
+	lineD.setAngle((DotLine->angle() - 180));
 	lineU.setLength(2500);
 	lineD.setLength(2500);
 	QPen pen;
@@ -117,6 +176,35 @@ void MCheckDot::paintDotLine(QPainter* paint)
 	paint->setPen(pen);
 	paint->drawLine(lineU);
 	paint->drawLine(lineD);
+}
+
+void MCheckDot::paintNote(QPainter* paint)
+{
+	if (NoteList->contains(*NextTime))
+	{
+		qint64* NextTimeTemp = new qint64(*NextTime);
+		while (NoteList->value(*NextTime)->time() * *Speed <= 2203 - NoteList->value(*NextTime)->radium())
+		{
+			switch (NoteList->value(*NextTime)->type())
+			{
+			case click:
+				break;
+			case catch:
+				break;
+			case hold:
+				break;
+			case beat:
+				break;
+			}
+			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+		}
+		NextTime = new qint64(*NextTimeTemp);
+	}
+	else
+	{
+		qDebug() << "MOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)\n";
+	}
+
 }
 
 void MCheckDot::setDotLine(MCheckDotLine& dotline)
@@ -225,12 +313,17 @@ QMap<qint64, MNote*>*& MCheckDot::noteList()
 	return NoteList;
 }
 
-void MCheckDot::noteListFlush()
+void MCheckDot::setNextTime(qint64 time_ms)
 {
-	NoteListPtr = new QMap<qint64, MNote*>::iterator(NoteList->begin());
+	NextTime = new qint64(time_ms);
 }
 
-QMap<qint64, qint32*>*& MCheckDot::noteCheckList()
+qint64 MCheckDot::nextTime()
+{
+	return *NextTime;
+}
+
+QMap<qint64, qint32>*& MCheckDot::noteCheckList()
 {
 	return NoteCheckList;
 }
@@ -250,8 +343,133 @@ bool MCheckDot::keyVisuable()
 	return *KeyVisuable;
 }
 
+void MCheckDot::setSpeed(qreal speed_px)
+{
+	Speed = new qreal(speed_px);
+	VSpeed = new qreal(*Speed * Parent->width() / Parent->oriSize().width());
+}
+
+qreal MCheckDot::speed()
+{
+	return *Speed;
+}
+
+void MCheckDot::setLineRadium(qreal lineradium)
+{
+	LineRadium = new qreal(lineradium);
+	VLineRadium = new qreal(*LineRadium * Parent->width() / Parent->oriSize().width());
+}
+
+qreal MCheckDot::lineRadium()
+{
+	return *LineRadium;
+}
+
 void MCheckDot::check()
 {
-	//if(NoteListPtr->value()->time())
-	//(*NoteListPtr)++;
+	qDebug() << "MOONOTUSYSTEM::_MESSAGE_::Check runs\n";
+	if (NoteList->contains(*NextTime))
+	{
+		qDebug() << "MOONOTUSYSTEM::_MESSAGE_::Check real runs\n";
+		if (NoteList->value(*NextTime)->type() == catch)
+		{
+			if (NoteList->value(*NextTime)->time() == Parent->time())
+			{
+				NoteCheckList->insert(*NextTime, strictperfect);
+				NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+			}
+		}
+		else if (NoteList->value(*NextTime)->type() == hold)
+		{
+			if (((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 50)
+			{
+				NoteCheckList->insert(*NextTime, strictperfect);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 80)
+			{
+				NoteCheckList->insert(*NextTime, preperfect);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -80)
+			{
+				NoteCheckList->insert(*NextTime, lagperfect);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
+			{
+				NoteCheckList->insert(*NextTime, pregood);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
+			{
+				NoteCheckList->insert(*NextTime, laggood);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 160 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 250)
+			{
+				NoteCheckList->insert(*NextTime, prebad);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -160 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -250)
+			{
+				NoteCheckList->insert(*NextTime, lagbad);
+			}
+			HoldPressing = new bool(true);
+			HoldPressed = new qint64(*NextTime);
+			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+		}
+		else
+		{
+			if (((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 50)
+			{
+				NoteCheckList->insert(*NextTime, strictperfect);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 80)
+			{
+				NoteCheckList->insert(*NextTime, preperfect);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -80)
+			{
+				NoteCheckList->insert(*NextTime, lagperfect);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
+			{
+				NoteCheckList->insert(*NextTime, pregood);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
+			{
+				NoteCheckList->insert(*NextTime, laggood);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 160 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 250)
+			{
+				NoteCheckList->insert(*NextTime, prebad);
+			}
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -160 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -250)
+			{
+				NoteCheckList->insert(*NextTime, lagbad);
+			}
+			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+		}
+	}
+	else
+	{
+		qDebug() << "MOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)\n";
+	}
+}
+
+void MCheckDot::aftercheck()
+{
+	if (((NoteList->value(*HoldPressed)->endTime()) - (Parent->time())) > 250)
+	{
+		NoteCheckList->remove(*HoldPressed);
+		NoteCheckList->insert(*HoldPressed, miss);
+	}
+}
+
+void MCheckDot::misscheck()
+{
+	if (NoteList->contains(*NextTime))
+	{
+		NoteCheckList->insert(*NextTime, miss);
+		NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+	}
+	else
+	{
+		qDebug() << "MOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)\n";
+	}
 }

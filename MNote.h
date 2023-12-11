@@ -5,6 +5,7 @@ class MCheckDot;
 
 class MNote
 {
+public:
 #define click 0x01
 #define catch 0x00
 #define hold 0x10
@@ -22,6 +23,9 @@ private:
 	qint32* BeatKey;
 	QString* BeatKeyText;
 	qint64* Time;
+	qint64* TimeLength;
+	qint64* EndTime;
+	qint64* NextTime;
 
 public:
 	MNote(MCheckDot* parent = nullptr);
@@ -42,5 +46,10 @@ public:
 	QString beatKeyText();
 	void setTime(qint64 time_ms);
 	qint64 time();
+	void setTimeLength(qint64 time_ms);
+	qint64 timeLength();
+	qint64 endTime();
+	void setNextTime(qint64 time_ms);
+	qint64 nextTime();
 	MCheckDot*& MParent();
 };

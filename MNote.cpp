@@ -12,6 +12,9 @@ MNote::MNote(MCheckDot* parent)
 	Visuable = new bool(parent->visuable());
 	BeatKey = new qint32(Qt::Key_0);
 	BeatKeyText = new QString("0");
+	Time = new qint64(0);
+	TimeLength = new qint64(0);
+	EndTime = new qint64(*Time + *TimeLength);
 }
 
 MNote::~MNote()
@@ -88,6 +91,7 @@ qint32 MNote::type()
 void MNote::setTime(qint64 time_ms)
 {
 	Time = new qint64(time_ms);
+	EndTime = new qint64(*Time + *TimeLength);
 }
 
 qint64 MNote::time()
@@ -95,7 +99,33 @@ qint64 MNote::time()
 	return *Time;
 }
 
+void MNote::setTimeLength(qint64 time_ms)
+{
+	TimeLength = new qint64(time_ms);
+	EndTime = new qint64(*Time + *TimeLength);
+}
+
+qint64 MNote::timeLength()
+{
+	return *TimeLength;
+}
+
+qint64 MNote::endTime()
+{
+	return *EndTime;
+}
+
 MCheckDot*& MNote::MParent()
 {
 	return Parent;
+}
+
+void MNote::setNextTime(qint64 time_ms)
+{
+	NextTime = new qint64(time_ms);
+}
+
+qint64 MNote::nextTime()
+{
+	return *NextTime;
 }

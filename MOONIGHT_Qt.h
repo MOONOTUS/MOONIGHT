@@ -10,9 +10,9 @@ class MOONIGHT_Qt : public QMainWindow
 public:
     MOONIGHT_Qt(QWidget *parent = nullptr);
     ~MOONIGHT_Qt();
+    Ui::MOONIGHT_QtClass* Ui();
 
 public slots:
-    Ui::MOONIGHT_QtClass* Ui();
 
 private:
     Ui::MOONIGHT_QtClass ui;
