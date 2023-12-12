@@ -27,6 +27,7 @@ private:
 	bool* ifShowBackImage;//是否显示背景图片
 	bool* ifShowBackBackImage;//是否显示背景的背景图片
 	qint64* time_ms;//以ms为单位的计时
+	QPixmap* Logo;//MOONOIGHT的标志图片
 
 public:
 	MWidget(QWidget* parent = nullptr);

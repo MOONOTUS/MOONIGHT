@@ -12,6 +12,7 @@ MWidget::MWidget(QWidget* parent)
 	backColor = new  QColor(245, 245, 245);
 	backCoverColor = new QColor(255, 255, 255, 0);
 	time_ms = new qint64(0);
+	Logo = new QPixmap("D:\\Painting\\MOONIGHT_Beta_Little.png");
 }
 
 MWidget::~MWidget()
@@ -30,6 +31,7 @@ void MWidget::paintEvent(QPaintEvent* event)
 	if (*ifShowBackImage)
 	{
 		paint->drawPixmap(QRect(0, (this->height() - this->width() * 9 / 16) / 2, this->width(), this->width() * 9 / 16), *backImage);
+		paint->drawPixmap(QRect(0, (this->height() - this->width() * 9 / 16) / 2, this->width(), this->width() * 9 / 16), *Logo);
 	}
 	else
 	{

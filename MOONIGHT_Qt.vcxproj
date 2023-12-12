@@ -126,11 +126,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MCenter.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ui_MOONIGHT_Qt.h" />
     <QtMoc Include="MCheckDotLine.h" />
     <QtMoc Include="MNote.h" />
     <ClInclude Include="MPivot.h" />
     <QtMoc Include="TestDemo.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="MOONIGHT_Beta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MOONIGHT_Qt.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
