@@ -26,9 +26,6 @@
     <QtRcc Include="MOONIGHT_Qt.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-    <QtUic Include="MOONIGHT_Qt.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtMoc Include="MOONIGHT_Qt.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -69,18 +66,21 @@
     <QtMoc Include="TestDemo.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="MCheckDotLine.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MNote.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MCheckDotLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MCenter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MNote.h">
+    <ClInclude Include="MPivot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MPivot.h">
+    <ClInclude Include="ui_MOONIGHT_Qt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,8 +1,7 @@
 #pragma once
-#include<QtCore>
-#include<QtWidgets>
-#include<QtGui>
-#include<QtMath>
+#include <QtWidgets/QtWidgets>
+#include<QtCore/QtCore>
+#include<QtGui/QtGui>
 
 #define phi 3.1415926535897932384626433
 

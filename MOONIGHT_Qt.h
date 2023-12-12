@@ -1,6 +1,6 @@
 #pragma once
 
-#include"Mcenter.h"
+#include"MCenter.h"
 #include "ui_MOONIGHT_Qt.h"
 
 class MOONIGHT_Qt : public QMainWindow

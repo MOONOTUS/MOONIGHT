@@ -12,10 +12,10 @@ public:
 #define beat 0x11
 
 private:
-	MCheckDot* Parent;
-	bool* Visuable;
-	qreal* Radium;  
-	qreal* VRadium;
+	MCheckDot* Parent;//存储parent，用于溯源
+	bool* Visuable;//音符是否可见
+	qreal* Radium;//音符的逻辑半径
+	qreal* VRadium;//音符的视觉半径
 	qreal* Width;
 	qreal* VWidth;
 	QColor* NoteColor;
@@ -52,4 +52,6 @@ public:
 	void setNextTime(qint64 time_ms);
 	qint64 nextTime();
 	MCheckDot*& MParent();
+	//qreal vRadium();
+	//qreal v
 };

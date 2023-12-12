@@ -61,9 +61,27 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <IncludePath>D:\Qt\6.6.0\msvc2019_64\include</IncludePath>
+    <LibraryPath>D:\Qt\6.6.0\msvc2019_64\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <IncludePath>D:\Qt\6.6.0\msvc2019_64\include</IncludePath>
+    <LibraryPath>D:\Qt\6.6.0\msvc2019_64\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <LanguageStandard>Default</LanguageStandard>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <AdditionalIncludeDirectories>D:\Qt\6.6.0\msvc2019_64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>D:\Qt\6.6.0\msvc2019_64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -96,7 +114,6 @@
     <ClCompile Include="MWidget.cpp" />
     <ClCompile Include="TestDemo.cpp" />
     <QtRcc Include="MOONIGHT_Qt.qrc" />
-    <QtUic Include="MOONIGHT_Qt.ui" />
     <QtMoc Include="MOONIGHT_Qt.h" />
     <ClCompile Include="MOONIGHT_Qt.cpp" />
     <ClCompile Include="main.cpp" />
@@ -109,8 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MCenter.h" />
-    <ClInclude Include="MCheckDotLine.h" />
-    <ClInclude Include="MNote.h" />
+    <ClInclude Include="ui_MOONIGHT_Qt.h" />
+    <QtMoc Include="MCheckDotLine.h" />
+    <QtMoc Include="MNote.h" />
     <ClInclude Include="MPivot.h" />
     <QtMoc Include="TestDemo.h" />
   </ItemGroup>

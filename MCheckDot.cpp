@@ -33,13 +33,13 @@ MCheckDot::MCheckDot(MWidget *parent)
 		this,
 		SLOT(check())
 	);
-	parent->MParent()->connect
-	(
-		this,
-		SIGNAL(released()),
-		this,
-		SLOT(aftercheck())
-	);
+	//parent->MParent()->connect
+	//(
+	//	this,
+	//	SIGNAL(released()),
+	//	this,
+	//	SLOT(aftercheck())
+	//);
 	parent->MParent()->connect
 	(
 		this,
@@ -459,6 +459,7 @@ void MCheckDot::aftercheck()
 		NoteCheckList->remove(*HoldPressed);
 		NoteCheckList->insert(*HoldPressed, miss);
 	}
+	HoldPressed = new qint64(0);
 }
 
 void MCheckDot::misscheck()
