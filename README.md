@@ -30,25 +30,29 @@
 
 ---
 
-更新日志：     1.    实现了准度判定；
+###### 更新日志
 
-                        2.    实现了模糊；
+1.    实现了准度判定；
 
-                        3.    实现了分离窗口。
+2.    实现了模糊；
 
----
-
-接下来的更新目标：    1.    实现音符绘制；
-
-                                       2.    优化模糊算法执行效率；
-
-                                       3.    实现启动动画；
-
-                                       4.    编写第一个测试关卡。    
+ 3.    实现了分离窗口。
 
 ---
 
-以下是为开发者提供的项目介绍：
+###### 接下来的更新目标
+
+1.    实现音符绘制；
+
+2.    优化模糊算法执行效率；
+
+3.    实现启动动画；
+
+4.    编写第一个测试关卡。    
+
+---
+
+###### 为开发者提供的项目介绍
 
 ---
 
@@ -92,16 +96,16 @@ private:
     Ui::MOONIGHT_QtClass ui;
 };
 
-调用MOONIGHT_Qt的成员函数Ui()，返回其私有成员ui的指针，ui中有三个成员：
+//调用MOONIGHT_Qt的成员函数Ui()，返回其私有成员ui的指针，ui中有三个成员：
 
 public:
     MWidget *central;
     QTimer* mainTime;
     QTimer*
 
-其中，central是主窗口的核心组件，其它组件全部分支于central的对象树下；
-mainTime是一个以10ms为周期的计时器，用于动效的实现；
-litTime是一个以1ms为周期的计时器，用于曲谱的计时。
+//其中，central是主窗口的核心组件，其它组件全部分支于central的对象树下；
+//mainTime是一个以10ms为周期的计时器，用于动效的实现；
+//litTime是一个以1ms为周期的计时器，用于曲谱的计时。
 ```
 
 ```c++
@@ -155,7 +159,7 @@ public:
 ```c++
 class MCheckDot  : public QPushButton
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
 #define strictperfect 0x1111
@@ -168,86 +172,86 @@ public:
 #define miss 0x0000
 
 protected:
-	void paintEvent(QPaintEvent* event);//重写的重绘函数
-	void keyPressEvent(QKeyEvent* event);//重写的键盘按下事件函数
-	void keyReleaseEvent(QKeyEvent* event);//重写的键盘释放事件函数
+    void paintEvent(QPaintEvent* event);//重写的重绘函数
+    void keyPressEvent(QKeyEvent* event);//重写的键盘按下事件函数
+    void keyReleaseEvent(QKeyEvent* event);//重写的键盘释放事件函数
 
-	void paintDot(QPainter* paint);//绘制判定点
-	void paintDotLine(QPainter* paint);//绘制判定线
-	void paintNote(QPainter* paint);//绘制音符
+    void paintDot(QPainter* paint);//绘制判定点
+    void paintDotLine(QPainter* paint);//绘制判定线
+    void paintNote(QPainter* paint);//绘制音符
 
 signals:
-	void touched();//触发信号
-	void released();//释放信号
-	void misschecked();//掉落信号
+    void touched();//触发信号
+    void released();//释放信号
+    void misschecked();//掉落信号
 
 public slots:
-	void check();//判定槽
-	void aftercheck();//hold音符专用的释放判定槽
-	void misscheck();//掉落槽
+    void check();//判定槽
+    void aftercheck();//hold音符专用的释放判定槽
+    void misscheck();//掉落槽
 
 private:
-	MCheckDotLine* DotLine;//轨道
-	QMap<qint64, MNote*>* NoteList;//音符容器，可以通过Key值获取对应的音符，一般建议采用音符的判定时间做Key值
-	qint64* NextTime;//下一个音符的判定时间，用于实现音符的判定和绘制
-	QMap<qint64, qint32>* NoteCheckList;//判定结果容器，与音符的Key值一一对应存放判定结果
-	bool* Visuable;//判定点是否可见
-	QPoint* Point;//判定点的逻辑坐标
-	qreal* Radium;//判定点的逻辑半径
-	qreal* Width;//判定点圆圈的逻辑宽度
-	QColor* DotColor;//判定点的颜色（RGBA）
-	QColor* DotKeyColor;//判定键的颜色（RGBA）
-	qint32* Key;//判定键
-	QString* KeyText;//在屏幕上显示的判定键文本
-	bool* KeyVisuable;//判定键文本是否可见
-	MWidget* Parent;//存储parent指针，用于溯源
-	QPoint* VPoint;//判定点的视觉坐标
-	qreal* VRadium;//判定点的视觉半径
-	qreal* VWidth;//判定点圆圈的视觉宽度
-	QSet<qint32>* KeyPressingList;//正在被按下的按键
-	bool* HoldPressing;//是否有hold音符正被按下
-	qint64* HoldPressed;//正被按下的hold音符Key值，若没有则为0
-	qreal* Speed;//音符的逻辑速度
-	qreal* VSpeed;//音符的视觉速度
-	qreal* LineRadium;//轨道线的逻辑长度
-	qreal* VLineRadium;//轨道线的视觉长度
+    MCheckDotLine* DotLine;//轨道
+    QMap<qint64, MNote*>* NoteList;//音符容器，可以通过Key值获取对应的音符，一般建议采用音符的判定时间做Key值
+    qint64* NextTime;//下一个音符的判定时间，用于实现音符的判定和绘制
+    QMap<qint64, qint32>* NoteCheckList;//判定结果容器，与音符的Key值一一对应存放判定结果
+    bool* Visuable;//判定点是否可见
+    QPoint* Point;//判定点的逻辑坐标
+    qreal* Radium;//判定点的逻辑半径
+    qreal* Width;//判定点圆圈的逻辑宽度
+    QColor* DotColor;//判定点的颜色（RGBA）
+    QColor* DotKeyColor;//判定键的颜色（RGBA）
+    qint32* Key;//判定键
+    QString* KeyText;//在屏幕上显示的判定键文本
+    bool* KeyVisuable;//判定键文本是否可见
+    MWidget* Parent;//存储parent指针，用于溯源
+    QPoint* VPoint;//判定点的视觉坐标
+    qreal* VRadium;//判定点的视觉半径
+    qreal* VWidth;//判定点圆圈的视觉宽度
+    QSet<qint32>* KeyPressingList;//正在被按下的按键
+    bool* HoldPressing;//是否有hold音符正被按下
+    qint64* HoldPressed;//正被按下的hold音符Key值，若没有则为0
+    qreal* Speed;//音符的逻辑速度
+    qreal* VSpeed;//音符的视觉速度
+    qreal* LineRadium;//轨道线的逻辑长度
+    qreal* VLineRadium;//轨道线的视觉长度
 
 
 public:
-	MCheckDot(MWidget *parent = nullptr);
-	~MCheckDot();
+    MCheckDot(MWidget *parent = nullptr);
+    ~MCheckDot();
 
-	void setDotLine(MCheckDotLine& dotline);//设定轨道线
-	MCheckDotLine*& dotLine();//返回轨道线的引用
-	void setVisuable(bool visuable);//设定判定点是否可见
-	bool visuable();//返回*Visuable
-	void setPoint(QPoint& point);//设定判定点的逻辑坐标
-	void setPoint(qreal x, qreal y);//设定判定点的逻辑坐标
-	QPoint point();//返回判定点的逻辑坐标
-	void setRadium(qreal r);//设定判定点的逻辑半径
-	qreal radium();//返回*Radium
-	void setWidth(qreal width);//设定判定点圆圈的逻辑宽度
-	qreal width();//返回*Width
-	void setDotColor(QColor color);//设定判定点颜色
-	void setDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定判定点颜色
-	QColor dotColor();//返回*DotColor
-	void setDotKeyColor(QColor color);//设定判定键的颜色
-	void setDotKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定判定键的颜色
-	QColor dotKeyColor();//返回*DotKeyColor
-	void setKey(qint32 key, QString keytext);//设定判定键
-	qint32 key();//返回*Key
-	QString keyText();//返回*KeyText
-	QMap<qint64, MNote*>*& noteList();//返回音符容器的引用
-	void setNextTime(qint64 time_ms);//设定下一个音符的判定时间
-	qint64 nextTime();//返回*NextTime
-	QMap<qint64, qint32>*& noteCheckList();//返回判定结果容器的引用
-	MWidget*& MParent();//返回Parent，用于溯源
-	void setKeyVisuable(bool visuable);//设定判定键文本是否可见
-	bool keyVisuable();//返回*KeyVisuable
-	void setSpeed(qreal speed_px);//设定音符的逻辑速度
-	qreal speed();//返回*Speed
-	void setLineRadium(qreal lineradium);//设定轨道线的逻辑长度
-	qreal lineRadium();//返回*LineRadium
+    void setDotLine(MCheckDotLine& dotline);//设定轨道线
+    MCheckDotLine*& dotLine();//返回轨道线的引用
+    void setVisuable(bool visuable);//设定判定点是否可见
+    bool visuable();//返回*Visuable
+    void setPoint(QPoint& point);//设定判定点的逻辑坐标
+    void setPoint(qreal x, qreal y);//设定判定点的逻辑坐标
+    QPoint point();//返回判定点的逻辑坐标
+    void setRadium(qreal r);//设定判定点的逻辑半径
+    qreal radium();//返回*Radium
+    void setWidth(qreal width);//设定判定点圆圈的逻辑宽度
+    qreal width();//返回*Width
+    void setDotColor(QColor color);//设定判定点颜色
+    void setDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定判定点颜色
+    QColor dotColor();//返回*DotColor
+    void setDotKeyColor(QColor color);//设定判定键的颜色
+    void setDotKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定判定键的颜色
+    QColor dotKeyColor();//返回*DotKeyColor
+    void setKey(qint32 key, QString keytext);//设定判定键
+    qint32 key();//返回*Key
+    QString keyText();//返回*KeyText
+    QMap<qint64, MNote*>*& noteList();//返回音符容器的引用
+    void setNextTime(qint64 time_ms);//设定下一个音符的判定时间
+    qint64 nextTime();//返回*NextTime
+    QMap<qint64, qint32>*& noteCheckList();//返回判定结果容器的引用
+    MWidget*& MParent();//返回Parent，用于溯源
+    void setKeyVisuable(bool visuable);//设定判定键文本是否可见
+    bool keyVisuable();//返回*KeyVisuable
+    void setSpeed(qreal speed_px);//设定音符的逻辑速度
+    qreal speed();//返回*Speed
+    void setLineRadium(qreal lineradium);//设定轨道线的逻辑长度
+    qreal lineRadium();//返回*LineRadium
 
 };
 ```
@@ -256,31 +260,31 @@ public:
 class MCheckDotLine
 {
 
-	Q_OBJECT
+    Q_OBJECT
 
 private:
-	MCheckDot* Parent;//存储parent，用于溯源
-	bool* Visuable;//轨道线是否可见
-	qreal* Width;//轨道线的逻辑宽度
-	qreal* Angel;//轨道线的角度
-	QColor* DotLineColor;//轨道线的颜色（RGBA）
-	qreal* VWidth;//轨道线的视觉宽度
+    MCheckDot* Parent;//存储parent，用于溯源
+    bool* Visuable;//轨道线是否可见
+    qreal* Width;//轨道线的逻辑宽度
+    qreal* Angel;//轨道线的角度
+    QColor* DotLineColor;//轨道线的颜色（RGBA）
+    qreal* VWidth;//轨道线的视觉宽度
 
 public:
-	MCheckDotLine(MCheckDot* parent = nullptr);
-	~MCheckDotLine();
+    MCheckDotLine(MCheckDot* parent = nullptr);
+    ~MCheckDotLine();
 
-	void setVisuable(bool visuable);//设定轨道线是否可见
-	bool visuable();//返回*Visuable
-	void setWidth(qreal width);//设定轨道线的逻辑宽度
-	qreal width();//返回*Width
-	void setAngel(qreal angle);//设定轨道线的角度
-	qreal angle();//返回*Angle
-	void setDotLineColor(QColor color);//设定轨道线的颜色
-	void setDotLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定轨道线的颜色
-	QColor dotLineColor();//返回*DotLineColor
-	qreal vWidth();//返回*VWidth
-	MCheckDot*& MParent();//返回Parent，用于溯源
+    void setVisuable(bool visuable);//设定轨道线是否可见
+    bool visuable();//返回*Visuable
+    void setWidth(qreal width);//设定轨道线的逻辑宽度
+    qreal width();//返回*Width
+    void setAngel(qreal angle);//设定轨道线的角度
+    qreal angle();//返回*Angle
+    void setDotLineColor(QColor color);//设定轨道线的颜色
+    void setDotLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定轨道线的颜色
+    QColor dotLineColor();//返回*DotLineColor
+    qreal vWidth();//返回*VWidth
+    MCheckDot*& MParent();//返回Parent，用于溯源
 };
 ```
 
@@ -292,7 +296,7 @@ public:
 
 ---
 
-以下是为谱面编辑师提供的项目介绍：
+###### 为谱面编辑师提供的项目介绍
 
 ---
 
