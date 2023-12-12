@@ -7,6 +7,8 @@ MNote::MNote(MCheckDot* parent)
 	Parent = parent;
 	Radium = new qreal(parent->radium() - 2);
 	Width = new qreal(2.0);
+	VRadium = new qreal(*Radium * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());
+	VWidth = new qreal(*Width * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());
 	Type = new qint32(catch);
 	NoteColor = new QColor(parent->dotColor());
 	Visuable = new bool(parent->visuable());
@@ -19,6 +21,43 @@ MNote::MNote(MCheckDot* parent)
 
 MNote::~MNote()
 {}
+
+void MNote::MNoteSet(bool visuable, qreal radium, qreal width, QColor color, qint32 type, qint64 time, qint64 nextTime, qint32 beatKey, QString beatKeyText, qint64 timeLength)
+{
+	setVisuable(visuable);
+	if (!(radium == -1))
+	{
+		setRadium(radium);
+	}
+	if (!(width == -1))
+	{
+		setWidth(width);
+	}
+	if (!(color == Qt::transparent))
+	{
+		setNoteColor(color);
+	}
+	if (!(type == -1))
+	{
+		setType(type);
+	}
+	if (!(time == -1))
+	{
+		setTime(time);
+	}
+	if (!(nextTime == -1))
+	{
+		setNextTime(time);
+	}
+	if (!((beatKey == -1) || (beatKeyText == "")))
+	{
+		setBeatKey(beatKey, beatKeyText);
+	}
+	if (!(timeLength == -1))
+	{
+		setTimeLength(timeLength);
+	}
+}
 
 void MNote::setVisuable(bool visuable)
 {
@@ -41,6 +80,11 @@ qreal MNote::radium()
 	return *Radium;
 }
 
+qreal MNote::vRadium()
+{
+	return *VRadium;
+}
+
 void MNote::setWidth(qreal width)
 {
 	Width = new qreal(width);
@@ -52,6 +96,11 @@ qreal MNote::width()
 	return *Width;
 }
 
+qreal MNote::vWidth()
+{
+	return *VWidth;
+}
+
 void MNote::setNoteColor(QColor color)
 {
 	NoteColor = new QColor(color);
@@ -60,6 +109,11 @@ void MNote::setNoteColor(QColor color)
 void MNote::setNoteColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
 	NoteColor = new QColor(R, G, B, A);
+}
+
+QColor MNote::noteColor()
+{
+	return *NoteColor;
 }
 
 void MNote::setType(qint32 type)
