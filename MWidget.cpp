@@ -4,16 +4,16 @@
 MWidget::MWidget(QWidget* parent)
 	: QWidget(parent)
 {
-	Parent = parent;
-	CheckDotList = new QMap<QString, MCheckDot*>;
-	this->OriSize = new QSize(1920, 1080);
-	ifShowBackImage = new bool(false);
-	ifShowBackBackImage = new bool(false);
-	ifShowLogo = new bool(true);
-	backColor = new  QColor(245, 245, 245);
-	backCoverColor = new QColor(255, 255, 255, 0);
-	time_ms = new qint64(0);
-	Logo = new QPixmap("D:\\Painting\\MOONIGHT_Beta_Little.png");
+	Parent = parent;//储存parent
+	CheckDotList = new QMap<QString, MCheckDot*>;//无用的初始化
+	this->OriSize = new QSize(1920, 1080);//设定Size=（1920，1080）的原始坐标系
+	ifShowBackImage = new bool(false);//初始化显示背景图片为假
+	ifShowBackBackImage = new bool(false);//初始化显示背景的背景为假
+	ifShowLogo = new bool(true);//初始化显示标志为真
+	backColor = new  QColor(245, 245, 245);//初始化背景色为（245，245，245，255）的亮灰白色
+	Logo = new QPixmap("D:\\Painting\\MOONIGHT_Beta_Little.png");//读取Logo图片，稍后改为相对路径
+	backCoverColor = new QColor(255, 255, 255, 0);//初始化背景遮罩色为全透明白色，即不显示遮罩
+	time_ms = new qint64(0);//时间置零
 }
 
 MWidget::~MWidget()

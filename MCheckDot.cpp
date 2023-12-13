@@ -4,43 +4,43 @@
 MCheckDot::MCheckDot(MWidget *parent)
 	: QPushButton(parent)
 {
-	this->Parent = parent;
-	DotColor = new QColor(217, 150, 229, 255);
-	DotKeyColor = new QColor(DotColor->red(), DotColor->green(), DotColor->blue(), DotColor->alpha() * 2 / 3);
-	Width = new qreal(6.0);
-	Radium = new qreal(30.0);
-	Visuable = new bool(true);
-	Point = new QPoint(parent->width() / 2, parent->height() / 2);
-	DotLine = new MCheckDotLine(this);
-	NoteList = new QMap<qint64, MNote*>;
-	NextTime = new qint64(0);
-	NoteCheckList = new QMap<qint64, qint32>;
-	KeyVisuable = new bool(false);
-	KeyPressingList = new QSet<qint32>;
-	HoldPressing = new bool(false);
-	Speed = new qreal(10.0);
-	VSpeed = new qreal(*Speed * parent->width() / parent->oriSize().width());
-	LineRadium = new qreal(2500.0);
-	VLineRadium = new qreal(*LineRadium * parent->width() / parent->oriSize().width());
-	this->setGeometry(0,0,parent->width(),parent->height());
-	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	this->setFont(QFont("Microsoft YaHei Ui", *Radium, *Width - 2));
+	this->Parent = parent;//存储parent
+	DotColor = new QColor(217, 150, 229, 255);//初始化判定点颜色
+	DotKeyColor = new QColor(DotColor->red(), DotColor->green(), DotColor->blue(), DotColor->alpha() * 2 / 3);//初始化判定键文本颜色
+	Width = new qreal(6.0);//初始化判定点圆圈逻辑宽度
+	Radium = new qreal(30.0);//初始化判定点逻辑半径
+	Visuable = new bool(true);//初始化判定点可见性为真
+	Point = new QPoint(parent->width() / 2, parent->height() / 2);//初始化判定点逻辑坐标
+	DotLine = new MCheckDotLine(this);//初始化轨道线
+	NoteList = new QMap<qint64, MNote*>;//初始化音符容器
+	NextTime = new qint64(0);//没用的初始化
+	NoteCheckList = new QMap<qint64, qint32>;//初始化判定结果容器
+	KeyVisuable = new bool(false);//初始化判定键文本可见性为假
+	KeyPressingList = new QSet<qint32>;//初始化正在按键列表
+	HoldPressing = new bool(false);//初始化hold按下状态为假
+	Speed = new qreal(10.0);//初始化音符逻辑速度
+	VSpeed = new qreal(*Speed * parent->width() / parent->oriSize().width());//初始化音符视觉速度
+	LineRadium = new qreal(2500.0);//初始化轨道线逻辑长度
+	VLineRadium = new qreal(*LineRadium * parent->width() / parent->oriSize().width());//初始化轨道线视觉长度
+	this->setGeometry(0,0,parent->width(),parent->height());//设定初始绘制区域
+	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);//设定尺寸可变性
+	this->setFont(QFont("Microsoft YaHei Ui", *Radium, *Width - 2));//设定文本字体
 
-	parent->MParent()->connect
+	parent->MParent()->connect//连接触发信号和判定槽
 	(
 		this,
 		SIGNAL(touched()),
 		this,
 		SLOT(check())
 	);
-	parent->MParent()->connect
+	parent->MParent()->connect//连接hold音符专有的释放信号和hold专有的释放判定槽
 	(
 		this,
 		SIGNAL(released()),
 		this,
 		SLOT(aftercheck())
 	);
-	parent->MParent()->connect
+	parent->MParent()->connect//连接掉落信号和掉落判定槽
 	(
 		this,
 		SIGNAL(misschecked()),
@@ -57,37 +57,36 @@ MCheckDot::~MCheckDot()
 
 void MCheckDot::paintEvent(QPaintEvent* event)
 {
-	this->setGeometry(0, (Parent->height() - Parent->width() * 9 / 16) / 2, Parent->width(), Parent->width() * 9 / 16);
-	DotLine->setWidth(DotLine->width());
-	for (QMap<qint64, MNote*>::iterator listptr = NoteList->begin(); listptr != NoteList->end(); ++listptr)
+	this->setGeometry(0, (Parent->height() - Parent->width() * 9 / 16) / 2, Parent->width(), Parent->width() * 9 / 16);//，以屏幕宽度为基准，设定16：9中央绘制区域，保证在不同尺寸的比例正常的设备上谱面的比例一样
+	DotLine->setWidth(DotLine->width());//刷新轨道线的视觉宽度
+	for (QMap<qint64, MNote*>::iterator listptr = NoteList->begin(); listptr != NoteList->end(); ++listptr)//刷新各个音符的视觉尺寸
 	{
 		listptr.value()->setRadium(listptr.value()->radium());
 		listptr.value()->setWidth(listptr.value()->width());
 	}
-	VPoint = new QPoint(Point->x() * this->size().width() / Parent->oriSize().width(), Point->y() * this->size().height() / Parent->oriSize().height());
-	VWidth = new qreal(*Width * Parent->width() / Parent->oriSize().width());
-	VRadium = new qreal(*Radium * Parent->width() / Parent->oriSize().width());
-	VSpeed = new qreal(10.0 * Parent->width() / Parent->oriSize().width());
-	VLineRadium = new qreal(*LineRadium * Parent->width() / Parent->oriSize().width());
-	this->setFont(QFont("Microsoft YaHei Ui", *VRadium, *VWidth - 2));
-	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	VPoint = new QPoint(Point->x() * this->size().width() / Parent->oriSize().width(), Point->y() * this->size().height() / Parent->oriSize().height());//刷新视觉坐标
+	VWidth = new qreal(*Width * Parent->width() / Parent->oriSize().width());//刷新视觉线宽
+	VRadium = new qreal(*Radium * Parent->width() / Parent->oriSize().width());//刷新视觉半径
+	VSpeed = new qreal(10.0 * Parent->width() / Parent->oriSize().width());//刷新视觉速度
+	VLineRadium = new qreal(*LineRadium * Parent->width() / Parent->oriSize().width());//刷新轨道线视觉长度
+	this->setFont(QFont("Microsoft YaHei Ui", *VRadium, *VWidth - 2));//刷新字体视觉样式
 	QPainter* paint = new QPainter(this);
 	paint->setRenderHint(QPainter::Antialiasing);
 	paint->setRenderHint(QPainter::TextAntialiasing);
 
-	if (DotLine->visuable())
+	if (DotLine->visuable())//绘制轨道线
 	{
 		paintDotLine(paint);
 	}
-	if (*Visuable)
+	if (*Visuable)//绘制判定点
 	{
 		paintDot(paint);
 	}
-	if (!NoteList->isEmpty())
+	if (!NoteList->isEmpty())//绘制音符
 	{
 		paintNote(paint);
 	}
-	if (*NextTime - Parent->time() < -250)
+	if (*NextTime - Parent->time() < -250)//掉落信号的发送
 	{
 		emit(misschecked());
 	}
@@ -97,25 +96,31 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 
 void MCheckDot::keyPressEvent(QKeyEvent* event)
 {
-	KeyPressingList->insert(event->key());
-	if (KeyPressingList->contains(*Key))
+	KeyPressingList->insert(event->key());//向按键列表中添加按下的键
+	if (NoteList->contains(*NextTime))//触发信号的发送
 	{
-		emit(touched());
-	}
-	if (NoteList->contains(*NextTime))
-	{
-		if (NoteList->value(*NextTime)->type() == beat)
+		if (NoteList->value(*NextTime)->time() - Parent->time() <= 250 && NoteList->value(*NextTime)->time() - Parent->time() >= -250)//只对时间差小于250ms的第一个音符进行判定
 		{
-			if ((KeyPressingList->contains(*Key) && KeyPressingList->contains(NoteList->value(*NextTime)->beatKey())) || (KeyPressingList->contains(*Key) && KeyPressingList->contains(NoteList->value(*NextTime)->beatKey())))
+			if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//对于click音符和hold音符，只在触发开始时进行判定
 			{
-				emit(touched());
+				if (event->key() == *Key)
+				{
+					emit(touched());
+				}
 			}
-		}
-		else
-		{
-			if (KeyPressingList->contains(*Key))
+			else if (NoteList->value(*NextTime)->type() == beat)//对于beat音符，只在保持触发的前提下beat音符的额外键触发开始时进行判定
 			{
-				emit(touched());
+				if ((KeyPressingList->contains(*Key) && (event->key() == NoteList->value(*NextTime)->beatKey())))
+				{
+					emit(touched());
+				}
+			}
+			else//对于catch音符，只要接近判定时保持触发状态即进行判定
+			{
+				if (KeyPressingList->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 10)
+				{
+					emit(touched());
+				}
 			}
 		}
 	}
@@ -128,8 +133,8 @@ void MCheckDot::keyPressEvent(QKeyEvent* event)
 
 void MCheckDot::keyReleaseEvent(QKeyEvent* event)
 {
-	KeyPressingList->remove(event->key());
-	if (HoldPressing && !KeyPressingList->contains(*Key))
+	KeyPressingList->remove(event->key());//从按键列表中删除松开的键
+	if (HoldPressing && !KeyPressingList->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
 	{
 		HoldPressing = new bool(false);
 		emit(released());
@@ -367,10 +372,10 @@ qreal MCheckDot::lineRadium()
 
 void MCheckDot::check()
 {
-	qDebug() << "MOONOTUSYSTEM::_MESSAGE_::Check runs\n";
+	qDebug() << "MOONOTUSYSTEM::_MESSAGE_::Check\n";
 	if (NoteList->contains(*NextTime))
 	{
-		qDebug() << "MOONOTUSYSTEM::_MESSAGE_::Check real runs\n";
+		qDebug() << "MOONOTUSYSTEM::_MESSAGE_::Truely check\n";
 		if (NoteList->value(*NextTime)->type() == catch)
 		{
 			if (NoteList->value(*NextTime)->time() == Parent->time())
@@ -464,8 +469,10 @@ void MCheckDot::aftercheck()
 
 void MCheckDot::misscheck()
 {
+	qDebug() << "MOONOTUSYSTEM::_::Message_::Miss check\n";
 	if (NoteList->contains(*NextTime))
 	{
+		qDebug() << "MOONOTUSYSTEM::_Message_::Truely miss check\n";
 		NoteCheckList->insert(*NextTime, miss);
 		NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 	}
