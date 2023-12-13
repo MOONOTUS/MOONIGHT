@@ -377,7 +377,7 @@ void MCheckDot::check()
 	if (NoteList->contains(*NextTime))
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_MESSAGE_::Truely check";
-		if (NoteList->value(*NextTime)->type() == catch)
+		if (NoteList->value(*NextTime)->type() == catch)//针对catch音符的判定
 		{
 			if (NoteList->value(*NextTime)->time() == Parent->time())
 			{
@@ -385,7 +385,7 @@ void MCheckDot::check()
 				NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 			}
 		}
-		else if (NoteList->value(*NextTime)->type() == hold)
+		else if (NoteList->value(*NextTime)->type() == hold)//针对hold音符的判定
 		{
 			if (((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 50)
 			{
@@ -419,7 +419,7 @@ void MCheckDot::check()
 			HoldPressed = new qint64(*NextTime);
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
-		else
+		else//针对click和beat音符的判定
 		{
 			if (((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 50)
 			{
@@ -460,7 +460,7 @@ void MCheckDot::check()
 
 void MCheckDot::aftercheck()
 {
-	if (((NoteList->value(*HoldPressed)->endTime()) - (Parent->time())) > 250)
+	if (((NoteList->value(*HoldPressed)->endTime()) - (Parent->time())) > 250)//hold音符的释放判定
 	{
 		NoteCheckList->remove(*HoldPressed);
 		NoteCheckList->insert(*HoldPressed, miss);
@@ -471,7 +471,7 @@ void MCheckDot::aftercheck()
 void MCheckDot::misscheck()
 {
 	qDebug() << "\tMOONOTUSYSTEM::_::Message_::Miss check";
-	if (NoteList->contains(*NextTime))
+	if (NoteList->contains(*NextTime))//掉落判定
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Message_::Truely miss check";
 		NoteCheckList->insert(*NextTime, miss);

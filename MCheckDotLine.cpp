@@ -4,11 +4,11 @@
 
 MCheckDotLine::MCheckDotLine(MCheckDot* parent)
 {
-	Parent = parent;
-	DotLineColor = new QColor(parent->dotColor());
-	Visuable = new bool(parent->visuable());
-	setWidth(parent->width() - 2);
-	Angel = new qreal(90);
+	Parent = parent;//存储parernt
+	DotLineColor = new QColor(parent->dotColor());//初始化轨道线的颜色
+	Visuable = new bool(parent->visuable());//初始化轨道线的可见性
+	setWidth(parent->width() - 2);//初始化轨道线的逻辑宽度和视觉宽度
+	Angel = new qreal(90);//初始化轨道线的角度
 }
 
 MCheckDotLine::~MCheckDotLine()
