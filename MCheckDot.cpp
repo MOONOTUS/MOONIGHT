@@ -169,6 +169,7 @@ void MCheckDot::paintDotLine(QPainter* paint)
 	line02.setAngle((DotLine->angle() - 180));
 	line01.setLength(*VRadium);
 	line02.setLength(*VRadium);
+	//使得轨道线的起点在判定点圆圈上
 	lineU.setP1(line01.p2());
 	lineD.setP1(line02.p2());
 	lineU.setAngle(DotLine->angle());
@@ -183,7 +184,7 @@ void MCheckDot::paintDotLine(QPainter* paint)
 	paint->drawLine(lineD);
 }
 
-void MCheckDot::paintNote(QPainter* paint)
+void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 {
 	if (NoteList->contains(*NextTime))
 	{
