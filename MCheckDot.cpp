@@ -18,7 +18,7 @@ MCheckDot::MCheckDot(MWidget *parent)
 	KeyVisuable = new bool(false);//初始化判定键文本可见性为假
 	KeyPressingList = new QSet<qint32>;//初始化正在按键列表
 	HoldPressing = new bool(false);//初始化hold按下状态为假
-	Speed = new qreal(10.0);//初始化音符逻辑速度
+	Speed = new qreal(100.0);//初始化音符逻辑速度
 	VSpeed = new qreal(*Speed * parent->width() / parent->oriSize().width());//初始化音符视觉速度
 	LineRadium = new qreal(2500.0);//初始化轨道线逻辑长度
 	VLineRadium = new qreal(*LineRadium * parent->width() / parent->oriSize().width());//初始化轨道线视觉长度
@@ -82,15 +82,15 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 	{
 		paintDot(paint);
 	}
-	if (!NoteList->isEmpty())//绘制音符
+	if (NoteList->contains(*NextTime))//绘制音符
 	{
 		paintNote(paint);
+		if (NoteList->value(*NextTime)->time() - Parent->time() < -250)//掉落信号的发送
+		{
+			emit(misschecked());
+		}
 	}
-	if (*NextTime - Parent->time() < -250)//掉落信号的发送
-	{
-		emit(misschecked());
-	}
-
+	qDebug() << "\tMOONOTUSYSTEM_::_Data_::_*NextTime_::" << *NextTime;
 	event->accept();
 }
 
@@ -186,21 +186,32 @@ void MCheckDot::paintDotLine(QPainter* paint)
 
 void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 {
+	if (*NextTime == -1)
+	{
+		qDebug() << "\tMOONOTUSYSTEM::_Message_::NoteList ends";
+	}
 	if (NoteList->contains(*NextTime))
 	{
 		qint64* NextTimeTemp = new qint64(*NextTime);
-		while (NoteList->value(*NextTime)->time() * *Speed <= 2203 - NoteList->value(*NextTime)->radium())
+		while (NoteList->contains(*NextTime) && (NoteList->value(*NextTime)->time() * *Speed / 1000 <= 2203 - NoteList->value(*NextTime)->radium()))
 		{
+			qDebug() << "\tMOONOTUS::_Message_::Note paints";
 			switch (NoteList->value(*NextTime)->type())
 			{
 			case click:
+				paintClickNote(paint);
 				break;
 			case catch:
-				break;
-			case hold:
+				paintCatchNote(paint);
 				break;
 			case beat:
+				paintBeatNote(paint);
 				break;
+			case hold:
+				paintHoldNote(paint);
+				break;
+			default:
+				qDebug() << "\tMOONOTUSYSTEM::_Error_::Unidentified type of note to be painted";
 			}
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
@@ -210,7 +221,36 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
+}
 
+void MCheckDot::paintClickNote(QPainter* paint)//绘制click音符
+{
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Click note paints";
+	QLineF line0;
+	line0.setP1(*VPoint);
+	line0.setAngle(DotLine->angle());
+	line0.setLength((NoteList->value(*NextTime)->time()-Parent->time())*(*VSpeed)/1000);
+	QPen pen;
+	pen.setWidth(NoteList->value(*NextTime)->vWidth());
+	pen.setColor(NoteList->value(*NextTime)->noteColor());
+	paint->setPen(pen);
+	paint->setBrush(NoteList->value(*NextTime)->noteColor());
+	paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+}
+
+void MCheckDot::paintCatchNote(QPainter* paint)//绘制catch音符
+{
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Catch note paints";
+}
+
+void MCheckDot::paintBeatNote(QPainter* paint)//绘制beat音符
+{
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Beat note paints";
+}
+
+void MCheckDot::paintHoldNote(QPainter* paint)//绘制hold音符
+{
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note paints";
 }
 
 void MCheckDot::setDotLine(MCheckDotLine& dotline)
@@ -349,9 +389,9 @@ bool MCheckDot::keyVisuable()
 	return *KeyVisuable;
 }
 
-void MCheckDot::setSpeed(qreal speed_px)
+void MCheckDot::setSpeed(qreal speed_px_ps)
 {
-	Speed = new qreal(speed_px);
+	Speed = new qreal(speed_px_ps);
 	VSpeed = new qreal(*Speed * Parent->width() / Parent->oriSize().width());
 }
 
@@ -470,7 +510,7 @@ void MCheckDot::aftercheck()
 
 void MCheckDot::misscheck()
 {
-	qDebug() << "\tMOONOTUSYSTEM::_::Message_::Miss check";
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Miss check";
 	if (NoteList->contains(*NextTime))//掉落判定
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Message_::Truely miss check";

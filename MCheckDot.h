@@ -28,6 +28,10 @@ protected:
 	void paintDot(QPainter* paint);//绘制判定点
 	void paintDotLine(QPainter* paint);//绘制判定线
 	void paintNote(QPainter* paint);//绘制音符
+	void paintClickNote(QPainter* paint);//绘制click音符
+	void paintCatchNote(QPainter* paint);//绘制catch音符
+	void paintBeatNote(QPainter* paint);//绘制beat音符
+	void paintHoldNote(QPainter* paint);//绘制hold音符
 
 signals:
 	void touched();//触发信号
@@ -97,7 +101,7 @@ public:
 	MWidget*& MParent();//返回Parent，用于溯源
 	void setKeyVisuable(bool visuable);//设定判定键文本是否可见
 	bool keyVisuable();//返回*KeyVisuable
-	void setSpeed(qreal speed_px);//设定音符的逻辑速度
+	void setSpeed(qreal speed_px_ps);//设定音符的逻辑速度
 	qreal speed();//返回*Speed
 	void setLineRadium(qreal lineradium);//设定轨道线的逻辑长度
 	qreal lineRadium();//返回*LineRadium

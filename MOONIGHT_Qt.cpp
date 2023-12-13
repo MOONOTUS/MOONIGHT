@@ -10,7 +10,7 @@ MOONIGHT_Qt::MOONIGHT_Qt(QWidget *parent)
         SIGNAL(timeout()),
         ui.central,
         SLOT(timeAdd_ms())
-    );//¡¨Ω”≤€”Î
+    );
 }
 
 MOONIGHT_Qt::~MOONIGHT_Qt()

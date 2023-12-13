@@ -21,6 +21,7 @@ MWidget::~MWidget()
 
 void MWidget::paintEvent(QPaintEvent* event)
 {
+	qDebug() << "MOONOTUSYSTEM::_Data::_*time_ms_::" << *time_ms;
 	QPainter* paint = new QPainter(this);
 	paint->setRenderHint(QPainter::Antialiasing);
 	paint->setRenderHint(QPainter::TextAntialiasing);
@@ -166,5 +167,5 @@ qint64 MWidget::time()
 
 void MWidget::timeAdd_ms()
 {
-	(*time_ms)++;
+	time_ms = new qint64((*time_ms) + 1);
 }

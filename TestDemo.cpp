@@ -27,6 +27,32 @@ TestDemo_Rotate_Class::TestDemo_Rotate_Class(MWidget* parent)
 	parent->checkDotList()->insert("4", new MCheckDot(parent));
 	parent->checkDotList()->value("4")->setKey(Qt::Key_4, "4");
 	parent->checkDotList()->value("4")->setKeyVisuable(true);
+	MNote* newNote1 = new MNote(parent->checkDotList()->value("M"));
+	MNote* newNote2 = new MNote(parent->checkDotList()->value("M"));
+	MNote* newNote3 = new MNote(parent->checkDotList()->value("M"));
+	MNote* newNote4 = new MNote(parent->checkDotList()->value("M"));
+	MNote* newNote5 = new MNote(parent->checkDotList()->value("M"));
+	parent->checkDotList()->value("M")->setNextTime(3000);
+	newNote1->setTime(3000);
+	newNote2->setTime(6000);
+	newNote3->setTime(9000);
+	newNote4->setTime(12000);
+	newNote5->setTime(15000);
+	newNote1->setNextTime(6000);
+	newNote2->setNextTime(9000);
+	newNote3->setNextTime(12000);
+	newNote4->setNextTime(15000);
+	newNote5->setNextTime(-1);;
+	newNote1->setType(click);
+	newNote2->setType(click);
+	newNote3->setType(click);
+	newNote4->setType(click);
+	newNote5->setType(click);
+	parent->checkDotList()->value("M")->noteList()->insert(3000, newNote1);
+	parent->checkDotList()->value("M")->noteList()->insert(6000, newNote2);
+	parent->checkDotList()->value("M")->noteList()->insert(9000, newNote3);
+	parent->checkDotList()->value("M")->noteList()->insert(12000, newNote4);
+	parent->checkDotList()->value("M")->noteList()->insert(15000, newNote5);
 	parent->checkDotList()->value("M")->show();
 	parent->checkDotList()->value("N")->show();
 	parent->checkDotList()->value("1")->show();
@@ -44,6 +70,7 @@ TestDemo_Rotate_Class::~TestDemo_Rotate_Class()
 void TestDemo_Rotate(MOONIGHT_Qt* w)
 {
 	TestDemo_Rotate_Class* r = new TestDemo_Rotate_Class(w->Ui()->central);
+	QCoreApplication::processEvents();
 	w->Ui()->central->setTime(0);
 	w->Ui()->mainTime->start();
 	w->Ui()->litTime->start();

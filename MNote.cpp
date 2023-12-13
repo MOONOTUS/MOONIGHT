@@ -8,15 +8,15 @@ MNote::MNote(MCheckDot* parent)
 	Radium = new qreal(parent->radium() - 2);//初始化音符逻辑半径
 	Width = new qreal(2.0);//初始化音符视觉线宽
 	VRadium = new qreal(*Radium * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//初始化音符逻辑宽度
-	VWidth = new qreal(*Width * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());
-	Type = new qint32(catch);
-	NoteColor = new QColor(parent->dotColor());
-	Visuable = new bool(parent->visuable());
-	BeatKey = new qint32(Qt::Key_0);
-	BeatKeyText = new QString("0");
-	Time = new qint64(0);
-	TimeLength = new qint64(0);
-	EndTime = new qint64(*Time + *TimeLength);
+	VWidth = new qreal(*Width * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//初始化音符的逻辑线宽
+	Type = new qint32(catch);//初始化音符的类型为catch
+	NoteColor = new QColor(parent->dotColor());//初始化音符的颜色
+	Visuable = new bool(parent->visuable());//初始化音符的可见性
+	BeatKey = new qint32(Qt::Key_Escape);//初始化beat音符专有的额外键
+	BeatKeyText = new QString("0");//初始化beat音符专有的额外键文本
+	Time = new qint64(0);//初始化音符的判定时间
+	TimeLength = new qint64(0);//初始化hold音符专有的持续时长
+	EndTime = new qint64(*Time + *TimeLength);//初始化hold音符专有的结束时间
 }
 
 MNote::~MNote()
