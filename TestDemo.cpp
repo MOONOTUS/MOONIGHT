@@ -93,6 +93,24 @@ void TestDemo_Rotate_Class::rotateCheckDot()
 	{
 		*angel = 0;
 	}
+	if (qint64(*angel * 180 / phi) % 90 < 10)
+	{
+		parent->checkDotList()->value("M")->setRadium(40.0);
+		parent->checkDotList()->value("N")->setRadium(40.0);
+		parent->checkDotList()->value("1")->setRadium(40.0);
+		parent->checkDotList()->value("2")->setRadium(40.0);
+		parent->checkDotList()->value("3")->setRadium(40.0);
+		parent->checkDotList()->value("4")->setRadium(40.0);
+	}
+	else
+	{
+		parent->checkDotList()->value("M")->setRadium(30.0);
+		parent->checkDotList()->value("N")->setRadium(30.0);
+		parent->checkDotList()->value("1")->setRadium(30.0);
+		parent->checkDotList()->value("2")->setRadium(30.0);
+		parent->checkDotList()->value("3")->setRadium(30.0);
+		parent->checkDotList()->value("4")->setRadium(30.0);
+	}
 }
 
 MWidget*& TestDemo_Rotate_Class::Parent()

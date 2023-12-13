@@ -4,10 +4,10 @@
 
 MNote::MNote(MCheckDot* parent)
 {
-	Parent = parent;
-	Radium = new qreal(parent->radium() - 2);
-	Width = new qreal(2.0);
-	VRadium = new qreal(*Radium * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());
+	Parent = parent;//´æ´¢parent
+	Radium = new qreal(parent->radium() - 2);//³õÊ¼»¯Òô·ûÂß¼­°ë¾¶
+	Width = new qreal(2.0);//³õÊ¼»¯Òô·ûÊÓ¾õÏß¿í
+	VRadium = new qreal(*Radium * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//³õÊ¼»¯Òô·ûÂß¼­¿í¶È
 	VWidth = new qreal(*Width * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());
 	Type = new qint32(catch);
 	NoteColor = new QColor(parent->dotColor());
