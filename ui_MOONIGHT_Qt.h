@@ -35,7 +35,7 @@ public:
         mainTime->setSingleShot(false);
         litTime->setSingleShot(false);
         mainTime->setInterval(10);
-        mainTime->setInterval(1);
+        litTime->setInterval(1);
 
         retranslateUi(MOONIGHT_QtClass);
 
