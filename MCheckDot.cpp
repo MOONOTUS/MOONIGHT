@@ -126,7 +126,7 @@ void MCheckDot::keyPressEvent(QKeyEvent* event)
 	}
 	else
 	{
-		qDebug() << "MOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)\n";
+		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
 	releaseKeyboard();
 }
@@ -208,7 +208,7 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 	}
 	else
 	{
-		qDebug() << "MOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)\n";
+		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
 
 }
@@ -373,10 +373,10 @@ qreal MCheckDot::lineRadium()
 
 void MCheckDot::check()
 {
-	qDebug() << "MOONOTUSYSTEM::_MESSAGE_::Check\n";
+	qDebug() << "\tMOONOTUSYSTEM::_MESSAGE_::Check";
 	if (NoteList->contains(*NextTime))
 	{
-		qDebug() << "MOONOTUSYSTEM::_MESSAGE_::Truely check\n";
+		qDebug() << "\tMOONOTUSYSTEM::_MESSAGE_::Truely check";
 		if (NoteList->value(*NextTime)->type() == catch)
 		{
 			if (NoteList->value(*NextTime)->time() == Parent->time())
@@ -454,7 +454,7 @@ void MCheckDot::check()
 	}
 	else
 	{
-		qDebug() << "MOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)\n";
+		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
 }
 
@@ -470,15 +470,15 @@ void MCheckDot::aftercheck()
 
 void MCheckDot::misscheck()
 {
-	qDebug() << "MOONOTUSYSTEM::_::Message_::Miss check\n";
+	qDebug() << "\tMOONOTUSYSTEM::_::Message_::Miss check";
 	if (NoteList->contains(*NextTime))
 	{
-		qDebug() << "MOONOTUSYSTEM::_Message_::Truely miss check\n";
+		qDebug() << "\tMOONOTUSYSTEM::_Message_::Truely miss check";
 		NoteCheckList->insert(*NextTime, miss);
 		NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 	}
 	else
 	{
-		qDebug() << "MOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)\n";
+		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
 }
