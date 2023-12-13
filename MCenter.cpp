@@ -1,6 +1,6 @@
 #include"MCenter.h"
 
-QImage blurred(const QImage& image, const QRect& rect, qint32 radius, bool alphaOnly)
+QImage blurred(const QImage& image, const QRect& rect, qint32 radius, bool alphaOnly)//无法生效的模糊算法。取自网络。
 {
 	qint32 tab[] = { 14, 10, 8, 6, 5, 5, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2 };
 	qint32 alpha = (radius < 1) ? 16 : (radius > 17) ? 1 : tab[radius - 1];
@@ -68,7 +68,7 @@ QImage blurred(const QImage& image, const QRect& rect, qint32 radius, bool alpha
 	return image;
 }
 
-void GaussiamBlur(qint32 r, qreal variance, QImage& img)//参数说明：模糊半径r，方差variance，QImage图像
+void GaussiamBlur(qint32 r, qreal variance, QImage& img)//可用的模糊算法，效率过低，亟待优化。参数说明：模糊半径r（与模糊程度正相关），方差variance（与模糊平滑度正相关），QImage图像。取自网络。
 {
     if (variance < 0)
     {

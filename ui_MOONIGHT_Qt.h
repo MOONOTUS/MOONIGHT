@@ -9,10 +9,10 @@ QT_BEGIN_NAMESPACE
 class Ui_MOONIGHT_QtClass
 {
 public:
-    MWidget* main;
-    MWidget *central;
-    QTimer* mainTime;
-    QTimer* litTime;
+    MWidget* main;//主界面
+    MWidget *central;//提供给谱面编辑师的窗口
+    QTimer* mainTime;//以10ms为周期的主计时器，用于实现动效
+    QTimer* litTime;//以1ms为周期的计时器，用于曲谱计时
 
     void setupUi(QMainWindow *MOONIGHT_QtClass)
     {
@@ -22,10 +22,12 @@ public:
         main = new MWidget(MOONIGHT_QtClass);
         main->setObjectName("mainWidget");
         MOONIGHT_QtClass->setCentralWidget(main);
+
         central= new MWidget();
         central->setObjectName("centralWidget");
         central->resize(960, 540);
         central->close();
+
         mainTime = new QTimer(central);
         mainTime->stop();
         litTime = new QTimer(central);

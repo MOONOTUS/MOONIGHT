@@ -25,7 +25,6 @@ void TestDemo_Rotate(MOONIGHT_Qt* w)
 {
 	TestDemo_Rotate_Class* r = new TestDemo_Rotate_Class(w->Ui()->central);
 	w->Ui()->central->setTime(0);
-	w->Ui()->mainTime->start();
 	w->Ui()->litTime->start();
 	w->connect
 	(
