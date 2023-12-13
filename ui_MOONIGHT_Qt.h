@@ -9,6 +9,7 @@ QT_BEGIN_NAMESPACE
 class Ui_MOONIGHT_QtClass
 {
 public:
+    MWidget* main;
     MWidget *central;
     QTimer* mainTime;
     QTimer* litTime;
@@ -18,9 +19,13 @@ public:
         if (MOONIGHT_QtClass->objectName().isEmpty())
             MOONIGHT_QtClass->setObjectName("MOONIGHT_QtClass");
         MOONIGHT_QtClass->resize(960, 540);
-        central = new MWidget(MOONIGHT_QtClass);
+        main = new MWidget(MOONIGHT_QtClass);
+        main->setObjectName("mainWidget");
+        MOONIGHT_QtClass->setCentralWidget(main);
+        central= new MWidget();
         central->setObjectName("centralWidget");
-        MOONIGHT_QtClass->setCentralWidget(central);
+        central->resize(960, 540);
+        central->close();
         mainTime = new QTimer(central);
         mainTime->stop();
         litTime = new QTimer(central);

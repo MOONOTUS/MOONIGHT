@@ -33,13 +33,13 @@ MCheckDot::MCheckDot(MWidget *parent)
 		this,
 		SLOT(check())
 	);
-	//parent->MParent()->connect
-	//(
-	//	this,
-	//	SIGNAL(released()),
-	//	this,
-	//	SLOT(aftercheck())
-	//);
+	parent->MParent()->connect
+	(
+		this,
+		SIGNAL(released()),
+		this,
+		SLOT(aftercheck())
+	);
 	parent->MParent()->connect
 	(
 		this,
@@ -129,7 +129,7 @@ void MCheckDot::keyPressEvent(QKeyEvent* event)
 void MCheckDot::keyReleaseEvent(QKeyEvent* event)
 {
 	KeyPressingList->remove(event->key());
-	if (HoldPressing)
+	if (HoldPressing && !KeyPressingList->contains(*Key))
 	{
 		HoldPressing = new bool(false);
 		emit(released());

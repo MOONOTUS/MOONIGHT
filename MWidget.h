@@ -26,6 +26,7 @@ private:
 	QMap<QString, MCheckDot*>* CheckDotList;//判定点的QMap容器，可以通过Key值获取对应的判定点，一般建议采用判定点的判定键做Key值
 	bool* ifShowBackImage;//是否显示背景图片
 	bool* ifShowBackBackImage;//是否显示背景的背景图片
+	bool* ifShowLogo;//是否显示标志
 	qint64* time_ms;//以ms为单位的计时
 	QPixmap* Logo;//MOONOIGHT的标志图片
 
@@ -41,8 +42,10 @@ public:
 	void setBackCoverColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定背景遮罩色
 	void setShowBackImage(bool show);//设定是否显示背景图片
 	void setShowBackBackImage(bool show);//设定是否显示背景的背景图片
-	bool showBackImage();//返回ifShowBackImage
-	bool showBackBackImage();//返回ifShowBackBackImage
+	void setShowLogo(bool show);//设定是否显示标志
+	bool showBackImage();//返回*ifShowBackImage
+	bool showBackBackImage();//返回*ifShowBackBackImage
+	bool showLogo();//返回*ifSHowLogo
 	void setCheckDotList(QMap<QString, MCheckDot*>*& checkdotlist);//设定判定点容器
 	QMap<QString, MCheckDot*>*& checkDotList();//返回判定点容器的引用
 	QSize oriSize();//返回*OriSize，用于自适应的实现

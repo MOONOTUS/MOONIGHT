@@ -34,6 +34,7 @@ void TestDemo_Rotate(MOONIGHT_Qt* w)
 		r,
 		SLOT(rotateCheckDot())
 	);
+	w->Ui()->central->show();
 }
 
 void TestDemo_Rotate_Class::rotateCheckDot()
