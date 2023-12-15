@@ -14,6 +14,8 @@ MWidget::MWidget(QWidget* parent)
 	Logo = new QPixmap("D:\\Painting\\MOONIGHT_Beta_Little.png");//读取Logo图片，稍后改为相对路径
 	backCoverColor = new QColor(255, 255, 255, 0);//初始化背景遮罩色为全透明白色，即不显示遮罩
 	time_ms = new qint64(0);//时间置零
+	DisTime = new QElapsedTimer();
+	DisTime->start();
 }
 
 MWidget::~MWidget()
@@ -167,5 +169,10 @@ qint64 MWidget::time()
 
 void MWidget::timeAdd_ms()
 {
-	time_ms = new qint64((*time_ms) + 1);
+	time_ms = new qint64(DisTime->elapsed());
+}
+
+QElapsedTimer*& MWidget::disTime()
+{
+	return DisTime;
 }

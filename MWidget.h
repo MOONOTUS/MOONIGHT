@@ -29,6 +29,7 @@ private:
 	bool* ifShowLogo;//是否显示标志
 	qint64* time_ms;//以ms为单位的计时
 	QPixmap* Logo;//MOONOIGHT的标志图片
+	QElapsedTimer* DisTime;
 
 public:
 	MWidget(QWidget* parent = nullptr);
@@ -52,4 +53,5 @@ public:
 	QWidget*& MParent();//返回Parent，用于溯源
 	void setTime(qint64 ms);//设定当前时间，通常只在曲谱开始时调用，将时间置零
 	qint64 time();//返回time_ms
+	QElapsedTimer*& disTime();
 };

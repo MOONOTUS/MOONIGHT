@@ -74,6 +74,7 @@ void TestDemo_Rotate(MOONIGHT_Qt* w)
 	w->Ui()->central->setTime(0);
 	w->Ui()->mainTime->start();
 	w->Ui()->litTime->start();
+	w->Ui()->central->disTime()->restart();
 	w->connect
 	(
 		w->Ui()->mainTime,
@@ -112,14 +113,10 @@ void TestDemo_Rotate_Class::rotateCheckDot()
 	parent->checkDotList()->value("4")->setPoint(newpoint);
 	parent->repaint();
 	QCoreApplication::processEvents();
-	*angel += 2 * phi / 180;
-	*r += 0.5;
+	*angel = (2 * phi / 180) * parent->time() / 10;
+	*r = 0.5 * parent->time() / 10;
 	delete x;
 	delete y;
-	if (*angel >= 2*phi)
-	{
-		*angel = 0;
-	}
 	if (qint64(*angel * 180 / phi) % 90 < 10)
 	{
 		parent->checkDotList()->value("M")->setRadium(40.0);
