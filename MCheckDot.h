@@ -31,7 +31,7 @@ protected:
 	void paintClickNote(QPainter* paint);//»æÖÆclickÒô·û
 	void paintCatchNote(QPainter* paint);//»æÖÆcatchÒô·û
 	void paintBeatNote(QPainter* paint);//»æÖÆbeatÒô·û
-	void paintHoldNote(QPainter* paint);//»æÖÆholdÒô·û
+	void paintHoldNote(QPainter* paint_);//»æÖÆholdÒô·û
 
 signals:
 	void touched();//´¥·¢ĞÅºÅ

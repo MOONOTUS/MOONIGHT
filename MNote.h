@@ -19,6 +19,7 @@ private:
 	qreal* Width;//音符边缘的宽度
 	qreal* VWidth;//音符边缘的视觉宽度
 	QColor* NoteColor;//音符的颜色
+	QColor* LineColor;
 	qint32* Type;//音符的类型
 	qint32* BeatKey;//beat音符专有的额外键
 	QString* BeatKeyText;//beat音符专有的额外键文本
@@ -44,6 +45,9 @@ public:
 	void setNoteColor(QColor color);//设定音符颜色（RGBA）
 	void setNoteColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定音符颜色（RGBA）
 	QColor noteColor();//返回*NoteColor
+	void setLineColor(QColor color);//设定音符颜色（RGBA）
+	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定音符颜色（RGBA）
+	QColor lineColor();//返回*NoteColor
 	void setType(qint32 type);//设定音符类型
 	qint32 type();//返回*Type
 	void setBeatKey(qint32 key, QString keytext);//设定beat音符专有的额外键

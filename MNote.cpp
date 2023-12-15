@@ -6,11 +6,12 @@ MNote::MNote(MCheckDot* parent)
 {
 	Parent = parent;//存储parent
 	Radium = new qreal(parent->radium() - 2);//初始化音符逻辑半径
-	Width = new qreal(2.0);//初始化音符视觉线宽
+	Width = new qreal(parent->width() - 2);//初始化音符视觉线宽
 	VRadium = new qreal(*Radium * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//初始化音符逻辑宽度
 	VWidth = new qreal(*Width * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//初始化音符的逻辑线宽
 	Type = new qint32(catch);//初始化音符的类型为catch
 	NoteColor = new QColor(parent->dotColor());//初始化音符的颜色
+	LineColor = new QColor(NoteColor->red() + 10, NoteColor->blue() + 10, NoteColor->green(), NoteColor->alpha());
 	Visuable = new bool(parent->visuable());//初始化音符的可见性
 	BeatKey = new qint32(Qt::Key_Escape);//初始化beat音符专有的额外键
 	BeatKeyText = new QString("0");//初始化beat音符专有的额外键文本
@@ -114,6 +115,21 @@ void MNote::setNoteColor(qint32 R, qint32 G, qint32 B, qint32 A)
 QColor MNote::noteColor()
 {
 	return *NoteColor;
+}
+
+void MNote::setLineColor(QColor color)
+{
+	LineColor = new QColor(color);
+}
+
+void MNote::setLineColor(qint32 R, qint32 G, qint32 B, qint32 A)
+{
+	LineColor = new QColor(R, G, B, A);
+}
+
+QColor MNote::lineColor()
+{
+	return *LineColor;
 }
 
 void MNote::setType(qint32 type)
