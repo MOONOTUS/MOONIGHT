@@ -19,7 +19,21 @@ MWidget::MWidget(QWidget* parent)
 }
 
 MWidget::~MWidget()
-{}
+{
+	delete Parent;
+	delete backImage;
+	delete backBackImage;
+	delete backCoverColor;
+	delete backColor;
+	delete OriSize;
+	delete CheckDotList;
+	delete ifShowBackImage;
+	delete ifShowBackBackImage;
+	delete ifShowLogo;
+	delete time_ms;
+	delete Logo;
+	delete DisTime;
+}
 
 void MWidget::paintEvent(QPaintEvent* event)
 {

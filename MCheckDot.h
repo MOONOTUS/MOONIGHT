@@ -44,6 +44,7 @@ public slots:
 	void misscheck();//掉落槽
 
 private:
+	MWidget* Parent;//存储parent指针，用于溯源
 	MCheckDotLine* DotLine;//轨道
 	QMap<qint64, MNote*>* NoteList;//音符容器，可以通过Key值获取对应的音符，一般建议采用音符的判定时间做Key值
 	qint64* NextTime;//下一个音符的判定时间，用于实现音符的判定和绘制
@@ -57,7 +58,6 @@ private:
 	qint32* Key;//判定键
 	QString* KeyText;//在屏幕上显示的判定键文本
 	bool* KeyVisuable;//判定键文本是否可见
-	MWidget* Parent;//存储parent指针，用于溯源
 	QPoint* VPoint;//判定点的视觉坐标
 	qreal* VRadium;//判定点的视觉半径
 	qreal* VWidth;//判定点圆圈的视觉宽度

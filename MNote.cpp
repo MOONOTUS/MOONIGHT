@@ -21,7 +21,22 @@ MNote::MNote(MCheckDot* parent)
 }
 
 MNote::~MNote()
-{}
+{
+	delete Visuable;
+	delete Radium;
+	delete VRadium;
+	delete Width;
+	delete VWidth;
+	delete NoteColor;
+	delete LineColor;
+	delete Type;
+	delete BeatKey;
+	delete BeatKeyText;
+	delete Time;
+	delete TimeLength;
+	delete EndTime;
+	delete NextTime;
+}
 
 void MNote::MNoteSet(bool visuable, qreal radium, qreal width, QColor color, qint32 type, qint64 time, qint64 nextTime, qint32 beatKey, QString beatKeyText, qint64 timeLength)
 {

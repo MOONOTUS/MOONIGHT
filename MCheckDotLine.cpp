@@ -12,7 +12,13 @@ MCheckDotLine::MCheckDotLine(MCheckDot* parent)
 }
 
 MCheckDotLine::~MCheckDotLine()
-{}
+{
+	delete Visuable;
+	delete Width;
+	delete Angel;
+	delete DotLineColor;
+	delete VWidth;
+}
 
 void MCheckDotLine::setVisuable(bool visuable)
 {
