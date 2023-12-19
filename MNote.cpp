@@ -173,6 +173,16 @@ qint32 MNote::type()
 	return *Type;
 }
 
+void MNote::setVTime(qint64 time_ms)
+{
+	VTime = new qint64(time_ms);
+}
+
+qint64 MNote::vTime()
+{
+	return *VTime;
+}
+
 void MNote::setTime(qint64 time_ms)
 {
 	Time = new qint64(time_ms);
