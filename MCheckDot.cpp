@@ -18,6 +18,7 @@ MCheckDot::MCheckDot(MWidget *parent)
 	KeyVisuable = new bool(false);//初始化判定键文本可见性为假
 	KeyPressingList = new QSet<qint32>;//初始化正在按键列表
 	HoldPressing = new bool(false);//初始化hold按下状态为假
+	HoldPressed = new qint64(0);//没用的初始化
 	Speed = new qreal(100.0);//初始化音符逻辑速度
 	VSpeed = new qreal(*Speed * parent->width() / parent->oriSize().width());//初始化音符视觉速度
 	LineRadium = new qreal(2500.0);//初始化轨道线逻辑长度
@@ -106,7 +107,7 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 	{
 		paintDot(paint);
 	}
-	if (NoteList->contains(*NextTime))//绘制音符
+	if (NoteList->contains(*NextTime) || *HoldPressing)//绘制音符
 	{
 		paintNote(paint);
 		if (NoteList->value(*NextTime)->time() - Parent->time() < -250)//掉落信号的发送
@@ -120,6 +121,7 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 
 void MCheckDot::keyPressEvent(QKeyEvent* event)
 {
+	grabKeyboard();
 	KeyPressingList->insert(event->key());//向按键列表中添加按下的键
 	if (NoteList->contains(*NextTime))//触发信号的发送
 	{
@@ -139,9 +141,9 @@ void MCheckDot::keyPressEvent(QKeyEvent* event)
 					emit(touched());
 				}
 			}
-			else//对于catch音符，只要接近判定时保持触发状态即进行判定
+			else if(NoteList->value(*NextTime)->type() == cat)//对于cat音符，只要接近判定时保持触发状态即进行判定
 			{
-				if (KeyPressingList->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 10)
+				if (KeyPressingList->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 50)
 				{
 					emit(touched());
 				}
@@ -153,16 +155,19 @@ void MCheckDot::keyPressEvent(QKeyEvent* event)
 		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
 	releaseKeyboard();
+	event->accept();
 }
 
 void MCheckDot::keyReleaseEvent(QKeyEvent* event)
 {
+	grabKeyboard();
 	KeyPressingList->remove(event->key());//从按键列表中删除松开的键
 	if (*HoldPressing && !KeyPressingList->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
 	{
 		emit(released());
 	}
 	releaseKeyboard();
+	event->accept();
 }
 
 void MCheckDot::paintDot(QPainter* paint)
@@ -226,8 +231,8 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 			case click:
 				paintClickNote(paint);
 				break;
-			case catch:
-				paintCatchNote(paint);
+			case cat:
+				paintCatNote(paint);
 				break;
 			case beat:
 				paintBeatNote(paint);
@@ -241,6 +246,7 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
 		NextTime = new qint64(*NextTimeTemp);
+		delete NextTimeTemp;
 	}
 	else
 	{
@@ -267,9 +273,9 @@ void MCheckDot::paintClickNote(QPainter* paint)//绘制click音符
 	paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
 }
 
-void MCheckDot::paintCatchNote(QPainter* paint)//绘制catch音符
+void MCheckDot::paintCatNote(QPainter* paint)//绘制cat音符
 {
-	qDebug() << "\tMOONOTUSYSTEM::_Message_::Catch note paints";
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Cat note paints";
 	QLineF line0;
 	line0.setP1(*VPoint);
 	line0.setAngle(DotLine->angle());
@@ -301,33 +307,37 @@ void MCheckDot::paintBeatNote(QPainter* paint)//绘制beat音符
 
 void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
 {
-	if (NoteList->value(*NextTime)->type() == hold)
+	if (NoteList->contains(*NextTime))
 	{
-		qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note paints";
-		QPainter* paint = new QPainter(this);
-		QLineF line01, line02, line03;
-		line01.setP1(*VPoint);
-		line01.setAngle(DotLine->angle());
-		line01.setLength((NoteList->value(*NextTime)->time() - Parent->time()) * (*VSpeed) / 1000);
-		line02.setP1(*VPoint);
-		line02.setAngle(DotLine->angle());
-		line02.setLength((NoteList->value(*NextTime)->endTime() - Parent->time()) * (*VSpeed) / 1000);
-		QPen pen;
-		pen.setWidth(NoteList->value(*NextTime)->vWidth());
-		pen.setColor(NoteList->value(*NextTime)->lineColor());
-		paint->setPen(pen);
-		paint->setBrush(NoteList->value(*NextTime)->noteColor());
-		paint->drawEllipse(line01.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
-		paint->drawEllipse(line02.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
-		line03.setP1(line02.p2());
-		line03.setLength(NoteList->value(*NextTime)->vRadium());
-		line03.setAngle(DotLine->angle() + 90);
-		pen.setColor(Qt::transparent);
-		paint->setPen(pen);
-		paint->translate(line03.p2());
-		paint->rotate(90 - DotLine->angle());
-		paint->drawRect(QRect(0, 0, NoteList->value(*NextTime)->vRadium() * 2, (NoteList->value(*NextTime)->endTime() - NoteList->value(*NextTime)->time()) * (*VSpeed) / 1000));
-		delete paint;
+		if (NoteList->value(*NextTime)->type() == hold)
+		{
+			qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note paints";
+			QPainter* paint = new QPainter(this);
+			QLineF line01, line02, line03;
+			line01.setP1(*VPoint);
+			line01.setAngle(DotLine->angle());
+			line01.setLength((NoteList->value(*NextTime)->time() - Parent->time()) * (*VSpeed) / 1000);
+			line02.setP1(*VPoint);
+			line02.setAngle(DotLine->angle());
+			line02.setLength((NoteList->value(*NextTime)->endTime() - Parent->time()) * (*VSpeed) / 1000);
+			QPen pen;
+			pen.setWidth(NoteList->value(*NextTime)->vWidth());
+			pen.setColor(NoteList->value(*NextTime)->lineColor());
+			paint->setPen(pen);
+			paint->setBrush(NoteList->value(*NextTime)->noteColor());
+			paint->drawEllipse(line01.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+			paint->drawEllipse(line02.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+			line03.setP1(line02.p2());
+			line03.setLength(NoteList->value(*NextTime)->vRadium());
+			line03.setAngle(DotLine->angle() + 90);
+			pen.setColor(Qt::transparent);
+			paint->setPen(pen);
+			paint->translate(line03.p2());
+			paint->rotate(90 - DotLine->angle());
+			paint->drawRect(QRect(0, 0, NoteList->value(*NextTime)->vRadium() * 2, (NoteList->value(*NextTime)->endTime() - NoteList->value(*NextTime)->time()) * (*VSpeed) / 1000));
+			delete paint;
+		}
+
 	}
 	else if(*HoldPressing)
 	{
@@ -523,14 +533,11 @@ void MCheckDot::check()
 	if (NoteList->contains(*NextTime))
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_MESSAGE_::Truely check";
-		if (NoteList->value(*NextTime)->type() == catch)//针对catch音符的判定
+		if (NoteList->value(*NextTime)->type() == cat)//针对cat音符的判定
 		{
-			if (NoteList->value(*NextTime)->time() == Parent->time())
-			{
-				qDebug() << "\tMOONOTUSYSTEM::_Message_::Perfect check of catch";
-				NoteCheckList->insert(*NextTime, strictperfect);
-				NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
-			}
+			qDebug() << "\tMOONOTUSYSTEM::_Message_::Perfect check of cat";
+			NoteCheckList->insert(*NextTime, strictperfect);
+			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
 		else if (NoteList->value(*NextTime)->type() == hold)//针对hold音符的判定
 		{

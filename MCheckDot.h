@@ -29,7 +29,7 @@ protected:
 	void paintDotLine(QPainter* paint);//»æÖÆÅĞ¶¨Ïß
 	void paintNote(QPainter* paint);//»æÖÆÒô·û
 	void paintClickNote(QPainter* paint);//»æÖÆclickÒô·û
-	void paintCatchNote(QPainter* paint);//»æÖÆcatchÒô·û
+	void paintCatNote(QPainter* paint);//»æÖÆcatÒô·û
 	void paintBeatNote(QPainter* paint);//»æÖÆbeatÒô·û
 	void paintHoldNote(QPainter* paint_);//»æÖÆholdÒô·û
 

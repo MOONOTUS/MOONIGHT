@@ -7,7 +7,7 @@ class MNote
 {
 public:
 #define click 0x01
-#define catch 0x00
+#define cat 0x00
 #define hold 0x10
 #define beat 0x11
 

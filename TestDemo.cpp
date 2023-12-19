@@ -42,7 +42,7 @@ TestDemo_Rotate_Class::TestDemo_Rotate_Class(MWidget* parent)
 	newNote3->setNextTime(12000);
 	newNote4->setNextTime(-1);
 	newNote1->setType(click);
-	newNote2->setType(catch);
+	newNote2->setType(cat);
 	newNote3->setType(beat);
 	newNote4->setType(hold);
 	newNote3->setBeatKey(Qt::Key_G, "G");

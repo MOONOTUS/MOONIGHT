@@ -9,7 +9,7 @@ MNote::MNote(MCheckDot* parent)
 	Width = new qreal(parent->width() - 2);//初始化音符视觉线宽
 	VRadium = new qreal(*Radium * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//初始化音符逻辑宽度
 	VWidth = new qreal(*Width * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//初始化音符的逻辑线宽
-	Type = new qint32(catch);//初始化音符的类型为catch
+	Type = new qint32(cat);//初始化音符的类型为cat
 	NoteColor = new QColor(parent->dotColor());//初始化音符的颜色
 	LineColor = new QColor(NoteColor->red() + 10, NoteColor->blue() + 10, NoteColor->green(), NoteColor->alpha());
 	Visuable = new bool(parent->visuable());//初始化音符的可见性
