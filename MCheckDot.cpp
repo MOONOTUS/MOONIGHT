@@ -108,7 +108,7 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 	}
 	if (NoteList->contains(*NextTime))//绘制音符
 	{
-		//paintNote(paint);
+		paintNote(paint);
 		if (NoteList->value(*NextTime)->time() - Parent->time() < -250)//掉落信号的发送
 		{
 			emit(misschecked());
@@ -158,9 +158,8 @@ void MCheckDot::keyPressEvent(QKeyEvent* event)
 void MCheckDot::keyReleaseEvent(QKeyEvent* event)
 {
 	KeyPressingList->remove(event->key());//从按键列表中删除松开的键
-	if (HoldPressing && !KeyPressingList->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
+	if (*HoldPressing && !KeyPressingList->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
 	{
-		HoldPressing = new bool(false);
 		emit(released());
 	}
 	releaseKeyboard();
@@ -247,6 +246,10 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
+	if (*HoldPressing)
+	{
+		paintHoldNote(paint);
+	}
 }
 
 void MCheckDot::paintClickNote(QPainter* paint)//绘制click音符
@@ -298,30 +301,62 @@ void MCheckDot::paintBeatNote(QPainter* paint)//绘制beat音符
 
 void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
 {
-	qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note paints"; 
-	QPainter* paint = new QPainter(this);
-	QLineF line01, line02, line03;
-	line01.setP1(*VPoint);
-	line01.setAngle(DotLine->angle());
-	line01.setLength((NoteList->value(*NextTime)->time() - Parent->time()) * (*VSpeed) / 1000);
-	line02.setP1(*VPoint);
-	line02.setAngle(DotLine->angle());
-	line02.setLength((NoteList->value(*NextTime)->endTime() - Parent->time()) * (*VSpeed) / 1000);
-	QPen pen;
-	pen.setWidth(NoteList->value(*NextTime)->vWidth());
-	pen.setColor(NoteList->value(*NextTime)->lineColor());
-	paint->setPen(pen);
-	paint->setBrush(NoteList->value(*NextTime)->noteColor());
-	paint->drawEllipse(line01.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
-	paint->drawEllipse(line02.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
-	line03.setP1(line02.p2());
-	line03.setLength(NoteList->value(*NextTime)->vRadium());
-	line03.setAngle(DotLine->angle() + 90);
-	pen.setColor(Qt::transparent);
-	paint->setPen(pen);
-	paint->translate(line03.p2());
-	paint->rotate(90 - DotLine->angle());
-	paint->drawRect(QRect(0, 0, NoteList->value(*NextTime)->vRadium() * 2, (NoteList->value(*NextTime)->endTime() - NoteList->value(*NextTime)->time()) * (*VSpeed) / 1000));
+	if (NoteList->value(*NextTime)->type() == hold)
+	{
+		qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note paints";
+		QPainter* paint = new QPainter(this);
+		QLineF line01, line02, line03;
+		line01.setP1(*VPoint);
+		line01.setAngle(DotLine->angle());
+		line01.setLength((NoteList->value(*NextTime)->time() - Parent->time()) * (*VSpeed) / 1000);
+		line02.setP1(*VPoint);
+		line02.setAngle(DotLine->angle());
+		line02.setLength((NoteList->value(*NextTime)->endTime() - Parent->time()) * (*VSpeed) / 1000);
+		QPen pen;
+		pen.setWidth(NoteList->value(*NextTime)->vWidth());
+		pen.setColor(NoteList->value(*NextTime)->lineColor());
+		paint->setPen(pen);
+		paint->setBrush(NoteList->value(*NextTime)->noteColor());
+		paint->drawEllipse(line01.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+		paint->drawEllipse(line02.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+		line03.setP1(line02.p2());
+		line03.setLength(NoteList->value(*NextTime)->vRadium());
+		line03.setAngle(DotLine->angle() + 90);
+		pen.setColor(Qt::transparent);
+		paint->setPen(pen);
+		paint->translate(line03.p2());
+		paint->rotate(90 - DotLine->angle());
+		paint->drawRect(QRect(0, 0, NoteList->value(*NextTime)->vRadium() * 2, (NoteList->value(*NextTime)->endTime() - NoteList->value(*NextTime)->time()) * (*VSpeed) / 1000));
+		delete paint;
+	}
+	else if(*HoldPressing)
+	{
+		qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note which is pressed paints";
+		QPainter* paint = new QPainter(this);
+		QLineF line01, line02, line03;
+		line01.setP1(*VPoint);
+		line01.setAngle(DotLine->angle());
+		line01.setLength((NoteList->value(*HoldPressed)->time() - Parent->time()) * (*VSpeed) / 1000);
+		line02.setP1(*VPoint);
+		line02.setAngle(DotLine->angle());
+		line02.setLength((NoteList->value(*HoldPressed)->endTime() - Parent->time()) * (*VSpeed) / 1000);
+		QPen pen;
+		pen.setWidth(NoteList->value(*HoldPressed)->vWidth());
+		pen.setColor(NoteList->value(*HoldPressed)->lineColor());
+		paint->setPen(pen);
+		paint->setBrush(NoteList->value(*HoldPressed)->noteColor());
+		paint->drawEllipse(line01.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
+		paint->drawEllipse(line02.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
+		line03.setP1(line02.p2());
+		line03.setLength(NoteList->value(*HoldPressed)->vRadium());
+		line03.setAngle(DotLine->angle() + 90);
+		pen.setColor(Qt::transparent);
+		paint->setPen(pen);
+		paint->translate(line03.p2());
+		paint->rotate(90 - DotLine->angle());
+		paint->drawRect(QRect(0, 0, NoteList->value(*HoldPressed)->vRadium() * 2, (NoteList->value(*HoldPressed)->endTime() - NoteList->value(*HoldPressed)->time()) * (*VSpeed) / 1000));
+		delete paint;
+	}
 }
 
 void MCheckDot::setDotLine(MCheckDotLine& dotline)
@@ -514,22 +549,22 @@ void MCheckDot::check()
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagPerfect check";
 				NoteCheckList->insert(*NextTime, lagperfect);
 			}
-			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreGood check";
 				NoteCheckList->insert(*NextTime, pregood);
 			}
-			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagGood check";
 				NoteCheckList->insert(*NextTime, laggood);
 			}
-			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 160 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 250)
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreBad check";
 				NoteCheckList->insert(*NextTime, prebad);
 			}
-			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -160 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -250)
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagBad check";
 				NoteCheckList->insert(*NextTime, lagbad);
@@ -555,22 +590,22 @@ void MCheckDot::check()
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagPerfect check";
 				NoteCheckList->insert(*NextTime, lagperfect);
 			}
-			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreGood check";
 				NoteCheckList->insert(*NextTime, pregood);
 			}
-			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagGood check";
 				NoteCheckList->insert(*NextTime, laggood);
 			}
-			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 160 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 250)
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreBad check";
 				NoteCheckList->insert(*NextTime, prebad);
 			}
-			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -160 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -250)
+			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagBad check";
 				NoteCheckList->insert(*NextTime, lagbad);
@@ -591,6 +626,7 @@ void MCheckDot::aftercheck()
 		qDebug()<<"\tMOONOTUSYSTEM::_Message_::Miss check of hold's after";
 		NoteCheckList->remove(*HoldPressed);
 		NoteCheckList->insert(*HoldPressed, miss);
+		HoldPressing = new bool(false);
 	}
 	HoldPressed = new qint64(0);
 }

@@ -25,7 +25,7 @@ private:
 	QString* BeatKeyText;//beat音符专有的额外键文本
 	qint64* Time;//音符的判定时间
 	qint64* TimeLength;//hold音符专有的持续时长
-	qint64* EndTime;//hold音符专业的判定介绍时间
+	qint64* EndTime;//hold音符专有的判定介绍时间
 	qint64* NextTime;//下一个音符的判定时间，用于音符判定和音符绘制的实现
 
 public:
