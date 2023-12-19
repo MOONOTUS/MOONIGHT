@@ -287,7 +287,7 @@ void MCheckDot::paintClickNote(QPainter* paint)//»æÖÆclickÒô·û
 	QLineF line0;
 	line0.setP1(*VPoint);
 	line0.setAngle(DotLine->angle());
-	line0.setLength((NoteList->value(*NextTime)->time()-Parent->time())*(*VSpeed)/1000);
+	line0.setLength((NoteList->value(*NextTime)->vTime()-Parent->time())*(*VSpeed)/1000);
 	QPen pen;
 	pen.setWidth(NoteList->value(*NextTime)->vWidth());
 	pen.setColor(NoteList->value(*NextTime)->lineColor());
@@ -302,7 +302,7 @@ void MCheckDot::paintCatNote(QPainter* paint)//»æÖÆcatÒô·û
 	QLineF line0;
 	line0.setP1(*VPoint);
 	line0.setAngle(DotLine->angle());
-	line0.setLength((NoteList->value(*NextTime)->time() - Parent->time()) * (*VSpeed) / 1000);
+	line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
 	QPen pen;
 	pen.setWidth(NoteList->value(*NextTime)->vWidth());
 	pen.setColor(NoteList->value(*NextTime)->lineColor());
@@ -317,7 +317,7 @@ void MCheckDot::paintBeatNote(QPainter* paint)//»æÖÆbeatÒô·û
 	QLineF line0;
 	line0.setP1(*VPoint);
 	line0.setAngle(DotLine->angle());
-	line0.setLength((NoteList->value(*NextTime)->time() - Parent->time()) * (*VSpeed) / 1000);
+	line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
 	QPen pen;
 	pen.setWidth(NoteList->value(*NextTime)->vWidth());
 	pen.setColor(NoteList->value(*NextTime)->lineColor());
@@ -339,10 +339,10 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//»æÖÆholdÒô·û
 			QLineF line01, line02, line03;
 			line01.setP1(*VPoint);
 			line01.setAngle(DotLine->angle());
-			line01.setLength((NoteList->value(*NextTime)->time() - Parent->time()) * (*VSpeed) / 1000);
+			line01.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
 			line02.setP1(*VPoint);
 			line02.setAngle(DotLine->angle());
-			line02.setLength((NoteList->value(*NextTime)->endTime() - Parent->time()) * (*VSpeed) / 1000);
+			line02.setLength((NoteList->value(*NextTime)->vEndTime() - Parent->time()) * (*VSpeed) / 1000);
 			QPen pen;
 			pen.setWidth(NoteList->value(*NextTime)->vWidth());
 			pen.setColor(NoteList->value(*NextTime)->lineColor());
@@ -357,7 +357,7 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//»æÖÆholdÒô·û
 			paint->setPen(pen);
 			paint->translate(line03.p2());
 			paint->rotate(90 - DotLine->angle());
-			paint->drawRect(QRect(0, 0, NoteList->value(*NextTime)->vRadium() * 2, (NoteList->value(*NextTime)->endTime() - NoteList->value(*NextTime)->time()) * (*VSpeed) / 1000));
+			paint->drawRect(QRect(0, 0, NoteList->value(*NextTime)->vRadium() * 2, (NoteList->value(*NextTime)->vEndTime() - NoteList->value(*NextTime)->vTime()) * (*VSpeed) / 1000));
 			delete paint;
 		}
 
@@ -373,7 +373,7 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//»æÖÆholdÒô·û
 		line01.setLength((NoteList->value(*HoldPressed)->vTime() - Parent->time()) * (*VSpeed) / 1000);
 		line02.setP1(*VPoint);
 		line02.setAngle(DotLine->angle());
-		line02.setLength((NoteList->value(*HoldPressed)->endTime() - Parent->time()) * (*VSpeed) / 1000);
+		line02.setLength((NoteList->value(*HoldPressed)->vEndTime() - Parent->time()) * (*VSpeed) / 1000);
 		QPen pen;
 		pen.setWidth(NoteList->value(*HoldPressed)->vWidth());
 		pen.setColor(NoteList->value(*HoldPressed)->lineColor());
@@ -388,7 +388,7 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//»æÖÆholdÒô·û
 		paint->setPen(pen);
 		paint->translate(line03.p2());
 		paint->rotate(90 - DotLine->angle());
-		paint->drawRect(QRect(0, 0, NoteList->value(*HoldPressed)->vRadium() * 2, (NoteList->value(*HoldPressed)->endTime() - NoteList->value(*HoldPressed)->vTime()) * (*VSpeed) / 1000));
+		paint->drawRect(QRect(0, 0, NoteList->value(*HoldPressed)->vRadium() * 2, (NoteList->value(*HoldPressed)->vEndTime() - NoteList->value(*HoldPressed)->vTime()) * (*VSpeed) / 1000));
 		delete paint;
 	}
 }

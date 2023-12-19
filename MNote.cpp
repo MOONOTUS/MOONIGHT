@@ -18,6 +18,9 @@ MNote::MNote(MCheckDot* parent)
 	Time = new qint64(0);//初始化音符的判定时间
 	TimeLength = new qint64(0);//初始化hold音符专有的持续时长
 	EndTime = new qint64(*Time + *TimeLength);//初始化hold音符专有的结束时间
+	VTime = new qint64(*Time);
+	VTimeLength = new qint64(*TimeLength);
+	VEndTime = new qint64(*VTime + *VTimeLength);
 }
 
 MNote::~MNote()
@@ -173,20 +176,12 @@ qint32 MNote::type()
 	return *Type;
 }
 
-void MNote::setVTime(qint64 time_ms)
-{
-	VTime = new qint64(time_ms);
-}
-
-qint64 MNote::vTime()
-{
-	return *VTime;
-}
-
 void MNote::setTime(qint64 time_ms)
 {
 	Time = new qint64(time_ms);
 	EndTime = new qint64(*Time + *TimeLength);
+	VTime = new qint64(*Time);
+	VEndTime = new qint64(*VTime + *VTimeLength);
 }
 
 qint64 MNote::time()
@@ -198,6 +193,8 @@ void MNote::setTimeLength(qint64 time_ms)
 {
 	TimeLength = new qint64(time_ms);
 	EndTime = new qint64(*Time + *TimeLength);
+	VTimeLength = new qint64(*TimeLength);
+	VEndTime = new qint64(*VTime + *VTimeLength);
 }
 
 qint64 MNote::timeLength()
@@ -208,6 +205,32 @@ qint64 MNote::timeLength()
 qint64 MNote::endTime()
 {
 	return *EndTime;
+}
+
+void MNote::setVTime(qint64 time_ms)
+{
+	VTime = new qint64(time_ms);
+}
+
+qint64 MNote::vTime()
+{
+	return *VTime;
+}
+
+void MNote::setVTimeLength(qint64 time_ms)
+{
+	VTimeLength = new qint64(time_ms);
+	VEndTime = new qint64(*VTime + *VTimeLength);
+}
+
+qint64 MNote::vTimeLength()
+{
+	return *VTimeLength;
+}
+
+qint64 MNote::vEndTime()
+{
+	return *VEndTime;
 }
 
 MCheckDot*& MNote::MParent()
