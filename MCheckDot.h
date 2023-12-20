@@ -37,11 +37,13 @@ signals:
 	void touched();//触发信号
 	void released();//释放信号
 	void misschecked();//掉落信号
+	void checkanimation(qint32 checktype);
 
 public slots:
 	void check();//判定槽
 	void aftercheck();//hold音符专用的释放判定槽
 	void misscheck();//掉落槽
+	void drawcheckanimation(qint32 checktype);
 	void press(QKeyEvent* event);
 	void release(QKeyEvent* event);
 

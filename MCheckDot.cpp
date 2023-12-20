@@ -51,7 +51,7 @@ MCheckDot::MCheckDot(MWidget *parent)
 		SLOT(misscheck()),
 		Qt::DirectConnection
 	);
-	connect
+	parent->MParent()->connect
 	(
 		parent,
 		SIGNAL(keyPressDown(QKeyEvent*)),
@@ -59,12 +59,20 @@ MCheckDot::MCheckDot(MWidget *parent)
 		SLOT(press(QKeyEvent*)),
 		Qt::DirectConnection
 	);
-	connect
+	parent->MParent()->connect
 	(
 		parent,
 		SIGNAL(keyReleaseUp(QKeyEvent*)),
 		this,
 		SLOT(release(QKeyEvent*)),
+		Qt::DirectConnection
+	);
+	parent->MParent()->connect
+	(
+		parent,
+		SIGNAL(checkanimation(qint32)),
+		this,
+		SLOT(drawcheckanimation(qint32)),
 		Qt::DirectConnection
 	);
 }
@@ -436,6 +444,7 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
 	}
 	else if(*HoldPressing)
 	{
+		emit(checkanimation(strictperfect));
 		NoteList->value(*HoldPressed)->setVTime(Parent->time());
 		qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note which is pressed paints";
 		QPainter* paint = new QPainter(this);
@@ -634,6 +643,7 @@ void MCheckDot::check()
 		if (NoteList->value(*NextTime)->type() == cat)//针对cat音符的判定
 		{
 			qDebug() << "\tMOONOTUSYSTEM::_Message_::Perfect check of cat";
+			emit(checkanimation(strictperfect));
 			NoteCheckList->insert(*NextTime, strictperfect);
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
@@ -642,36 +652,43 @@ void MCheckDot::check()
 			if (((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 50)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::StrictPerfect check";
+				emit(checkanimation(strictperfect));
 				NoteCheckList->insert(*NextTime, strictperfect);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 80)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PrePerfect check";
+				emit(checkanimation(preperfect));
 				NoteCheckList->insert(*NextTime, preperfect);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -80)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagPerfect check";
+				emit(checkanimation(lagperfect));
 				NoteCheckList->insert(*NextTime, lagperfect);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreGood check";
+				emit(checkanimation(pregood));
 				NoteCheckList->insert(*NextTime, pregood);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagGood check";
+				emit(checkanimation(laggood));
 				NoteCheckList->insert(*NextTime, laggood);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreBad check";
+				emit(checkanimation(prebad));
 				NoteCheckList->insert(*NextTime, prebad);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagBad check";
+				emit(checkanimation(lagbad));
 				NoteCheckList->insert(*NextTime, lagbad);
 			}
 			HoldPressing = new bool(true);
@@ -683,36 +700,43 @@ void MCheckDot::check()
 			if (((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 50)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::StrictPerfect check";
+				emit(checkanimation(strictperfect));
 				NoteCheckList->insert(*NextTime, strictperfect);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 80)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PrePerfect check";
+				emit(checkanimation(preperfect));
 				NoteCheckList->insert(*NextTime, preperfect);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -80)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagPerfect check";
+				emit(checkanimation(lagperfect));
 				NoteCheckList->insert(*NextTime, lagperfect);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreGood check";
+				emit(checkanimation(pregood));
 				NoteCheckList->insert(*NextTime, pregood);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagGood check";
+				emit(checkanimation(laggood));
 				NoteCheckList->insert(*NextTime, laggood);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreBad check";
+				emit(checkanimation(prebad));
 				NoteCheckList->insert(*NextTime, prebad);
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagBad check";
+				emit(checkanimation(lagbad));
 				NoteCheckList->insert(*NextTime, lagbad);
 			}
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
@@ -730,6 +754,7 @@ void MCheckDot::aftercheck()
 	if (((NoteList->value(*HoldPressed)->endTime()) - (Parent->time())) > 250)//hold音符的释放判定
 	{
 		qDebug()<<"\tMOONOTUSYSTEM::_Message_::Miss check of hold's after";
+		emit(checkanimation(miss));
 		NoteCheckList->remove(*HoldPressed);
 		NoteCheckList->insert(*HoldPressed, miss);
 		HoldPressing = new bool(false);
@@ -743,6 +768,7 @@ void MCheckDot::misscheck()
 	if (NoteList->contains(*NextTime))//掉落判定
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Message_::Truely miss";
+		emit(checkanimation(miss));
 		NoteCheckList->insert(*NextTime, miss);
 		NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 	}
