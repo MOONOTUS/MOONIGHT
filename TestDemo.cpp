@@ -130,7 +130,7 @@ void TestDemo_Rotate_Class::rotateCheckDot()
 		parent->repaint();
 		QCoreApplication::processEvents();
 		*angel = (1 * phi / 180) * parent->time() / 10;
-		*r += (parent->time() / 100) * (parent->time() / 100);
+		*r += (parent->time() / 1000) * (parent->time() / 100);
 		parent->checkDotList()->value("O")->setRadium(parent->time() / 100);
 		//parent->checkDotList()->value("O")->setDotColor(QColor(parent->checkDotList()->value("O")->dotColor().red(), parent->checkDotList()->value("O")->dotColor().green(), parent->checkDotList()->value("O")->dotColor().blue(), alpha));
 		//oparent->checkDotList()->value("O")->dotLine()->setDotLineColor(QColor(parent->checkDotList()->value("O")->dotLine()->dotLineColor().red(), parent->checkDotList()->value("O")->dotLine()->dotLineColor().green(), parent->checkDotList()->value("O")->dotLine()->dotLineColor().blue(), alpha));

@@ -7,8 +7,13 @@ MCheckDotLine::MCheckDotLine(MCheckDot* parent)
 	Parent = parent;//存储parernt
 	DotLineColor = new QColor(parent->dotColor());//初始化轨道线的颜色
 	Visuable = new bool(parent->visuable());//初始化轨道线的可见性
+	UpVisuable = new bool(*Visuable);
+	DownVisuable = new bool(*Visuable);
 	setWidth(parent->width() - 2);//初始化轨道线的逻辑宽度和视觉宽度
 	Angel = new qreal(90);//初始化轨道线的角度
+	UpAngle = new qreal(*Angel);
+	DownAngle = new qreal(*Angel - 180);
+
 }
 
 MCheckDotLine::~MCheckDotLine()
@@ -23,11 +28,33 @@ MCheckDotLine::~MCheckDotLine()
 void MCheckDotLine::setVisuable(bool visuable)
 {
 	Visuable = new bool(visuable);
+	UpVisuable = new bool(*Visuable);
+	DownVisuable = new bool(*Visuable);
 }
 
 bool MCheckDotLine::visuable()
 {
 	return *Visuable;
+}
+
+void MCheckDotLine::setUpVisuable(bool visuable)
+{
+	UpVisuable = new bool(visuable);
+}
+
+bool MCheckDotLine::upVisuable()
+{
+	return *UpVisuable;
+}
+
+void MCheckDotLine::setDownVisuable(bool visuable)
+{
+	DownVisuable = new bool(visuable);
+}
+
+bool MCheckDotLine::downVisuable()
+{
+	return *DownVisuable;
 }
 
 void MCheckDotLine::setWidth(qreal width)
@@ -43,11 +70,33 @@ qreal MCheckDotLine::width()
 void MCheckDotLine::setAngel(qreal angel)
 {
 	Angel = new qreal(angel);
+	UpAngle = new qreal(*Angel);
+	DownAngle = new qreal(*Angel - 180);
 }
 
 qreal MCheckDotLine::angle()
 {
 	return *Angel;
+}
+
+void MCheckDotLine::setUpAngle(qreal angle)
+{
+	UpAngle = new qreal(angle);
+}
+
+qreal MCheckDotLine::upAngle()
+{
+	return *UpAngle;
+}
+
+void MCheckDotLine::setDownAngle(qreal angle)
+{
+	DownAngle = new qreal(angle);
+}
+
+qreal MCheckDotLine::downAngle()
+{
+	return *DownAngle;
 }
 
 void MCheckDotLine::setDotLineColor(QColor color)

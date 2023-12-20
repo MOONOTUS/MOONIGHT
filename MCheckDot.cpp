@@ -243,7 +243,7 @@ void MCheckDot::press(QKeyEvent* event)
 
 void MCheckDot::release(QKeyEvent* event)
 {
-	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release";
+	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard release slot runs";
 	if (*HoldPressing && !Parent->keyPressingList()->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
 	{
 		emit(released());
@@ -271,25 +271,30 @@ void MCheckDot::paintDotLine(QPainter* paint)
 {
 	QLineF lineU, lineD;
 	QLineF line01, line02;
-	line01.setP1(*VPoint);
-	line02.setP1(*VPoint);
-	line01.setAngle(DotLine->angle());
-	line02.setAngle((DotLine->angle() - 180));
-	line01.setLength(*VRadium);
-	line02.setLength(*VRadium);
-	//使得轨道线的起点在判定点圆圈上
-	lineU.setP1(line01.p2());
-	lineD.setP1(line02.p2());
-	lineU.setAngle(DotLine->angle());
-	lineD.setAngle((DotLine->angle() - 180));
-	lineU.setLength(2500);
-	lineD.setLength(2500);
 	QPen pen;
 	pen.setWidth(DotLine->vWidth());
 	pen.setColor(DotLine->dotLineColor());
 	paint->setPen(pen);
-	paint->drawLine(lineU);
-	paint->drawLine(lineD);
+	if (DotLine->upVisuable())
+	{
+		line01.setP1(*VPoint);
+		line01.setAngle(DotLine->upAngle());
+		line01.setLength(*VRadium);
+		lineU.setP1(line01.p2());
+		lineU.setAngle(DotLine->upAngle());
+		lineU.setLength(*VLineRadium);
+		paint->drawLine(lineU);
+	}
+	if (DotLine->downVisuable())
+	{
+		line02.setP1(*VPoint);
+		line02.setAngle(DotLine->downAngle());
+		line02.setLength(*VRadium);
+		lineD.setP1(line02.p2());
+		lineD.setAngle(DotLine->downAngle());
+		lineD.setLength(*VLineRadium);
+		paint->drawLine(lineD);
+	}
 }
 
 void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
