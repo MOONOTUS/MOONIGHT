@@ -32,18 +32,17 @@ protected:
 	void paintCatNote(QPainter* paint);//绘制cat音符
 	void paintBeatNote(QPainter* paint);//绘制beat音符
 	void paintHoldNote(QPainter* paint_);//绘制hold音符
+	void paintCheckAnimation(QPainter* paint);
 
 signals:
 	void touched();//触发信号
 	void released();//释放信号
 	void misschecked();//掉落信号
-	void checkanimation(qint32 checktype);
 
 public slots:
 	void check();//判定槽
 	void aftercheck();//hold音符专用的释放判定槽
 	void misscheck();//掉落槽
-	void drawcheckanimation(qint32 checktype);
 	void press(QKeyEvent* event);
 	void release(QKeyEvent* event);
 
@@ -72,7 +71,7 @@ private:
 	qreal* VSpeed;//音符的视觉速度
 	qreal* LineRadium;//轨道线的逻辑长度
 	qreal* VLineRadium;//轨道线的视觉长度
-
+	QMap<qint64, qint32>* NoteCheckAnimationList;
 
 public:
 	MCheckDot(MWidget *parent = nullptr);
