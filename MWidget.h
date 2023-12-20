@@ -10,8 +10,13 @@ class MWidget : public QWidget
 
 protected:
 	void paintEvent(QPaintEvent* event);//经过重写的绘制函数
+	void keyPressEvent(QKeyEvent* event);//重写的键盘按下事件函数
+	void keyReleaseEvent(QKeyEvent* event);//重写的键盘释放事件函数
+
 
 signals:
+	void keyPressDown(QKeyEvent*& event);
+	void keyReleaseUp(QKeyEvent*& event);
 
 public slots:
 	void timeAdd_ms();//计时槽，与parent->litTime的信号timeout()连接
@@ -30,6 +35,7 @@ private:
 	qint64* time_ms;//以ms为单位的计时
 	QPixmap* Logo;//MOONOIGHT的标志图片
 	QElapsedTimer* DisTime;
+	QSet<qint32>* KeyPressingList;
 
 public:
 	MWidget(QWidget* parent = nullptr);
@@ -54,4 +60,5 @@ public:
 	void setTime(qint64 ms);//设定当前时间，通常只在曲谱开始时调用，将时间置零
 	qint64 time();//返回time_ms
 	QElapsedTimer*& disTime();
+	QSet<qint32>*& keyPressingList();
 };

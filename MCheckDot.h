@@ -22,8 +22,8 @@ public:
 
 protected:
 	void paintEvent(QPaintEvent* event);//重写的重绘函数
-	void keyPressEvent(QKeyEvent* event);//重写的键盘按下事件函数
-	void keyReleaseEvent(QKeyEvent* event);//重写的键盘释放事件函数
+	//void keyPressEvent(QKeyEvent* event);//重写的键盘按下事件函数
+	//void keyReleaseEvent(QKeyEvent* event);//重写的键盘释放事件函数
 
 	void paintDot(QPainter* paint);//绘制判定点
 	void paintDotLine(QPainter* paint);//绘制判定线
@@ -42,6 +42,8 @@ public slots:
 	void check();//判定槽
 	void aftercheck();//hold音符专用的释放判定槽
 	void misscheck();//掉落槽
+	void press(QKeyEvent* event);
+	void release(QKeyEvent* event);
 
 private:
 	MWidget* Parent;//存储parent指针，用于溯源

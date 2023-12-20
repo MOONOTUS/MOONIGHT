@@ -32,23 +32,41 @@ MCheckDot::MCheckDot(MWidget *parent)
 		this,
 		SIGNAL(touched()),
 		this,
-		SLOT(check())
+		SLOT(check()),
+		Qt::DirectConnection
 	);
 	parent->MParent()->connect//连接hold音符专有的释放信号和hold专有的释放判定槽
 	(
 		this,
 		SIGNAL(released()),
 		this,
-		SLOT(aftercheck())
+		SLOT(aftercheck()),
+		Qt::DirectConnection
 	);
 	parent->MParent()->connect//连接掉落信号和掉落判定槽
 	(
 		this,
 		SIGNAL(misschecked()),
 		this,
-		SLOT(misscheck())
+		SLOT(misscheck()),
+		Qt::DirectConnection
 	);
-
+	parent->MParent()->connect
+	(
+		parent,
+		SIGNAL(MWidget::keyPressDown()),
+		this,
+		SLOT(press()),
+		Qt::DirectConnection
+	);
+	parent->MParent()->connect
+	(
+		parent,
+		SIGNAL(MWidget::keyReleaseUp()),
+		this,
+		SLOT(release()),
+		Qt::DirectConnection
+	);
 }
 
 MCheckDot::~MCheckDot()
@@ -82,6 +100,7 @@ MCheckDot::~MCheckDot()
 
 void MCheckDot::paintEvent(QPaintEvent* event)
 {
+	qDebug() << "MOONOTUSYSTEM::_Message_::MCheckDot " << *KeyText << " paints";
 	this->setGeometry(0, (Parent->height() - Parent->width() * 9 / 16) / 2, Parent->width(), Parent->width() * 9 / 16);//，以屏幕宽度为基准，设定16：9中央绘制区域，保证在不同尺寸的比例正常的设备上谱面的比例一样
 	DotLine->setWidth(DotLine->width());//刷新轨道线的视觉宽度
 	for (QMap<qint64, MNote*>::iterator listptr = NoteList->begin(); listptr != NoteList->end(); ++listptr)//刷新各个音符的视觉尺寸
@@ -116,7 +135,7 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 		}
 		if (NoteList->contains(*NextTime) && NoteList->value(*NextTime)->type() == cat)//对于cat音符，只要接近判定时保持触发状态即进行判定
 		{
-			if (KeyPressingList->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 50)
+			if (Parent->keyPressingList()->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 50)
 			{
 				emit(touched());
 			}
@@ -126,63 +145,109 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 	event->accept();
 }
 
-void MCheckDot::keyPressEvent(QKeyEvent* event)
+//void MCheckDot::keyPressEvent(QKeyEvent* event)
+//{
+//	if (!event->isAutoRepeat())
+//	{
+//		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Press";
+//		KeyPressingList->insert(event->key());//向按键列表中添加按下的键
+//		if (NoteList->contains(*NextTime))//触发信号的发送
+//		{
+//			if (NoteList->value(*NextTime)->time() - Parent->time() <= 250 && NoteList->value(*NextTime)->time() - Parent->time() >= -250)//只对时间差小于250ms的第一个音符进行判定
+//			{
+//				if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//对于click音符和hold音符，只在触发开始时进行判定
+//				{
+//					if (event->key() == *Key)
+//					{
+//						emit(touched());
+//					}
+//				}
+//				else if (NoteList->value(*NextTime)->type() == beat)//对于beat音符，只在保持触发的前提下beat音符的额外键触发开始时进行判定
+//				{
+//					if ((KeyPressingList->contains(*Key) && (event->key() == NoteList->value(*NextTime)->beatKey())))
+//					{
+//						emit(touched());
+//					}
+//				}
+//				else if (NoteList->value(*NextTime)->type() == cat)//对于cat音符，只要接近判定时保持触发状态即进行判定
+//				{
+//					if (KeyPressingList->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 50)
+//					{
+//						emit(touched());
+//					}
+//				}
+//			}
+//		}
+//		else
+//		{
+//			qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
+//		}
+//
+//	}
+//	releaseKeyboard();
+//	event->accept();
+//}
+//
+//void MCheckDot::keyReleaseEvent(QKeyEvent* event)
+//{
+//	if (!event->isAutoRepeat())
+//	{
+//		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release";
+//		KeyPressingList->remove(event->key());//从按键列表中删除松开的键
+//		if (*HoldPressing && !KeyPressingList->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
+//		{
+//			emit(released());
+//		}
+//
+//	}
+//	releaseKeyboard();
+//	event->accept();
+//}
+
+
+void MCheckDot::press(QKeyEvent* event)
 {
-	if (!event->isAutoRepeat())
+	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard press slot runs";
+	if (NoteList->contains(*NextTime))//触发信号的发送
 	{
-		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Press";
-		KeyPressingList->insert(event->key());//向按键列表中添加按下的键
-		if (NoteList->contains(*NextTime))//触发信号的发送
+		if (NoteList->value(*NextTime)->time() - Parent->time() <= 250 && NoteList->value(*NextTime)->time() - Parent->time() >= -250)//只对时间差小于250ms的第一个音符进行判定
 		{
-			if (NoteList->value(*NextTime)->time() - Parent->time() <= 250 && NoteList->value(*NextTime)->time() - Parent->time() >= -250)//只对时间差小于250ms的第一个音符进行判定
+			if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//对于click音符和hold音符，只在触发开始时进行判定
 			{
-				if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//对于click音符和hold音符，只在触发开始时进行判定
+				if (event->key() == *Key)
 				{
-					if (event->key() == *Key)
-					{
-						emit(touched());
-					}
+					emit(touched());
 				}
-				else if (NoteList->value(*NextTime)->type() == beat)//对于beat音符，只在保持触发的前提下beat音符的额外键触发开始时进行判定
+			}
+			else if (NoteList->value(*NextTime)->type() == beat)//对于beat音符，只在保持触发的前提下beat音符的额外键触发开始时进行判定
+			{
+				if ((Parent->keyPressingList()->contains(*Key) && (event->key() == NoteList->value(*NextTime)->beatKey())))
 				{
-					if ((KeyPressingList->contains(*Key) && (event->key() == NoteList->value(*NextTime)->beatKey())))
-					{
-						emit(touched());
-					}
+					emit(touched());
 				}
-				else if (NoteList->value(*NextTime)->type() == cat)//对于cat音符，只要接近判定时保持触发状态即进行判定
+			}
+			else if (NoteList->value(*NextTime)->type() == cat)//对于cat音符，只要接近判定时保持触发状态即进行判定
+			{
+				if (Parent->keyPressingList()->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 50)
 				{
-					if (KeyPressingList->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 50)
-					{
-						emit(touched());
-					}
+					emit(touched());
 				}
 			}
 		}
-		else
-		{
-			qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
-		}
-
 	}
-	releaseKeyboard();
-	event->accept();
+	else
+	{
+		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
+	}
 }
 
-void MCheckDot::keyReleaseEvent(QKeyEvent* event)
+void MCheckDot::release(QKeyEvent* event)
 {
-	if (!event->isAutoRepeat())
+	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release";
+	if (*HoldPressing && !Parent->keyPressingList()->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
 	{
-		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release";
-		KeyPressingList->remove(event->key());//从按键列表中删除松开的键
-		if (*HoldPressing && !KeyPressingList->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
-		{
-			emit(released());
-		}
-
+		emit(released());
 	}
-	releaseKeyboard();
-	event->accept();
 }
 
 void MCheckDot::paintDot(QPainter* paint)
@@ -349,6 +414,8 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
 			paint->setPen(pen);
 			paint->setBrush(NoteList->value(*NextTime)->noteColor());
 			paint->drawEllipse(line01.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+			pen.setColor(Qt::transparent);
+			paint->setPen(pen);
 			paint->drawEllipse(line02.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
 			line03.setP1(line02.p2());
 			line03.setLength(NoteList->value(*NextTime)->vRadium());
@@ -380,6 +447,8 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
 		paint->setPen(pen);
 		paint->setBrush(NoteList->value(*HoldPressed)->noteColor());
 		paint->drawEllipse(line01.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
+		pen.setColor(Qt::transparent);
+		paint->setPen(pen);
 		paint->drawEllipse(line02.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
 		line03.setP1(line02.p2());
 		line03.setLength(NoteList->value(*HoldPressed)->vRadium());

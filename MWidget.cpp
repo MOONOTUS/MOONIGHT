@@ -15,7 +15,9 @@ MWidget::MWidget(QWidget* parent)
 	backCoverColor = new QColor(255, 255, 255, 0);//初始化背景遮罩色为全透明白色，即不显示遮罩
 	time_ms = new qint64(0);//时间置零
 	DisTime = new QElapsedTimer();
+	KeyPressingList = new QSet<qint32>;
 	DisTime->start();
+	this->setFocus();
 }
 
 MWidget::~MWidget()
@@ -37,6 +39,7 @@ MWidget::~MWidget()
 
 void MWidget::paintEvent(QPaintEvent* event)
 {
+	this->setFocus();
 	qDebug() << "MOONOTUSYSTEM::_Data::_*time_ms_::" << *time_ms;
 	QPainter* paint = new QPainter(this);
 	paint->setRenderHint(QPainter::Antialiasing);
@@ -66,6 +69,32 @@ void MWidget::paintEvent(QPaintEvent* event)
 		paint->fillRect(QRect(0, 0, this->width(), this->height()), *backCoverColor);
 	}
 
+	event->accept();
+}
+
+
+void MWidget::keyPressEvent(QKeyEvent* event)//重写的键盘按下事件函数
+{
+	if (!event->isAutoRepeat())
+	{
+		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Press " << event->key();
+		KeyPressingList->insert(event->key());//向按键列表中添加按下的键
+		emit(keyPressDown(event));
+	}
+	releaseKeyboard();
+	event->accept();
+}
+
+void MWidget::keyReleaseEvent(QKeyEvent* event)//重写的键盘释放事件函数
+{
+	if (!event->isAutoRepeat())
+	{
+		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release " << event->key();
+		KeyPressingList->remove(event->key());//向按键列表中添加按下的键
+		emit(keyReleaseUp(event));
+
+	}
+	releaseKeyboard();
 	event->accept();
 }
 
@@ -189,4 +218,9 @@ void MWidget::timeAdd_ms()
 QElapsedTimer*& MWidget::disTime()
 {
 	return DisTime;
+}
+
+QSet<qint32>*& MWidget::keyPressingList()
+{
+	return KeyPressingList;
 }
