@@ -146,6 +146,10 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 			}
 		}
 	}
+	else
+	{
+		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
+	}
 	qDebug() << "\tMOONOTUSYSTEM_::_Data_::_*NextTime_::" << *NextTime;
 	event->accept();
 }
@@ -215,7 +219,7 @@ void MCheckDot::press(QKeyEvent* event)
 	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard press slot runs";
 	if (NoteList->contains(*NextTime))//触发信号的发送
 	{
-		if (NoteList->value(*NextTime)->time() - Parent->time() <= 250 && NoteList->value(*NextTime)->time() - Parent->time() >= -250)//只对时间差小于250ms的第一个音符进行判定
+		if (NoteList->value(*NextTime)->time() - Parent->time() <= 160 && NoteList->value(*NextTime)->time() - Parent->time() >= -160)//只对时间差小于160ms的第一个音符进行判定
 		{
 			if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//对于click音符和hold音符，只在触发开始时进行判定
 			{
@@ -312,12 +316,14 @@ void MCheckDot::paintCheckAnimation(QPainter* paint)
 		}
 		else
 		{
-			//if (listptr.value() == miss)
-			//{
-			//	paint->setPen(QColor(255, 25, 0, 60));
-			//	paint->setBrush(QColor(255, 25, 0, 60));
-			//	paint->drawRect(this->rect());
-			//}
+			if (listptr.value() == miss)
+			{
+				QPen pen;
+				pen.setColor(QColor(255, 25, 0, 60));
+				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
+				paint->setPen(pen);
+				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key())) / 2, qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
+			}
 			if (listptr.value() == strictperfect)
 			{
 				QPen pen;
