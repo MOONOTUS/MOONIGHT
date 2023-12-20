@@ -15,8 +15,8 @@ protected:
 
 
 signals:
-	void keyPressDown(QKeyEvent*& event);
-	void keyReleaseUp(QKeyEvent*& event);
+	void keyPressDown(QKeyEvent* event);
+	void keyReleaseUp(QKeyEvent* event);
 
 public slots:
 	void timeAdd_ms();//计时槽，与parent->litTime的信号timeout()连接

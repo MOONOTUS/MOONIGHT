@@ -51,20 +51,20 @@ MCheckDot::MCheckDot(MWidget *parent)
 		SLOT(misscheck()),
 		Qt::DirectConnection
 	);
-	parent->MParent()->connect
+	connect
 	(
 		parent,
-		SIGNAL(MWidget::keyPressDown()),
+		SIGNAL(keyPressDown(QKeyEvent*)),
 		this,
-		SLOT(press()),
+		SLOT(press(QKeyEvent*)),
 		Qt::DirectConnection
 	);
-	parent->MParent()->connect
+	connect
 	(
 		parent,
-		SIGNAL(MWidget::keyReleaseUp()),
+		SIGNAL(keyReleaseUp(QKeyEvent*)),
 		this,
-		SLOT(release()),
+		SLOT(release(QKeyEvent*)),
 		Qt::DirectConnection
 	);
 }
