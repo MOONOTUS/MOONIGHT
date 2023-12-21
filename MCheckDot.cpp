@@ -319,7 +319,7 @@ void MCheckDot::paintCheckAnimation(QPainter* paint)
 			if (listptr.value() == miss)
 			{
 				QPen pen;
-				pen.setColor(QColor(255, 25, 0, 60));
+				pen.setColor(QColor(255, 25, 0, 60));//朱红
 				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
 				paint->setPen(pen);
 				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key())) / 2, qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
@@ -327,7 +327,7 @@ void MCheckDot::paintCheckAnimation(QPainter* paint)
 			if (listptr.value() == strictperfect)
 			{
 				QPen pen;
-				pen.setColor(QColor(255, 209, 86, 60));
+				pen.setColor(QColor(255, 209, 86, 60));//夕霞
 				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
 				paint->setPen(pen);
 				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key())) / 2, qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
@@ -335,7 +335,7 @@ void MCheckDot::paintCheckAnimation(QPainter* paint)
 			else if (listptr.value() == preperfect || listptr.value() == lagperfect)
 			{
 				QPen pen;
-				pen.setColor(QColor(224, 212, 254, 60));
+				pen.setColor(QColor(224, 212, 254, 60));//晚云
 				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
 				paint->setPen(pen);
 				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) / 2), qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
@@ -343,7 +343,7 @@ void MCheckDot::paintCheckAnimation(QPainter* paint)
 			else if (listptr.value() == pregood || listptr.value() == laggood)
 			{
 				QPen pen;
-				pen.setColor(QColor(162, 230, 155, 60));
+				pen.setColor(QColor(255, 178, 162, 60));//海日
 				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
 				paint->setPen(pen);
 				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) / 2), qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
@@ -351,7 +351,7 @@ void MCheckDot::paintCheckAnimation(QPainter* paint)
 			if (listptr.value() == prebad || listptr.value() == lagbad)
 			{
 				QPen pen;
-				pen.setColor(QColor(255, 178, 162, 60));
+				pen.setColor(QColor(86, 143, 168, 60));//沉沦
 				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
 				paint->setPen(pen);
 				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) / 2), qint32(*VRadium + (Parent->time() - listptr.key())) / 2);

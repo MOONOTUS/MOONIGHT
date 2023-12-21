@@ -3,7 +3,7 @@
 TestDemo_Rotate_Class::TestDemo_Rotate_Class(MWidget* parent)
 	: QObject(parent)
 {
-	QPixmap backImage("D:\\Painting\\00013.png");
+	QPixmap backImage(".\\Grass.png");
 	parent->setBackImage(backImage);
 	parent->setShowBackImage(true);
 	parent->setShowBackBackImage(true);
@@ -104,7 +104,7 @@ TestDemo_Rotate_Class::TestDemo_Rotate_Class(MWidget* parent)
 	//parent->checkDotList()->value("3")->show();
 	//parent->checkDotList()->value("4")->show();
 	parent->checkDotList()->value("O")->show();
-	parent->setMusicPath("D:\\Cfamily Program\\MOONIGHT_Qt\\InfinityHeaven.ogg");
+	parent->setMusicPath(".\\InfinityHeaven.ogg");
 	this->parent = parent;
 	angel = new qreal(0.0);
 	r = new qreal(0.0);

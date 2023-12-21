@@ -38,6 +38,7 @@ private:
 	QSet<qint32>* KeyPressingList;
 	qint64* Delay;
 	QString* MusicPath;
+	QAudioOutput* PlayerBase;
 	QMediaPlayer* Player;
 	bool* MusicPlayed;
 

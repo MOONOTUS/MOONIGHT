@@ -18,7 +18,9 @@ MWidget::MWidget(QWidget* parent)
 	KeyPressingList = new QSet<qint32>;
 	Delay = new qint64(0);
 	MusicPath = new QString("");
+	PlayerBase = new QAudioOutput(this);
 	Player = new QMediaPlayer(this);
+	Player->setAudioOutput(PlayerBase);
 	MusicPlayed = new bool(false);
 	DisTime->start();
 	this->setFocus();
@@ -251,7 +253,7 @@ QString MWidget::musicPath()
 
 void MWidget::playMusic(bool nodelay)
 {
-	if (*MusicPlayed)
+	if (!*MusicPlayed)
 	{
 		if (nodelay)
 		{
@@ -259,6 +261,7 @@ void MWidget::playMusic(bool nodelay)
 			{
 				Player->setSource(QUrl::fromLocalFile(*MusicPath));
 				Player->play();
+				MusicPlayed = new bool(true);
 			}
 		}
 		else if (*Delay <= this->time())
@@ -267,6 +270,7 @@ void MWidget::playMusic(bool nodelay)
 			{
 				Player->setSource(QUrl::fromLocalFile(*MusicPath));
 				Player->play();
+				MusicPlayed = new bool(true);
 			}
 		}
 	}
