@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"MPivot.h"
 
 class TestDemo_Rotate_Class:public QObject

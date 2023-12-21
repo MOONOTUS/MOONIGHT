@@ -1,34 +1,34 @@
-#include"MCheckDot.h"
+ï»¿#include"MCheckDot.h"
 #include"MWidget.h"
 
 MCheckDot::MCheckDot(MWidget *parent)
 	: QPushButton(parent)
 {
-	this->Parent = parent;//´æ´¢parent
-	DotColor = new QColor(217, 150, 229, 255);//³õÊ¼»¯ÅĞ¶¨µãÑÕÉ«
-	DotKeyColor = new QColor(DotColor->red(), DotColor->green(), DotColor->blue(), DotColor->alpha() * 2 / 3);//³õÊ¼»¯ÅĞ¶¨¼üÎÄ±¾ÑÕÉ«
-	Width = new qreal(6.0);//³õÊ¼»¯ÅĞ¶¨µãÔ²È¦Âß¼­¿í¶È
-	Radium = new qreal(30.0);//³õÊ¼»¯ÅĞ¶¨µãÂß¼­°ë¾¶
-	Visuable = new bool(true);//³õÊ¼»¯ÅĞ¶¨µã¿É¼ûĞÔÎªÕæ
-	Point = new QPoint(parent->width() / 2, parent->height() / 2);//³õÊ¼»¯ÅĞ¶¨µãÂß¼­×ø±ê
-	DotLine = new MCheckDotLine(this);//³õÊ¼»¯¹ìµÀÏß
-	NoteList = new QMap<qint64, MNote*>;//³õÊ¼»¯Òô·ûÈİÆ÷
-	NextTime = new qint64(0);//Ã»ÓÃµÄ³õÊ¼»¯
-	NoteCheckList = new QMap<qint64, qint32>;//³õÊ¼»¯ÅĞ¶¨½á¹ûÈİÆ÷
-	KeyVisuable = new bool(false);//³õÊ¼»¯ÅĞ¶¨¼üÎÄ±¾¿É¼ûĞÔÎª¼Ù
-	KeyPressingList = new QSet<qint32>;//³õÊ¼»¯ÕıÔÚ°´¼üÁĞ±í
-	HoldPressing = new bool(false);//³õÊ¼»¯hold°´ÏÂ×´Ì¬Îª¼Ù
-	HoldPressed = new qint64(0);//Ã»ÓÃµÄ³õÊ¼»¯
-	Speed = new qreal(200.0);//³õÊ¼»¯Òô·ûÂß¼­ËÙ¶È
-	VSpeed = new qreal(*Speed * parent->width() / parent->oriSize().width());//³õÊ¼»¯Òô·ûÊÓ¾õËÙ¶È
-	LineRadium = new qreal(2500.0);//³õÊ¼»¯¹ìµÀÏßÂß¼­³¤¶È
-	VLineRadium = new qreal(*LineRadium * parent->width() / parent->oriSize().width());//³õÊ¼»¯¹ìµÀÏßÊÓ¾õ³¤¶È
+	this->Parent = parent;//å­˜å‚¨parent
+	DotColor = new QColor(217, 150, 229, 255);//åˆå§‹åŒ–åˆ¤å®šç‚¹é¢œè‰²
+	DotKeyColor = new QColor(DotColor->red(), DotColor->green(), DotColor->blue(), DotColor->alpha() * 2 / 3);//åˆå§‹åŒ–åˆ¤å®šé”®æ–‡æœ¬é¢œè‰²
+	Width = new qreal(6.0);//åˆå§‹åŒ–åˆ¤å®šç‚¹åœ†åœˆé€»è¾‘å®½åº¦
+	Radium = new qreal(30.0);//åˆå§‹åŒ–åˆ¤å®šç‚¹é€»è¾‘åŠå¾„
+	Visuable = new bool(true);//åˆå§‹åŒ–åˆ¤å®šç‚¹å¯è§æ€§ä¸ºçœŸ
+	Point = new QPoint(parent->width() / 2, parent->height() / 2);//åˆå§‹åŒ–åˆ¤å®šç‚¹é€»è¾‘åæ ‡
+	DotLine = new MCheckDotLine(this);//åˆå§‹åŒ–è½¨é“çº¿
+	NoteList = new QMap<qint64, MNote*>;//åˆå§‹åŒ–éŸ³ç¬¦å®¹å™¨
+	NextTime = new qint64(0);//æ²¡ç”¨çš„åˆå§‹åŒ–
+	NoteCheckList = new QMap<qint64, qint32>;//åˆå§‹åŒ–åˆ¤å®šç»“æœå®¹å™¨
+	KeyVisuable = new bool(false);//åˆå§‹åŒ–åˆ¤å®šé”®æ–‡æœ¬å¯è§æ€§ä¸ºå‡
+	KeyPressingList = new QSet<qint32>;//åˆå§‹åŒ–æ­£åœ¨æŒ‰é”®åˆ—è¡¨
+	HoldPressing = new bool(false);//åˆå§‹åŒ–holdæŒ‰ä¸‹çŠ¶æ€ä¸ºå‡
+	HoldPressed = new qint64(0);//æ²¡ç”¨çš„åˆå§‹åŒ–
+	Speed = new qreal(200.0);//åˆå§‹åŒ–éŸ³ç¬¦é€»è¾‘é€Ÿåº¦
+	VSpeed = new qreal(*Speed * parent->width() / parent->oriSize().width());//åˆå§‹åŒ–éŸ³ç¬¦è§†è§‰é€Ÿåº¦
+	LineRadium = new qreal(2500.0);//åˆå§‹åŒ–è½¨é“çº¿é€»è¾‘é•¿åº¦
+	VLineRadium = new qreal(*LineRadium * parent->width() / parent->oriSize().width());//åˆå§‹åŒ–è½¨é“çº¿è§†è§‰é•¿åº¦
 	NoteCheckAnimationList = new QMap<qint64, qint32>;
-	this->setGeometry(0,0,parent->width(),parent->height());//Éè¶¨³õÊ¼»æÖÆÇøÓò
-	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);//Éè¶¨³ß´ç¿É±äĞÔ
-	this->setFont(QFont("Microsoft YaHei Ui", *Radium, *Width - 2));//Éè¶¨ÎÄ±¾×ÖÌå
+	this->setGeometry(0,0,parent->width(),parent->height());//è®¾å®šåˆå§‹ç»˜åˆ¶åŒºåŸŸ
+	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);//è®¾å®šå°ºå¯¸å¯å˜æ€§
+	this->setFont(QFont("Microsoft YaHei Ui", *Radium, *Width - 2));//è®¾å®šæ–‡æœ¬å­—ä½“
 
-	parent->MParent()->connect//Á¬½Ó´¥·¢ĞÅºÅºÍÅĞ¶¨²Û
+	parent->MParent()->connect//è¿æ¥è§¦å‘ä¿¡å·å’Œåˆ¤å®šæ§½
 	(
 		this,
 		SIGNAL(touched()),
@@ -36,7 +36,7 @@ MCheckDot::MCheckDot(MWidget *parent)
 		SLOT(check()),
 		Qt::DirectConnection
 	);
-	parent->MParent()->connect//Á¬½ÓholdÒô·û×¨ÓĞµÄÊÍ·ÅĞÅºÅºÍhold×¨ÓĞµÄÊÍ·ÅÅĞ¶¨²Û
+	parent->MParent()->connect//è¿æ¥holdéŸ³ç¬¦ä¸“æœ‰çš„é‡Šæ”¾ä¿¡å·å’Œholdä¸“æœ‰çš„é‡Šæ”¾åˆ¤å®šæ§½
 	(
 		this,
 		SIGNAL(released()),
@@ -44,7 +44,7 @@ MCheckDot::MCheckDot(MWidget *parent)
 		SLOT(aftercheck()),
 		Qt::DirectConnection
 	);
-	parent->MParent()->connect//Á¬½ÓµôÂäĞÅºÅºÍµôÂäÅĞ¶¨²Û
+	parent->MParent()->connect//è¿æ¥æ‰è½ä¿¡å·å’Œæ‰è½åˆ¤å®šæ§½
 	(
 		this,
 		SIGNAL(misschecked()),
@@ -102,28 +102,28 @@ MCheckDot::~MCheckDot()
 void MCheckDot::paintEvent(QPaintEvent* event)
 {
 	qDebug() << "MOONOTUSYSTEM::_Message_::MCheckDot " << *KeyText << " paints";
-	this->setGeometry(0, (Parent->height() - Parent->width() * 9 / 16) / 2, Parent->width(), Parent->width() * 9 / 16);//£¬ÒÔÆÁÄ»¿í¶ÈÎª»ù×¼£¬Éè¶¨16£º9ÖĞÑë»æÖÆÇøÓò£¬±£Ö¤ÔÚ²»Í¬³ß´çµÄ±ÈÀıÕı³£µÄÉè±¸ÉÏÆ×ÃæµÄ±ÈÀıÒ»Ñù
-	DotLine->setWidth(DotLine->width());//Ë¢ĞÂ¹ìµÀÏßµÄÊÓ¾õ¿í¶È
-	for (QMap<qint64, MNote*>::iterator listptr = NoteList->begin(); listptr != NoteList->end(); ++listptr)//Ë¢ĞÂ¸÷¸öÒô·ûµÄÊÓ¾õ³ß´ç
+	this->setGeometry(0, (Parent->height() - Parent->width() * 9 / 16) / 2, Parent->width(), Parent->width() * 9 / 16);//ï¼Œä»¥å±å¹•å®½åº¦ä¸ºåŸºå‡†ï¼Œè®¾å®š16ï¼š9ä¸­å¤®ç»˜åˆ¶åŒºåŸŸï¼Œä¿è¯åœ¨ä¸åŒå°ºå¯¸çš„æ¯”ä¾‹æ­£å¸¸çš„è®¾å¤‡ä¸Šè°±é¢çš„æ¯”ä¾‹ä¸€æ ·
+	DotLine->setWidth(DotLine->width());//åˆ·æ–°è½¨é“çº¿çš„è§†è§‰å®½åº¦
+	for (QMap<qint64, MNote*>::iterator listptr = NoteList->begin(); listptr != NoteList->end(); ++listptr)//åˆ·æ–°å„ä¸ªéŸ³ç¬¦çš„è§†è§‰å°ºå¯¸
 	{
 		listptr.value()->setRadium(listptr.value()->radium());
 		listptr.value()->setWidth(listptr.value()->width());
 	}
-	VPoint = new QPoint(Point->x() * this->size().width() / Parent->oriSize().width(), Point->y() * this->size().height() / Parent->oriSize().height());//Ë¢ĞÂÊÓ¾õ×ø±ê
-	VWidth = new qreal(*Width * Parent->width() / Parent->oriSize().width());//Ë¢ĞÂÊÓ¾õÏß¿í
-	VRadium = new qreal(*Radium * Parent->width() / Parent->oriSize().width());//Ë¢ĞÂÊÓ¾õ°ë¾¶
-	VSpeed = new qreal(*Speed * Parent->width() / Parent->oriSize().width());//Ë¢ĞÂÊÓ¾õËÙ¶È
-	VLineRadium = new qreal(*LineRadium * Parent->width() / Parent->oriSize().width());//Ë¢ĞÂ¹ìµÀÏßÊÓ¾õ³¤¶È
-	this->setFont(QFont("Microsoft YaHei Ui", *VRadium, *VWidth - 2));//Ë¢ĞÂ×ÖÌåÊÓ¾õÑùÊ½
+	VPoint = new QPoint(Point->x() * this->size().width() / Parent->oriSize().width(), Point->y() * this->size().height() / Parent->oriSize().height());//åˆ·æ–°è§†è§‰åæ ‡
+	VWidth = new qreal(*Width * Parent->width() / Parent->oriSize().width());//åˆ·æ–°è§†è§‰çº¿å®½
+	VRadium = new qreal(*Radium * Parent->width() / Parent->oriSize().width());//åˆ·æ–°è§†è§‰åŠå¾„
+	VSpeed = new qreal(*Speed * Parent->width() / Parent->oriSize().width());//åˆ·æ–°è§†è§‰é€Ÿåº¦
+	VLineRadium = new qreal(*LineRadium * Parent->width() / Parent->oriSize().width());//åˆ·æ–°è½¨é“çº¿è§†è§‰é•¿åº¦
+	this->setFont(QFont("Microsoft YaHei Ui", *VRadium, *VWidth - 2));//åˆ·æ–°å­—ä½“è§†è§‰æ ·å¼
 	QPainter* paint = new QPainter(this);
 	paint->setRenderHint(QPainter::Antialiasing);
 	paint->setRenderHint(QPainter::TextAntialiasing);
 
-	if (DotLine->visuable())//»æÖÆ¹ìµÀÏß
+	if (DotLine->visuable())//ç»˜åˆ¶è½¨é“çº¿
 	{
 		paintDotLine(paint);
 	}
-	if (*Visuable)//»æÖÆÅĞ¶¨µã
+	if (*Visuable)//ç»˜åˆ¶åˆ¤å®šç‚¹
 	{
 		paintDot(paint);
 	}
@@ -131,14 +131,14 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 	{
 		paintCheckAnimation(paint);
 	}
-	if (NoteList->contains(*NextTime) || *HoldPressing)//»æÖÆÒô·û
+	if (NoteList->contains(*NextTime) || *HoldPressing)//ç»˜åˆ¶éŸ³ç¬¦
 	{
 		paintNote(paint);
-		if (NoteList->contains(*NextTime) && NoteList->value(*NextTime)->time() - Parent->time() < -250)//µôÂäĞÅºÅµÄ·¢ËÍ
+		if (NoteList->contains(*NextTime) && NoteList->value(*NextTime)->time() - Parent->time() < -250)//æ‰è½ä¿¡å·çš„å‘é€
 		{
 			emit(misschecked());
 		}
-		if (NoteList->contains(*NextTime) && NoteList->value(*NextTime)->type() == cat)//¶ÔÓÚcatÒô·û£¬Ö»Òª½Ó½üÅĞ¶¨Ê±±£³Ö´¥·¢×´Ì¬¼´½øĞĞÅĞ¶¨
+		if (NoteList->contains(*NextTime) && NoteList->value(*NextTime)->type() == cat)//å¯¹äºcatéŸ³ç¬¦ï¼Œåªè¦æ¥è¿‘åˆ¤å®šæ—¶ä¿æŒè§¦å‘çŠ¶æ€å³è¿›è¡Œåˆ¤å®š
 		{
 			if (Parent->keyPressingList()->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 50)
 			{
@@ -159,26 +159,26 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 //	if (!event->isAutoRepeat())
 //	{
 //		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Press";
-//		KeyPressingList->insert(event->key());//Ïò°´¼üÁĞ±íÖĞÌí¼Ó°´ÏÂµÄ¼ü
-//		if (NoteList->contains(*NextTime))//´¥·¢ĞÅºÅµÄ·¢ËÍ
+//		KeyPressingList->insert(event->key());//å‘æŒ‰é”®åˆ—è¡¨ä¸­æ·»åŠ æŒ‰ä¸‹çš„é”®
+//		if (NoteList->contains(*NextTime))//è§¦å‘ä¿¡å·çš„å‘é€
 //		{
-//			if (NoteList->value(*NextTime)->time() - Parent->time() <= 250 && NoteList->value(*NextTime)->time() - Parent->time() >= -250)//Ö»¶ÔÊ±¼ä²îĞ¡ÓÚ250msµÄµÚÒ»¸öÒô·û½øĞĞÅĞ¶¨
+//			if (NoteList->value(*NextTime)->time() - Parent->time() <= 250 && NoteList->value(*NextTime)->time() - Parent->time() >= -250)//åªå¯¹æ—¶é—´å·®å°äº250msçš„ç¬¬ä¸€ä¸ªéŸ³ç¬¦è¿›è¡Œåˆ¤å®š
 //			{
-//				if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//¶ÔÓÚclickÒô·ûºÍholdÒô·û£¬Ö»ÔÚ´¥·¢¿ªÊ¼Ê±½øĞĞÅĞ¶¨
+//				if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//å¯¹äºclickéŸ³ç¬¦å’ŒholdéŸ³ç¬¦ï¼Œåªåœ¨è§¦å‘å¼€å§‹æ—¶è¿›è¡Œåˆ¤å®š
 //				{
 //					if (event->key() == *Key)
 //					{
 //						emit(touched());
 //					}
 //				}
-//				else if (NoteList->value(*NextTime)->type() == beat)//¶ÔÓÚbeatÒô·û£¬Ö»ÔÚ±£³Ö´¥·¢µÄÇ°ÌáÏÂbeatÒô·ûµÄ¶îÍâ¼ü´¥·¢¿ªÊ¼Ê±½øĞĞÅĞ¶¨
+//				else if (NoteList->value(*NextTime)->type() == beat)//å¯¹äºbeatéŸ³ç¬¦ï¼Œåªåœ¨ä¿æŒè§¦å‘çš„å‰æä¸‹beatéŸ³ç¬¦çš„é¢å¤–é”®è§¦å‘å¼€å§‹æ—¶è¿›è¡Œåˆ¤å®š
 //				{
 //					if ((KeyPressingList->contains(*Key) && (event->key() == NoteList->value(*NextTime)->beatKey())))
 //					{
 //						emit(touched());
 //					}
 //				}
-//				else if (NoteList->value(*NextTime)->type() == cat)//¶ÔÓÚcatÒô·û£¬Ö»Òª½Ó½üÅĞ¶¨Ê±±£³Ö´¥·¢×´Ì¬¼´½øĞĞÅĞ¶¨
+//				else if (NoteList->value(*NextTime)->type() == cat)//å¯¹äºcatéŸ³ç¬¦ï¼Œåªè¦æ¥è¿‘åˆ¤å®šæ—¶ä¿æŒè§¦å‘çŠ¶æ€å³è¿›è¡Œåˆ¤å®š
 //				{
 //					if (KeyPressingList->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 50)
 //					{
@@ -202,8 +202,8 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 //	if (!event->isAutoRepeat())
 //	{
 //		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release";
-//		KeyPressingList->remove(event->key());//´Ó°´¼üÁĞ±íÖĞÉ¾³ıËÉ¿ªµÄ¼ü
-//		if (*HoldPressing && !KeyPressingList->contains(*Key))//Èç¹ûÓĞholdÕı±»°´ÏÂÇÒ´¥·¢×´Ì¬ÒÑ¾­½áÊø£¬Ôò·¢ËÍÊÍ·ÅĞÅºÅ
+//		KeyPressingList->remove(event->key());//ä»æŒ‰é”®åˆ—è¡¨ä¸­åˆ é™¤æ¾å¼€çš„é”®
+//		if (*HoldPressing && !KeyPressingList->contains(*Key))//å¦‚æœæœ‰holdæ­£è¢«æŒ‰ä¸‹ä¸”è§¦å‘çŠ¶æ€å·²ç»ç»“æŸï¼Œåˆ™å‘é€é‡Šæ”¾ä¿¡å·
 //		{
 //			emit(released());
 //		}
@@ -217,25 +217,25 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 void MCheckDot::press(QKeyEvent* event)
 {
 	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard press slot runs";
-	if (NoteList->contains(*NextTime))//´¥·¢ĞÅºÅµÄ·¢ËÍ
+	if (NoteList->contains(*NextTime))//è§¦å‘ä¿¡å·çš„å‘é€
 	{
-		if (NoteList->value(*NextTime)->time() - Parent->time() <= 160 && NoteList->value(*NextTime)->time() - Parent->time() >= -160)//Ö»¶ÔÊ±¼ä²îĞ¡ÓÚ160msµÄµÚÒ»¸öÒô·û½øĞĞÅĞ¶¨
+		if (NoteList->value(*NextTime)->time() - Parent->time() <= 160 && NoteList->value(*NextTime)->time() - Parent->time() >= -160)//åªå¯¹æ—¶é—´å·®å°äº160msçš„ç¬¬ä¸€ä¸ªéŸ³ç¬¦è¿›è¡Œåˆ¤å®š
 		{
-			if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//¶ÔÓÚclickÒô·ûºÍholdÒô·û£¬Ö»ÔÚ´¥·¢¿ªÊ¼Ê±½øĞĞÅĞ¶¨
+			if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//å¯¹äºclickéŸ³ç¬¦å’ŒholdéŸ³ç¬¦ï¼Œåªåœ¨è§¦å‘å¼€å§‹æ—¶è¿›è¡Œåˆ¤å®š
 			{
 				if (event->key() == *Key)
 				{
 					emit(touched());
 				}
 			}
-			else if (NoteList->value(*NextTime)->type() == beat)//¶ÔÓÚbeatÒô·û£¬Ö»ÔÚ±£³Ö´¥·¢µÄÇ°ÌáÏÂbeatÒô·ûµÄ¶îÍâ¼ü´¥·¢¿ªÊ¼Ê±½øĞĞÅĞ¶¨
+			else if (NoteList->value(*NextTime)->type() == beat)//å¯¹äºbeatéŸ³ç¬¦ï¼Œåªåœ¨ä¿æŒè§¦å‘çš„å‰æä¸‹beatéŸ³ç¬¦çš„é¢å¤–é”®è§¦å‘å¼€å§‹æ—¶è¿›è¡Œåˆ¤å®š
 			{
 				if ((Parent->keyPressingList()->contains(*Key) && (event->key() == NoteList->value(*NextTime)->beatKey())))
 				{
 					emit(touched());
 				}
 			}
-			else if (NoteList->value(*NextTime)->type() == cat)//¶ÔÓÚcatÒô·û£¬Ö»Òª½Ó½üÅĞ¶¨Ê±±£³Ö´¥·¢×´Ì¬¼´½øĞĞÅĞ¶¨
+			else if (NoteList->value(*NextTime)->type() == cat)//å¯¹äºcatéŸ³ç¬¦ï¼Œåªè¦æ¥è¿‘åˆ¤å®šæ—¶ä¿æŒè§¦å‘çŠ¶æ€å³è¿›è¡Œåˆ¤å®š
 			{
 				if (Parent->keyPressingList()->contains(*Key) && NoteList->value(*NextTime)->time() - Parent->time() <= 50)
 				{
@@ -253,7 +253,7 @@ void MCheckDot::press(QKeyEvent* event)
 void MCheckDot::release(QKeyEvent* event)
 {
 	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard release slot runs";
-	if (*HoldPressing && !Parent->keyPressingList()->contains(*Key))//Èç¹ûÓĞholdÕı±»°´ÏÂÇÒ´¥·¢×´Ì¬ÒÑ¾­½áÊø£¬Ôò·¢ËÍÊÍ·ÅĞÅºÅ
+	if (*HoldPressing && !Parent->keyPressingList()->contains(*Key))//å¦‚æœæœ‰holdæ­£è¢«æŒ‰ä¸‹ä¸”è§¦å‘çŠ¶æ€å·²ç»ç»“æŸï¼Œåˆ™å‘é€é‡Šæ”¾ä¿¡å·
 	{
 		emit(released());
 	}
@@ -361,7 +361,7 @@ void MCheckDot::paintCheckAnimation(QPainter* paint)
 	}
 }
 
-void MCheckDot::paintNote(QPainter* paint)//´ıÊµÏÖµÄ»æÖÆÒô·ûµÄº¯Êı
+void MCheckDot::paintNote(QPainter* paint)//å¾…å®ç°çš„ç»˜åˆ¶éŸ³ç¬¦çš„å‡½æ•°
 {
 	if (*NextTime == -1)
 	{
@@ -415,7 +415,7 @@ void MCheckDot::paintNote(QPainter* paint)//´ıÊµÏÖµÄ»æÖÆÒô·ûµÄº¯Êı
 	}
 }
 
-void MCheckDot::paintClickNote(QPainter* paint)//»æÖÆclickÒô·û
+void MCheckDot::paintClickNote(QPainter* paint)//ç»˜åˆ¶clickéŸ³ç¬¦
 {
 	qDebug() << "\tMOONOTUSYSTEM::_Message_::Click note paints";
 	QLineF line0;
@@ -430,7 +430,7 @@ void MCheckDot::paintClickNote(QPainter* paint)//»æÖÆclickÒô·û
 	paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
 }
 
-void MCheckDot::paintCatNote(QPainter* paint)//»æÖÆcatÒô·û
+void MCheckDot::paintCatNote(QPainter* paint)//ç»˜åˆ¶catéŸ³ç¬¦
 {
 	qDebug() << "\tMOONOTUSYSTEM::_Message_::Cat note paints";
 	QLineF line0;
@@ -445,7 +445,7 @@ void MCheckDot::paintCatNote(QPainter* paint)//»æÖÆcatÒô·û
 	paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
 }
 
-void MCheckDot::paintBeatNote(QPainter* paint)//»æÖÆbeatÒô·û
+void MCheckDot::paintBeatNote(QPainter* paint)//ç»˜åˆ¶beatéŸ³ç¬¦
 {
 	qDebug() << "\tMOONOTUSYSTEM::_Message_::Beat note paints";
 	QLineF line0;
@@ -462,7 +462,7 @@ void MCheckDot::paintBeatNote(QPainter* paint)//»æÖÆbeatÒô·û
 	paint->drawText(QRect(line0.p2().x() - QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size() / 2, line0.p2().y() - QFontMetricsF(font()).height() / 2, QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size(), QFontMetricsF(font()).height()), Qt::AlignHCenter | Qt::AlignVCenter, NoteList->value(*NextTime)->beatKeyText());
 }
 
-void MCheckDot::paintHoldNote(QPainter* paint_)//»æÖÆholdÒô·û
+void MCheckDot::paintHoldNote(QPainter* paint_)//ç»˜åˆ¶holdéŸ³ç¬¦
 {
 	if (NoteList->contains(*NextTime))
 	{
@@ -696,14 +696,14 @@ void MCheckDot::check()
 	if (NoteList->contains(*NextTime))
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_MESSAGE_::Truely check";
-		if (NoteList->value(*NextTime)->type() == cat)//Õë¶ÔcatÒô·ûµÄÅĞ¶¨
+		if (NoteList->value(*NextTime)->type() == cat)//é’ˆå¯¹catéŸ³ç¬¦çš„åˆ¤å®š
 		{
 			qDebug() << "\tMOONOTUSYSTEM::_Message_::Perfect check of cat";
 			NoteCheckAnimationList->insert(Parent->time(),strictperfect);
 			NoteCheckList->insert(*NextTime, strictperfect);
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
-		else if (NoteList->value(*NextTime)->type() == hold)//Õë¶ÔholdÒô·ûµÄÅĞ¶¨
+		else if (NoteList->value(*NextTime)->type() == hold)//é’ˆå¯¹holdéŸ³ç¬¦çš„åˆ¤å®š
 		{
 			if (((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 50)
 			{
@@ -751,7 +751,7 @@ void MCheckDot::check()
 			HoldPressed = new qint64(*NextTime);
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
-		else//Õë¶ÔclickºÍbeatÒô·ûµÄÅĞ¶¨
+		else//é’ˆå¯¹clickå’ŒbeatéŸ³ç¬¦çš„åˆ¤å®š
 		{
 			if (((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 50)
 			{
@@ -807,7 +807,7 @@ void MCheckDot::check()
 void MCheckDot::aftercheck()
 {
 	qDebug() << "\tMOONOTUSYSTEM::_Message_::Check of hold's after";
-	if (((NoteList->value(*HoldPressed)->endTime()) - (Parent->time())) > 250)//holdÒô·ûµÄÊÍ·ÅÅĞ¶¨
+	if (((NoteList->value(*HoldPressed)->endTime()) - (Parent->time())) > 250)//holdéŸ³ç¬¦çš„é‡Šæ”¾åˆ¤å®š
 	{
 		qDebug()<<"\tMOONOTUSYSTEM::_Message_::Miss check of hold's after";
 		NoteCheckAnimationList->insert(Parent->time(), miss);
@@ -821,7 +821,7 @@ void MCheckDot::aftercheck()
 void MCheckDot::misscheck()
 {
 	qDebug() << "\tMOONOTUSYSTEM::_Message_::Miss check start";
-	if (NoteList->contains(*NextTime))//µôÂäÅĞ¶¨
+	if (NoteList->contains(*NextTime))//æ‰è½åˆ¤å®š
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Message_::Miss checks";
 		NoteCheckAnimationList->insert(Parent->time(), miss);

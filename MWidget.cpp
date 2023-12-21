@@ -1,21 +1,25 @@
-#include "MWidget.h"
+ï»¿#include "MWidget.h"
 #include"MCheckDot.h"
 
 MWidget::MWidget(QWidget* parent)
 	: QWidget(parent)
 {
-	Parent = parent;//´¢´æparent
-	CheckDotList = new QMap<QString, MCheckDot*>;//ÎŞÓÃµÄ³õÊ¼»¯
-	this->OriSize = new QSize(1920, 1080);//Éè¶¨Size=£¨1920£¬1080£©µÄÔ­Ê¼×ø±êÏµ
-	ifShowBackImage = new bool(false);//³õÊ¼»¯ÏÔÊ¾±³¾°Í¼Æ¬Îª¼Ù
-	ifShowBackBackImage = new bool(false);//³õÊ¼»¯ÏÔÊ¾±³¾°µÄ±³¾°Îª¼Ù
-	ifShowLogo = new bool(true);//³õÊ¼»¯ÏÔÊ¾±êÖ¾ÎªÕæ
-	backColor = new  QColor(245, 245, 245);//³õÊ¼»¯±³¾°É«Îª£¨245£¬245£¬245£¬255£©µÄÁÁ»Ò°×É«
-	Logo = new QPixmap("D:\\Painting\\MOONIGHT_Beta_Little.png");//¶ÁÈ¡LogoÍ¼Æ¬£¬ÉÔºó¸ÄÎªÏà¶ÔÂ·¾¶
-	backCoverColor = new QColor(255, 255, 255, 0);//³õÊ¼»¯±³¾°ÕÚÕÖÉ«ÎªÈ«Í¸Ã÷°×É«£¬¼´²»ÏÔÊ¾ÕÚÕÖ
-	time_ms = new qint64(0);//Ê±¼äÖÃÁã
+	Parent = parent;//å‚¨å­˜parent
+	CheckDotList = new QMap<QString, MCheckDot*>;//æ— ç”¨çš„åˆå§‹åŒ–
+	this->OriSize = new QSize(1920, 1080);//è®¾å®šSize=ï¼ˆ1920ï¼Œ1080ï¼‰çš„åŸå§‹åæ ‡ç³»
+	ifShowBackImage = new bool(false);//åˆå§‹åŒ–æ˜¾ç¤ºèƒŒæ™¯å›¾ç‰‡ä¸ºå‡
+	ifShowBackBackImage = new bool(false);//åˆå§‹åŒ–æ˜¾ç¤ºèƒŒæ™¯çš„èƒŒæ™¯ä¸ºå‡
+	ifShowLogo = new bool(true);//åˆå§‹åŒ–æ˜¾ç¤ºæ ‡å¿—ä¸ºçœŸ
+	backColor = new  QColor(245, 245, 245);//åˆå§‹åŒ–èƒŒæ™¯è‰²ä¸ºï¼ˆ245ï¼Œ245ï¼Œ245ï¼Œ255ï¼‰çš„äº®ç°ç™½è‰²
+	Logo = new QPixmap("D:\\Painting\\MOONIGHT_Beta_Little.png");//è¯»å–Logoå›¾ç‰‡ï¼Œç¨åæ”¹ä¸ºç›¸å¯¹è·¯å¾„
+	backCoverColor = new QColor(255, 255, 255, 0);//åˆå§‹åŒ–èƒŒæ™¯é®ç½©è‰²ä¸ºå…¨é€æ˜ç™½è‰²ï¼Œå³ä¸æ˜¾ç¤ºé®ç½©
+	time_ms = new qint64(0);//æ—¶é—´ç½®é›¶
 	DisTime = new QElapsedTimer();
 	KeyPressingList = new QSet<qint32>;
+	Delay = new qint64(0);
+	MusicPath = new QString("");
+	Player = new QMediaPlayer(this);
+	MusicPlayed = new bool(false);
 	DisTime->start();
 	this->setFocus();
 }
@@ -44,27 +48,27 @@ void MWidget::paintEvent(QPaintEvent* event)
 	QPainter* paint = new QPainter(this);
 	paint->setRenderHint(QPainter::Antialiasing);
 	paint->setRenderHint(QPainter::TextAntialiasing);
-	if (*ifShowBackBackImage)//±³¾°µÄ±³¾°µÄ»æÖÆ
+	if (*ifShowBackBackImage)//èƒŒæ™¯çš„èƒŒæ™¯çš„ç»˜åˆ¶
 	{
 		paint->drawPixmap(QRect(0, 0, this->width(), this->height()), *backBackImage);
 		if (!(backCoverColor->alpha() == 0))
 		{
-			paint->fillRect(QRect(0, 0, this->width(), this->height()), QColor(backCoverColor->red(), backCoverColor->green(), backCoverColor->blue(), backCoverColor->alpha() / 2));//¸²¸Ç½µµÍÁË²»Í¸Ã÷¶ÈµÄÕÚÕÖÉ«
+			paint->fillRect(QRect(0, 0, this->width(), this->height()), QColor(backCoverColor->red(), backCoverColor->green(), backCoverColor->blue(), backCoverColor->alpha() / 2));//è¦†ç›–é™ä½äº†ä¸é€æ˜åº¦çš„é®ç½©è‰²
 		}
 	}
-	else//±³¾°É«µÄ»æÖÆ
+	else//èƒŒæ™¯è‰²çš„ç»˜åˆ¶
 	{
 		paint->fillRect(QRect(0, 0, this->width(), this->height()), *backColor);
 	}
-	if (*ifShowBackImage)//±³¾°Í¼Æ¬µÄ»æÖÆ
+	if (*ifShowBackImage)//èƒŒæ™¯å›¾ç‰‡çš„ç»˜åˆ¶
 	{
 		paint->drawPixmap(QRect(0, (this->height() - this->width() * 9 / 16) / 2, this->width(), this->width() * 9 / 16), *backImage);
 	}
-	if (*ifShowLogo)//±êÖ¾µÄ»æÖÆ
+	if (*ifShowLogo)//æ ‡å¿—çš„ç»˜åˆ¶
 	{
 		paint->drawPixmap(QRect(0, (this->height() - this->width() * 9 / 16) / 2, this->width(), this->width() * 9 / 16), *Logo);
 	}
-	if (!(backCoverColor->alpha() == 0))//±³¾°ÕÚÕÖ²ãµÄ»æÖÆ
+	if (!(backCoverColor->alpha() == 0))//èƒŒæ™¯é®ç½©å±‚çš„ç»˜åˆ¶
 	{
 		paint->fillRect(QRect(0, 0, this->width(), this->height()), *backCoverColor);
 	}
@@ -73,24 +77,24 @@ void MWidget::paintEvent(QPaintEvent* event)
 }
 
 
-void MWidget::keyPressEvent(QKeyEvent* event)//ÖØĞ´µÄ¼üÅÌ°´ÏÂÊÂ¼şº¯Êı
+void MWidget::keyPressEvent(QKeyEvent* event)//é‡å†™çš„é”®ç›˜æŒ‰ä¸‹äº‹ä»¶å‡½æ•°
 {
 	if (!event->isAutoRepeat())
 	{
 		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Press " << event->key();
-		KeyPressingList->insert(event->key());//Ïò°´¼üÁĞ±íÖĞÌí¼Ó°´ÏÂµÄ¼ü
+		KeyPressingList->insert(event->key());//å‘æŒ‰é”®åˆ—è¡¨ä¸­æ·»åŠ æŒ‰ä¸‹çš„é”®
 		emit(keyPressDown(event));
 	}
 	releaseKeyboard();
 	event->accept();
 }
 
-void MWidget::keyReleaseEvent(QKeyEvent* event)//ÖØĞ´µÄ¼üÅÌÊÍ·ÅÊÂ¼şº¯Êı
+void MWidget::keyReleaseEvent(QKeyEvent* event)//é‡å†™çš„é”®ç›˜é‡Šæ”¾äº‹ä»¶å‡½æ•°
 {
 	if (!event->isAutoRepeat())
 	{
 		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release " << event->key();
-		KeyPressingList->remove(event->key());//Ïò°´¼üÁĞ±íÖĞÌí¼Ó°´ÏÂµÄ¼ü
+		KeyPressingList->remove(event->key());//å‘æŒ‰é”®åˆ—è¡¨ä¸­æ·»åŠ æŒ‰ä¸‹çš„é”®
 		emit(keyReleaseUp(event));
 
 	}
@@ -101,7 +105,7 @@ void MWidget::keyReleaseEvent(QKeyEvent* event)//ÖØĞ´µÄ¼üÅÌÊÍ·ÅÊÂ¼şº¯Êı
 void MWidget::setBackImage(QPixmap& image)
 {
 	backImage = new QPixmap(image);
-	if (backImage->width() / backImage->height() > 16 / 9)//×ÔÊÊÓ¦Ä£¿é£¬×Ô¶¯ÒÔºÏÊÊµÄ·½°¸½«Í¼Æ¬²Ã¼ôÎª16£º9µÄ±ÈÀı
+	if (backImage->width() / backImage->height() > 16 / 9)//è‡ªé€‚åº”æ¨¡å—ï¼Œè‡ªåŠ¨ä»¥åˆé€‚çš„æ–¹æ¡ˆå°†å›¾ç‰‡è£å‰ªä¸º16ï¼š9çš„æ¯”ä¾‹
 	{
 		backImage = new QPixmap(backImage->copy((backImage->width() - backImage->height() * 16 / 9) / 2, 0, backImage->height() * 16 / 9, backImage->height()));
 	}
@@ -110,14 +114,14 @@ void MWidget::setBackImage(QPixmap& image)
 		backImage = new QPixmap(backImage->copy(0, (backImage->height() - backImage->width() * 9 / 16) / 2, backImage->width(), backImage->width() * 9 / 16));
 	}
 	QImage backBack = backImage->toImage();
-	GaussiamBlur(36, 2000, backBack);//Éú³É±³¾°Í¼Æ¬µÄÄ£ºı¿½±´
-	backBackImage = new QPixmap(QPixmap::fromImage(backBack));//´æ´¢±³¾°µÄ±³¾°Í¼Æ¬
+	GaussiamBlur(36, 2000, backBack);//ç”ŸæˆèƒŒæ™¯å›¾ç‰‡çš„æ¨¡ç³Šæ‹·è´
+	backBackImage = new QPixmap(QPixmap::fromImage(backBack));//å­˜å‚¨èƒŒæ™¯çš„èƒŒæ™¯å›¾ç‰‡
 }
 
 void MWidget::setBackImage(QString& path)
 {
 	backImage = new QPixmap(path);
-	if (backImage->width() / backImage->height() > 16 / 9)//×ÔÊÊÓ¦Ä£¿é£¬×Ô¶¯ÒÔºÏÊÊµÄ·½°¸½«Í¼Æ¬²Ã¼ôÎª16£º9µÄ±ÈÀı
+	if (backImage->width() / backImage->height() > 16 / 9)//è‡ªé€‚åº”æ¨¡å—ï¼Œè‡ªåŠ¨ä»¥åˆé€‚çš„æ–¹æ¡ˆå°†å›¾ç‰‡è£å‰ªä¸º16ï¼š9çš„æ¯”ä¾‹
 	{
 		backImage = new QPixmap(backImage->copy((backImage->width() - backImage->height() * 16 / 9) / 2, 0, backImage->height() * 16 / 9, backImage->height()));
 	}
@@ -126,8 +130,8 @@ void MWidget::setBackImage(QString& path)
 		backImage = new QPixmap(backImage->copy(0, (backImage->height() - backImage->width() * 9 / 16) / 2, backImage->width(),backImage->width() * 9 / 16));
 	}
 	QImage backBack = backImage->toImage();
-	GaussiamBlur(36, 2000, backBack);//Éú³É±³¾°Í¼Æ¬µÄÄ£ºı¿½±´
-	backBackImage = new QPixmap(QPixmap::fromImage(backBack));//´æ´¢±³¾°µÄ±³¾°Í¼Æ¬
+	GaussiamBlur(36, 2000, backBack);//ç”ŸæˆèƒŒæ™¯å›¾ç‰‡çš„æ¨¡ç³Šæ‹·è´
+	backBackImage = new QPixmap(QPixmap::fromImage(backBack));//å­˜å‚¨èƒŒæ™¯çš„èƒŒæ™¯å›¾ç‰‡
 }
 
 void MWidget::setBackColor(QColor color)
@@ -223,4 +227,47 @@ QElapsedTimer*& MWidget::disTime()
 QSet<qint32>*& MWidget::keyPressingList()
 {
 	return KeyPressingList;
+}
+
+void MWidget::setDelay(qint64 delay)
+{
+	Delay = new qint64(delay);
+}
+
+qint64 MWidget::delay()
+{
+	return *Delay;
+}
+
+void MWidget::setMusicPath(QString path)
+{
+	MusicPath = new QString(path);
+}
+
+QString MWidget::musicPath()
+{
+	return *MusicPath;
+}
+
+void MWidget::playMusic(bool nodelay)
+{
+	if (*MusicPlayed)
+	{
+		if (nodelay)
+		{
+			if (*MusicPath != "")
+			{
+				Player->setSource(QUrl::fromLocalFile(*MusicPath));
+				Player->play();
+			}
+		}
+		else if (*Delay <= this->time())
+		{
+			if (*MusicPath != "")
+			{
+				Player->setSource(QUrl::fromLocalFile(*MusicPath));
+				Player->play();
+			}
+		}
+	}
 }

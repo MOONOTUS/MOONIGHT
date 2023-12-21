@@ -36,6 +36,10 @@ private:
 	QPixmap* Logo;//MOONOIGHT的标志图片
 	QElapsedTimer* DisTime;
 	QSet<qint32>* KeyPressingList;
+	qint64* Delay;
+	QString* MusicPath;
+	QMediaPlayer* Player;
+	bool* MusicPlayed;
 
 public:
 	MWidget(QWidget* parent = nullptr);
@@ -61,4 +65,9 @@ public:
 	qint64 time();//返回time_ms
 	QElapsedTimer*& disTime();
 	QSet<qint32>*& keyPressingList();
+	void setDelay(qint64 delay);
+	qint64 delay();
+	void setMusicPath(QString path);
+	QString musicPath();
+	void playMusic(bool nodelay = false);
 };

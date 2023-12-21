@@ -1,16 +1,16 @@
-#include"MWidget.h"
+﻿#include"MWidget.h"
 #include"MCheckDot.h"
 #include"MCheckDotLine.h"
 
 MCheckDotLine::MCheckDotLine(MCheckDot* parent)
 {
-	Parent = parent;//�洢parernt
-	DotLineColor = new QColor(parent->dotColor());//��ʼ������ߵ���ɫ
-	Visuable = new bool(parent->visuable());//��ʼ������ߵĿɼ���
+	Parent = parent;//存储parernt
+	DotLineColor = new QColor(parent->dotColor());//初始化轨道线的颜色
+	Visuable = new bool(parent->visuable());//初始化轨道线的可见性
 	UpVisuable = new bool(*Visuable);
 	DownVisuable = new bool(*Visuable);
-	setWidth(parent->width() - 2);//��ʼ������ߵ��߼����Ⱥ��Ӿ�����
-	Angel = new qreal(90);//��ʼ������ߵĽǶ�
+	setWidth(parent->width() - 2);//初始化轨道线的逻辑宽度和视觉宽度
+	Angel = new qreal(90);//初始化轨道线的角度
 	UpAngle = new qreal(*Angel);
 	DownAngle = new qreal(*Angel - 180);
 

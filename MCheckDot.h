@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include"MCenter.h"
 #include"MCheckDotLine.h"
@@ -21,92 +21,92 @@ public:
 #define miss 0x0000
 
 protected:
-	void paintEvent(QPaintEvent* event);//ÖØĞ´µÄÖØ»æº¯Êı
-	//void keyPressEvent(QKeyEvent* event);//ÖØĞ´µÄ¼üÅÌ°´ÏÂÊÂ¼şº¯Êı
-	//void keyReleaseEvent(QKeyEvent* event);//ÖØĞ´µÄ¼üÅÌÊÍ·ÅÊÂ¼şº¯Êı
+	void paintEvent(QPaintEvent* event);//é‡å†™çš„é‡ç»˜å‡½æ•°
+	//void keyPressEvent(QKeyEvent* event);//é‡å†™çš„é”®ç›˜æŒ‰ä¸‹äº‹ä»¶å‡½æ•°
+	//void keyReleaseEvent(QKeyEvent* event);//é‡å†™çš„é”®ç›˜é‡Šæ”¾äº‹ä»¶å‡½æ•°
 
-	void paintDot(QPainter* paint);//»æÖÆÅĞ¶¨µã
-	void paintDotLine(QPainter* paint);//»æÖÆÅĞ¶¨Ïß
-	void paintNote(QPainter* paint);//»æÖÆÒô·û
-	void paintClickNote(QPainter* paint);//»æÖÆclickÒô·û
-	void paintCatNote(QPainter* paint);//»æÖÆcatÒô·û
-	void paintBeatNote(QPainter* paint);//»æÖÆbeatÒô·û
-	void paintHoldNote(QPainter* paint_);//»æÖÆholdÒô·û
+	void paintDot(QPainter* paint);//ç»˜åˆ¶åˆ¤å®šç‚¹
+	void paintDotLine(QPainter* paint);//ç»˜åˆ¶åˆ¤å®šçº¿
+	void paintNote(QPainter* paint);//ç»˜åˆ¶éŸ³ç¬¦
+	void paintClickNote(QPainter* paint);//ç»˜åˆ¶clickéŸ³ç¬¦
+	void paintCatNote(QPainter* paint);//ç»˜åˆ¶catéŸ³ç¬¦
+	void paintBeatNote(QPainter* paint);//ç»˜åˆ¶beatéŸ³ç¬¦
+	void paintHoldNote(QPainter* paint_);//ç»˜åˆ¶holdéŸ³ç¬¦
 	void paintCheckAnimation(QPainter* paint);
 
 signals:
-	void touched();//´¥·¢ĞÅºÅ
-	void released();//ÊÍ·ÅĞÅºÅ
-	void misschecked();//µôÂäĞÅºÅ
+	void touched();//è§¦å‘ä¿¡å·
+	void released();//é‡Šæ”¾ä¿¡å·
+	void misschecked();//æ‰è½ä¿¡å·
 
 public slots:
-	void check();//ÅĞ¶¨²Û
-	void aftercheck();//holdÒô·û×¨ÓÃµÄÊÍ·ÅÅĞ¶¨²Û
-	void misscheck();//µôÂä²Û
+	void check();//åˆ¤å®šæ§½
+	void aftercheck();//holdéŸ³ç¬¦ä¸“ç”¨çš„é‡Šæ”¾åˆ¤å®šæ§½
+	void misscheck();//æ‰è½æ§½
 	void press(QKeyEvent* event);
 	void release(QKeyEvent* event);
 
 private:
-	MWidget* Parent;//´æ´¢parentÖ¸Õë£¬ÓÃÓÚËİÔ´
-	MCheckDotLine* DotLine;//¹ìµÀ
-	QMap<qint64, MNote*>* NoteList;//Òô·ûÈİÆ÷£¬¿ÉÒÔÍ¨¹ıKeyÖµ»ñÈ¡¶ÔÓ¦µÄÒô·û£¬Ò»°ã½¨Òé²ÉÓÃÒô·ûµÄÅĞ¶¨Ê±¼ä×öKeyÖµ
-	qint64* NextTime;//ÏÂÒ»¸öÒô·ûµÄÅĞ¶¨Ê±¼ä£¬ÓÃÓÚÊµÏÖÒô·ûµÄÅĞ¶¨ºÍ»æÖÆ
-	QMap<qint64, qint32>* NoteCheckList;//ÅĞ¶¨½á¹ûÈİÆ÷£¬ÓëÒô·ûµÄKeyÖµÒ»Ò»¶ÔÓ¦´æ·ÅÅĞ¶¨½á¹û
-	bool* Visuable;//ÅĞ¶¨µãÊÇ·ñ¿É¼û
-	QPoint* Point;//ÅĞ¶¨µãµÄÂß¼­×ø±ê
-	qreal* Radium;//ÅĞ¶¨µãµÄÂß¼­°ë¾¶
-	qreal* Width;//ÅĞ¶¨µãÔ²È¦µÄÂß¼­¿í¶È
-	QColor* DotColor;//ÅĞ¶¨µãµÄÑÕÉ«£¨RGBA£©
-	QColor* DotKeyColor;//ÅĞ¶¨¼üµÄÑÕÉ«£¨RGBA£©
-	qint32* Key;//ÅĞ¶¨¼ü
-	QString* KeyText;//ÔÚÆÁÄ»ÉÏÏÔÊ¾µÄÅĞ¶¨¼üÎÄ±¾
-	bool* KeyVisuable;//ÅĞ¶¨¼üÎÄ±¾ÊÇ·ñ¿É¼û
-	QPoint* VPoint;//ÅĞ¶¨µãµÄÊÓ¾õ×ø±ê
-	qreal* VRadium;//ÅĞ¶¨µãµÄÊÓ¾õ°ë¾¶
-	qreal* VWidth;//ÅĞ¶¨µãÔ²È¦µÄÊÓ¾õ¿í¶È
-	QSet<qint32>* KeyPressingList;//ÕıÔÚ±»°´ÏÂµÄ°´¼ü
-	bool* HoldPressing;//ÊÇ·ñÓĞholdÒô·ûÕı±»°´ÏÂ
-	qint64* HoldPressed;//Õı±»°´ÏÂµÄholdÒô·ûKeyÖµ£¬ÈôÃ»ÓĞÔòÎª0
-	qreal* Speed;//Òô·ûµÄÂß¼­ËÙ¶È
-	qreal* VSpeed;//Òô·ûµÄÊÓ¾õËÙ¶È
-	qreal* LineRadium;//¹ìµÀÏßµÄÂß¼­³¤¶È
-	qreal* VLineRadium;//¹ìµÀÏßµÄÊÓ¾õ³¤¶È
+	MWidget* Parent;//å­˜å‚¨parentæŒ‡é’ˆï¼Œç”¨äºæº¯æº
+	MCheckDotLine* DotLine;//è½¨é“
+	QMap<qint64, MNote*>* NoteList;//éŸ³ç¬¦å®¹å™¨ï¼Œå¯ä»¥é€šè¿‡Keyå€¼è·å–å¯¹åº”çš„éŸ³ç¬¦ï¼Œä¸€èˆ¬å»ºè®®é‡‡ç”¨éŸ³ç¬¦çš„åˆ¤å®šæ—¶é—´åšKeyå€¼
+	qint64* NextTime;//ä¸‹ä¸€ä¸ªéŸ³ç¬¦çš„åˆ¤å®šæ—¶é—´ï¼Œç”¨äºå®ç°éŸ³ç¬¦çš„åˆ¤å®šå’Œç»˜åˆ¶
+	QMap<qint64, qint32>* NoteCheckList;//åˆ¤å®šç»“æœå®¹å™¨ï¼Œä¸éŸ³ç¬¦çš„Keyå€¼ä¸€ä¸€å¯¹åº”å­˜æ”¾åˆ¤å®šç»“æœ
+	bool* Visuable;//åˆ¤å®šç‚¹æ˜¯å¦å¯è§
+	QPoint* Point;//åˆ¤å®šç‚¹çš„é€»è¾‘åæ ‡
+	qreal* Radium;//åˆ¤å®šç‚¹çš„é€»è¾‘åŠå¾„
+	qreal* Width;//åˆ¤å®šç‚¹åœ†åœˆçš„é€»è¾‘å®½åº¦
+	QColor* DotColor;//åˆ¤å®šç‚¹çš„é¢œè‰²ï¼ˆRGBAï¼‰
+	QColor* DotKeyColor;//åˆ¤å®šé”®çš„é¢œè‰²ï¼ˆRGBAï¼‰
+	qint32* Key;//åˆ¤å®šé”®
+	QString* KeyText;//åœ¨å±å¹•ä¸Šæ˜¾ç¤ºçš„åˆ¤å®šé”®æ–‡æœ¬
+	bool* KeyVisuable;//åˆ¤å®šé”®æ–‡æœ¬æ˜¯å¦å¯è§
+	QPoint* VPoint;//åˆ¤å®šç‚¹çš„è§†è§‰åæ ‡
+	qreal* VRadium;//åˆ¤å®šç‚¹çš„è§†è§‰åŠå¾„
+	qreal* VWidth;//åˆ¤å®šç‚¹åœ†åœˆçš„è§†è§‰å®½åº¦
+	QSet<qint32>* KeyPressingList;//æ­£åœ¨è¢«æŒ‰ä¸‹çš„æŒ‰é”®
+	bool* HoldPressing;//æ˜¯å¦æœ‰holdéŸ³ç¬¦æ­£è¢«æŒ‰ä¸‹
+	qint64* HoldPressed;//æ­£è¢«æŒ‰ä¸‹çš„holdéŸ³ç¬¦Keyå€¼ï¼Œè‹¥æ²¡æœ‰åˆ™ä¸º0
+	qreal* Speed;//éŸ³ç¬¦çš„é€»è¾‘é€Ÿåº¦
+	qreal* VSpeed;//éŸ³ç¬¦çš„è§†è§‰é€Ÿåº¦
+	qreal* LineRadium;//è½¨é“çº¿çš„é€»è¾‘é•¿åº¦
+	qreal* VLineRadium;//è½¨é“çº¿çš„è§†è§‰é•¿åº¦
 	QMap<qint64, qint32>* NoteCheckAnimationList;
 
 public:
 	MCheckDot(MWidget *parent = nullptr);
 	~MCheckDot();
 
-	void setDotLine(MCheckDotLine& dotline);//Éè¶¨¹ìµÀÏß
-	MCheckDotLine*& dotLine();//·µ»Ø¹ìµÀÏßµÄÒıÓÃ
-	void setVisuable(bool visuable);//Éè¶¨ÅĞ¶¨µãÊÇ·ñ¿É¼û
-	bool visuable();//·µ»Ø*Visuable
-	void setPoint(QPoint& point);//Éè¶¨ÅĞ¶¨µãµÄÂß¼­×ø±ê
-	void setPoint(qreal x, qreal y);//Éè¶¨ÅĞ¶¨µãµÄÂß¼­×ø±ê
-	QPoint point();//·µ»ØÅĞ¶¨µãµÄÂß¼­×ø±ê
-	void setRadium(qreal r);//Éè¶¨ÅĞ¶¨µãµÄÂß¼­°ë¾¶
-	qreal radium();//·µ»Ø*Radium
-	void setWidth(qreal width);//Éè¶¨ÅĞ¶¨µãÔ²È¦µÄÂß¼­¿í¶È
-	qreal width();//·µ»Ø*Width
-	void setDotColor(QColor color);//Éè¶¨ÅĞ¶¨µãÑÕÉ«
-	void setDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//Éè¶¨ÅĞ¶¨µãÑÕÉ«
-	QColor dotColor();//·µ»Ø*DotColor
-	void setDotKeyColor(QColor color);//Éè¶¨ÅĞ¶¨¼üµÄÑÕÉ«
-	void setDotKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//Éè¶¨ÅĞ¶¨¼üµÄÑÕÉ«
-	QColor dotKeyColor();//·µ»Ø*DotKeyColor
-	void setKey(qint32 key, QString keytext);//Éè¶¨ÅĞ¶¨¼ü
-	qint32 key();//·µ»Ø*Key
-	QString keyText();//·µ»Ø*KeyText
-	QMap<qint64, MNote*>*& noteList();//·µ»ØÒô·ûÈİÆ÷µÄÒıÓÃ
-	void setNextTime(qint64 time_ms);//Éè¶¨ÏÂÒ»¸öÒô·ûµÄÅĞ¶¨Ê±¼ä
-	qint64 nextTime();//·µ»Ø*NextTime
-	QMap<qint64, qint32>*& noteCheckList();//·µ»ØÅĞ¶¨½á¹ûÈİÆ÷µÄÒıÓÃ
-	MWidget*& MParent();//·µ»ØParent£¬ÓÃÓÚËİÔ´
-	void setKeyVisuable(bool visuable);//Éè¶¨ÅĞ¶¨¼üÎÄ±¾ÊÇ·ñ¿É¼û
-	bool keyVisuable();//·µ»Ø*KeyVisuable
-	void setSpeed(qreal speed_px_ps);//Éè¶¨Òô·ûµÄÂß¼­ËÙ¶È
-	qreal speed();//·µ»Ø*Speed
-	void setLineRadium(qreal lineradium);//Éè¶¨¹ìµÀÏßµÄÂß¼­³¤¶È
-	qreal lineRadium();//·µ»Ø*LineRadium
+	void setDotLine(MCheckDotLine& dotline);//è®¾å®šè½¨é“çº¿
+	MCheckDotLine*& dotLine();//è¿”å›è½¨é“çº¿çš„å¼•ç”¨
+	void setVisuable(bool visuable);//è®¾å®šåˆ¤å®šç‚¹æ˜¯å¦å¯è§
+	bool visuable();//è¿”å›*Visuable
+	void setPoint(QPoint& point);//è®¾å®šåˆ¤å®šç‚¹çš„é€»è¾‘åæ ‡
+	void setPoint(qreal x, qreal y);//è®¾å®šåˆ¤å®šç‚¹çš„é€»è¾‘åæ ‡
+	QPoint point();//è¿”å›åˆ¤å®šç‚¹çš„é€»è¾‘åæ ‡
+	void setRadium(qreal r);//è®¾å®šåˆ¤å®šç‚¹çš„é€»è¾‘åŠå¾„
+	qreal radium();//è¿”å›*Radium
+	void setWidth(qreal width);//è®¾å®šåˆ¤å®šç‚¹åœ†åœˆçš„é€»è¾‘å®½åº¦
+	qreal width();//è¿”å›*Width
+	void setDotColor(QColor color);//è®¾å®šåˆ¤å®šç‚¹é¢œè‰²
+	void setDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//è®¾å®šåˆ¤å®šç‚¹é¢œè‰²
+	QColor dotColor();//è¿”å›*DotColor
+	void setDotKeyColor(QColor color);//è®¾å®šåˆ¤å®šé”®çš„é¢œè‰²
+	void setDotKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//è®¾å®šåˆ¤å®šé”®çš„é¢œè‰²
+	QColor dotKeyColor();//è¿”å›*DotKeyColor
+	void setKey(qint32 key, QString keytext);//è®¾å®šåˆ¤å®šé”®
+	qint32 key();//è¿”å›*Key
+	QString keyText();//è¿”å›*KeyText
+	QMap<qint64, MNote*>*& noteList();//è¿”å›éŸ³ç¬¦å®¹å™¨çš„å¼•ç”¨
+	void setNextTime(qint64 time_ms);//è®¾å®šä¸‹ä¸€ä¸ªéŸ³ç¬¦çš„åˆ¤å®šæ—¶é—´
+	qint64 nextTime();//è¿”å›*NextTime
+	QMap<qint64, qint32>*& noteCheckList();//è¿”å›åˆ¤å®šç»“æœå®¹å™¨çš„å¼•ç”¨
+	MWidget*& MParent();//è¿”å›Parentï¼Œç”¨äºæº¯æº
+	void setKeyVisuable(bool visuable);//è®¾å®šåˆ¤å®šé”®æ–‡æœ¬æ˜¯å¦å¯è§
+	bool keyVisuable();//è¿”å›*KeyVisuable
+	void setSpeed(qreal speed_px_ps);//è®¾å®šéŸ³ç¬¦çš„é€»è¾‘é€Ÿåº¦
+	qreal speed();//è¿”å›*Speed
+	void setLineRadium(qreal lineradium);//è®¾å®šè½¨é“çº¿çš„é€»è¾‘é•¿åº¦
+	qreal lineRadium();//è¿”å›*LineRadium
 
 };

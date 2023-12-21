@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"MCenter.h"
 
 class MCheckDot;
@@ -12,61 +12,61 @@ public:
 #define beat 0x11
 
 private:
-	MCheckDot* Parent;//´æ´¢parent£¬ÓÃÓÚËİÔ´
-	bool* Visuable;//Òô·ûÊÇ·ñ¿É¼û
-	qreal* Radium;//Òô·ûµÄÂß¼­°ë¾¶
-	qreal* VRadium;//Òô·ûµÄÊÓ¾õ°ë¾¶
-	qreal* Width;//Òô·û±ßÔµµÄ¿í¶È
-	qreal* VWidth;//Òô·û±ßÔµµÄÊÓ¾õ¿í¶È
-	QColor* NoteColor;//Òô·ûµÄÑÕÉ«
+	MCheckDot* Parent;//å­˜å‚¨parentï¼Œç”¨äºæº¯æº
+	bool* Visuable;//éŸ³ç¬¦æ˜¯å¦å¯è§
+	qreal* Radium;//éŸ³ç¬¦çš„é€»è¾‘åŠå¾„
+	qreal* VRadium;//éŸ³ç¬¦çš„è§†è§‰åŠå¾„
+	qreal* Width;//éŸ³ç¬¦è¾¹ç¼˜çš„å®½åº¦
+	qreal* VWidth;//éŸ³ç¬¦è¾¹ç¼˜çš„è§†è§‰å®½åº¦
+	QColor* NoteColor;//éŸ³ç¬¦çš„é¢œè‰²
 	QColor* LineColor;
-	qint32* Type;//Òô·ûµÄÀàĞÍ
-	qint32* BeatKey;//beatÒô·û×¨ÓĞµÄ¶îÍâ¼ü
-	QString* BeatKeyText;//beatÒô·û×¨ÓĞµÄ¶îÍâ¼üÎÄ±¾
-	qint64* Time;//Òô·ûµÄÅĞ¶¨Ê±¼ä
-	qint64* TimeLength;//holdÒô·û×¨ÓĞµÄ³ÖĞøÊ±³¤
-	qint64* EndTime;//holdÒô·û×¨ÓĞµÄÅĞ¶¨½éÉÜÊ±¼ä
+	qint32* Type;//éŸ³ç¬¦çš„ç±»å‹
+	qint32* BeatKey;//beatéŸ³ç¬¦ä¸“æœ‰çš„é¢å¤–é”®
+	QString* BeatKeyText;//beatéŸ³ç¬¦ä¸“æœ‰çš„é¢å¤–é”®æ–‡æœ¬
+	qint64* Time;//éŸ³ç¬¦çš„åˆ¤å®šæ—¶é—´
+	qint64* TimeLength;//holdéŸ³ç¬¦ä¸“æœ‰çš„æŒç»­æ—¶é•¿
+	qint64* EndTime;//holdéŸ³ç¬¦ä¸“æœ‰çš„åˆ¤å®šä»‹ç»æ—¶é—´
 	qint64* VTime;
 	qint64* VTimeLength;
 	qint64* VEndTime;
-	qint64* NextTime;//ÏÂÒ»¸öÒô·ûµÄÅĞ¶¨Ê±¼ä£¬ÓÃÓÚÒô·ûÅĞ¶¨ºÍÒô·û»æÖÆµÄÊµÏÖ
+	qint64* NextTime;//ä¸‹ä¸€ä¸ªéŸ³ç¬¦çš„åˆ¤å®šæ—¶é—´ï¼Œç”¨äºéŸ³ç¬¦åˆ¤å®šå’ŒéŸ³ç¬¦ç»˜åˆ¶çš„å®ç°
 
 public:
 	MNote(MCheckDot* parent = nullptr);
 	~MNote();
 
-	void MNoteSet(bool visuable, qreal radium = -1, qreal width = -1, QColor color = Qt::transparent, qint32 type = -1, qint64 time = -1, qint64 nextTime = -1, qint32 beatKey = -1, QString beatKeyText = "", qint64 timeLength = 0);//Éè¶¨Òô·ûµÄ¸÷Ïî²ÎÊı£¬Ä¬ÈÏ²ÎÊı±íÊ¾²»¸Ä±ä
+	void MNoteSet(bool visuable, qreal radium = -1, qreal width = -1, QColor color = Qt::transparent, qint32 type = -1, qint64 time = -1, qint64 nextTime = -1, qint32 beatKey = -1, QString beatKeyText = "", qint64 timeLength = 0);//è®¾å®šéŸ³ç¬¦çš„å„é¡¹å‚æ•°ï¼Œé»˜è®¤å‚æ•°è¡¨ç¤ºä¸æ”¹å˜
 
-	void setVisuable(bool visuable);//Éè¶¨Òô·ûÊÇ·ñ¿É¼û
-	bool visuable();//·µ»Ø*Visuable
-	void setRadium(qreal r);//Éè¶¨Òô·ûµÄÂß¼­°ë¾¶
-	qreal radium();//·µ»Ø*Radium
-	qreal vRadium();//·µ»Ø*VRadium
-	void setWidth(qreal width);//Éè¶¨Òô·û±ßÔµµÄÂß¼­¿í¶È
-	qreal width();//·µ»Ø*Width
-	qreal vWidth();//·µ»Ø*VWidth
-	void setNoteColor(QColor color);//Éè¶¨Òô·ûÑÕÉ«£¨RGBA£©
-	void setNoteColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//Éè¶¨Òô·ûÑÕÉ«£¨RGBA£©
-	QColor noteColor();//·µ»Ø*NoteColor
-	void setLineColor(QColor color);//Éè¶¨Òô·ûÑÕÉ«£¨RGBA£©
-	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//Éè¶¨Òô·ûÑÕÉ«£¨RGBA£©
-	QColor lineColor();//·µ»Ø*NoteColor
-	void setType(qint32 type);//Éè¶¨Òô·ûÀàĞÍ
-	qint32 type();//·µ»Ø*Type
-	void setBeatKey(qint32 key, QString keytext);//Éè¶¨beatÒô·û×¨ÓĞµÄ¶îÍâ¼ü
-	qint32 beatKey();//·µ»Ø*BeatKey
-	QString beatKeyText();//·µ»Ø*BeatKeyText
-	void setTime(qint64 time_ms);//Éè¶¨Òô·ûµÄÅĞ¶¨Ê±¼ä
-	qint64 time();//·µ»Ø*Time
-	void setTimeLength(qint64 time_ms);//Éè¶¨holdÒô·û×¨ÓĞµÄÅĞ¶¨Ê±³¤
-	qint64 timeLength();//·µ»Ø*TimeLength
-	qint64 endTime();//·µ»Ø*EndTime
+	void setVisuable(bool visuable);//è®¾å®šéŸ³ç¬¦æ˜¯å¦å¯è§
+	bool visuable();//è¿”å›*Visuable
+	void setRadium(qreal r);//è®¾å®šéŸ³ç¬¦çš„é€»è¾‘åŠå¾„
+	qreal radium();//è¿”å›*Radium
+	qreal vRadium();//è¿”å›*VRadium
+	void setWidth(qreal width);//è®¾å®šéŸ³ç¬¦è¾¹ç¼˜çš„é€»è¾‘å®½åº¦
+	qreal width();//è¿”å›*Width
+	qreal vWidth();//è¿”å›*VWidth
+	void setNoteColor(QColor color);//è®¾å®šéŸ³ç¬¦é¢œè‰²ï¼ˆRGBAï¼‰
+	void setNoteColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//è®¾å®šéŸ³ç¬¦é¢œè‰²ï¼ˆRGBAï¼‰
+	QColor noteColor();//è¿”å›*NoteColor
+	void setLineColor(QColor color);//è®¾å®šéŸ³ç¬¦é¢œè‰²ï¼ˆRGBAï¼‰
+	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//è®¾å®šéŸ³ç¬¦é¢œè‰²ï¼ˆRGBAï¼‰
+	QColor lineColor();//è¿”å›*NoteColor
+	void setType(qint32 type);//è®¾å®šéŸ³ç¬¦ç±»å‹
+	qint32 type();//è¿”å›*Type
+	void setBeatKey(qint32 key, QString keytext);//è®¾å®šbeatéŸ³ç¬¦ä¸“æœ‰çš„é¢å¤–é”®
+	qint32 beatKey();//è¿”å›*BeatKey
+	QString beatKeyText();//è¿”å›*BeatKeyText
+	void setTime(qint64 time_ms);//è®¾å®šéŸ³ç¬¦çš„åˆ¤å®šæ—¶é—´
+	qint64 time();//è¿”å›*Time
+	void setTimeLength(qint64 time_ms);//è®¾å®šholdéŸ³ç¬¦ä¸“æœ‰çš„åˆ¤å®šæ—¶é•¿
+	qint64 timeLength();//è¿”å›*TimeLength
+	qint64 endTime();//è¿”å›*EndTime
 	void setVTime(qint64 time_ms);
 	qint64 vTime();
 	void setVTimeLength(qint64 time_ms);
 	qint64 vTimeLength();
 	qint64 vEndTime();
-	void setNextTime(qint64 time_ms);//Éè¶¨ÏÂÒ»¸öÒô·ûµÄÅĞ¶¨Ê±¼ä£¬ÓÃÓÚÒô·ûÅĞ¶¨ºÍÒô·û»æÖÆµÄÊµÏÖ
-	qint64 nextTime();//·µ»Ø*NextTime
-	MCheckDot*& MParent();//·µ»ØParent£¬ÓÃÓÚËİÔ´
+	void setNextTime(qint64 time_ms);//è®¾å®šä¸‹ä¸€ä¸ªéŸ³ç¬¦çš„åˆ¤å®šæ—¶é—´ï¼Œç”¨äºéŸ³ç¬¦åˆ¤å®šå’ŒéŸ³ç¬¦ç»˜åˆ¶çš„å®ç°
+	qint64 nextTime();//è¿”å›*NextTime
+	MCheckDot*& MParent();//è¿”å›Parentï¼Œç”¨äºæº¯æº
 };

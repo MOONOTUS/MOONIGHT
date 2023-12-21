@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"MCenter.h"
 
 class MCheckDot;
@@ -6,38 +6,38 @@ class MCheckDot;
 class MCheckDotLine
 {
 private:
-	MCheckDot* Parent;//´æ´¢parent£¬ÓÃÓÚËİÔ´
-	bool* Visuable;//¹ìµÀÏßÊÇ·ñ¿É¼û
-	qreal* Width;//¹ìµÀÏßµÄÂß¼­¿í¶È
-	qreal* Angel;//¹ìµÀÏßµÄ½Ç¶È
+	MCheckDot* Parent;//å­˜å‚¨parentï¼Œç”¨äºæº¯æº
+	bool* Visuable;//è½¨é“çº¿æ˜¯å¦å¯è§
+	qreal* Width;//è½¨é“çº¿çš„é€»è¾‘å®½åº¦
+	qreal* Angel;//è½¨é“çº¿çš„è§’åº¦
 	qreal* UpAngle;
 	qreal* DownAngle;
 	bool* UpVisuable;
 	bool* DownVisuable;
-	QColor* DotLineColor;//¹ìµÀÏßµÄÑÕÉ«£¨RGBA£©
-	qreal* VWidth;//¹ìµÀÏßµÄÊÓ¾õ¿í¶È
+	QColor* DotLineColor;//è½¨é“çº¿çš„é¢œè‰²ï¼ˆRGBAï¼‰
+	qreal* VWidth;//è½¨é“çº¿çš„è§†è§‰å®½åº¦
 
 public:
 	MCheckDotLine(MCheckDot* parent = nullptr);
 	~MCheckDotLine();
 
-	void setVisuable(bool visuable);//Éè¶¨¹ìµÀÏßÊÇ·ñ¿É¼û
-	bool visuable();//·µ»Ø*Visuable
+	void setVisuable(bool visuable);//è®¾å®šè½¨é“çº¿æ˜¯å¦å¯è§
+	bool visuable();//è¿”å›*Visuable
 	void setUpVisuable(bool visuable);
 	bool upVisuable();
 	void setDownVisuable(bool visuable);
 	bool downVisuable();
-	void setWidth(qreal width);//Éè¶¨¹ìµÀÏßµÄÂß¼­¿í¶È
-	qreal width();//·µ»Ø*Width
-	void setAngel(qreal angle);//Éè¶¨¹ìµÀÏßµÄ½Ç¶È
-	qreal angle();//·µ»Ø*Angle
+	void setWidth(qreal width);//è®¾å®šè½¨é“çº¿çš„é€»è¾‘å®½åº¦
+	qreal width();//è¿”å›*Width
+	void setAngel(qreal angle);//è®¾å®šè½¨é“çº¿çš„è§’åº¦
+	qreal angle();//è¿”å›*Angle
 	void setUpAngle(qreal angle);
 	qreal upAngle();
 	void setDownAngle(qreal angle);
 	qreal downAngle();
-	void setDotLineColor(QColor color);//Éè¶¨¹ìµÀÏßµÄÑÕÉ«
-	void setDotLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//Éè¶¨¹ìµÀÏßµÄÑÕÉ«
-	QColor dotLineColor();//·µ»Ø*DotLineColor
-	qreal vWidth();//·µ»Ø*VWidth
-	MCheckDot*& MParent();//·µ»ØParent£¬ÓÃÓÚËİÔ´
+	void setDotLineColor(QColor color);//è®¾å®šè½¨é“çº¿çš„é¢œè‰²
+	void setDotLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//è®¾å®šè½¨é“çº¿çš„é¢œè‰²
+	QColor dotLineColor();//è¿”å›*DotLineColor
+	qreal vWidth();//è¿”å›*VWidth
+	MCheckDot*& MParent();//è¿”å›Parentï¼Œç”¨äºæº¯æº
 };

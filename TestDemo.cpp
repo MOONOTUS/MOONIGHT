@@ -1,4 +1,4 @@
-#include"TestDemo.h"
+﻿#include"TestDemo.h"
 
 TestDemo_Rotate_Class::TestDemo_Rotate_Class(MWidget* parent)
 	: QObject(parent)
@@ -104,6 +104,7 @@ TestDemo_Rotate_Class::TestDemo_Rotate_Class(MWidget* parent)
 	//parent->checkDotList()->value("3")->show();
 	//parent->checkDotList()->value("4")->show();
 	parent->checkDotList()->value("O")->show();
+	parent->setMusicPath("D:\\Cfamily Program\\MOONIGHT_Qt\\InfinityHeaven.ogg");
 	this->parent = parent;
 	angel = new qreal(0.0);
 	r = new qreal(0.0);
@@ -141,6 +142,7 @@ void TestDemo_Rotate(MOONIGHT_Qt* w)
 
 void TestDemo_Rotate_Class::rotateCheckDot()
 {
+	parent->playMusic();
 	//qint32 alpha = 0;
 	//if (parent->time() <= 3000)
 	//{

@@ -1,4 +1,4 @@
-#include "MOONIGHT_Qt.h"
+﻿#include "MOONIGHT_Qt.h"
 
 MOONIGHT_Qt::MOONIGHT_Qt(QWidget *parent)
     : QMainWindow(parent)

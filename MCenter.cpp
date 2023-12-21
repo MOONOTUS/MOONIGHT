@@ -1,6 +1,6 @@
-#include"MCenter.h"
+ï»¿#include"MCenter.h"
 
-QImage blurred(const QImage& image, const QRect& rect, qint32 radius, bool alphaOnly)//ÎŞ·¨ÉúĞ§µÄÄ£ºıËã·¨¡£È¡×ÔÍøÂç¡£
+QImage blurred(const QImage& image, const QRect& rect, qint32 radius, bool alphaOnly)//æ— æ³•ç”Ÿæ•ˆçš„æ¨¡ç³Šç®—æ³•ã€‚å–è‡ªç½‘ç»œã€‚
 {
 	qint32 tab[] = { 14, 10, 8, 6, 5, 5, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2 };
 	qint32 alpha = (radius < 1) ? 16 : (radius > 17) ? 1 : tab[radius - 1];
@@ -68,7 +68,7 @@ QImage blurred(const QImage& image, const QRect& rect, qint32 radius, bool alpha
 	return image;
 }
 
-void GaussiamBlur(qint32 r, qreal variance, QImage& img)//¿ÉÓÃµÄÄ£ºıËã·¨£¬Ğ§ÂÊ¹ıµÍ£¬Ø½´ıÓÅ»¯¡£²ÎÊıËµÃ÷£ºÄ£ºı°ë¾¶r£¨ÓëÄ£ºı³Ì¶ÈÕıÏà¹Ø£©£¬·½²îvariance£¨ÓëÄ£ºıÆ½»¬¶ÈÕıÏà¹Ø£©£¬QImageÍ¼Ïñ¡£È¡×ÔÍøÂç¡£
+void GaussiamBlur(qint32 r, qreal variance, QImage& img)//å¯ç”¨çš„æ¨¡ç³Šç®—æ³•ï¼Œæ•ˆç‡è¿‡ä½ï¼ŒäºŸå¾…ä¼˜åŒ–ã€‚å‚æ•°è¯´æ˜ï¼šæ¨¡ç³ŠåŠå¾„rï¼ˆä¸æ¨¡ç³Šç¨‹åº¦æ­£ç›¸å…³ï¼‰ï¼Œæ–¹å·®varianceï¼ˆä¸æ¨¡ç³Šå¹³æ»‘åº¦æ­£ç›¸å…³ï¼‰ï¼ŒQImageå›¾åƒã€‚å–è‡ªç½‘ç»œã€‚
 {
     if (variance < 0)
     {
@@ -79,7 +79,7 @@ void GaussiamBlur(qint32 r, qreal variance, QImage& img)//¿ÉÓÃµÄÄ£ºıËã·¨£¬Ğ§ÂÊ¹ı
         return;
     }
 
-    //lambdaº¯ÊıËµÃ÷£ºx£ºÄ£ºı°ë¾¶£¬o£º·½²î£¬·µ»Ø£º1Î¬¸ßË¹º¯ÊıµÄÔËËã½á¹û
+    //lambdaå‡½æ•°è¯´æ˜ï¼šxï¼šæ¨¡ç³ŠåŠå¾„ï¼Œoï¼šæ–¹å·®ï¼Œè¿”å›ï¼š1ç»´é«˜æ–¯å‡½æ•°çš„è¿ç®—ç»“æœ
     auto Gaussian1D = [](qreal x, qreal variance_)->qreal {return (qExp(-(qPow(x, 2) / (2 * qPow(variance_, 2))))) / (variance_ * 2 * M_PI); };
 
     qint32 imgw = img.width();
@@ -90,23 +90,23 @@ void GaussiamBlur(qint32 r, qreal variance, QImage& img)//¿ÉÓÃµÄÄ£ºıËã·¨£¬Ğ§ÂÊ¹ı
     QVector<qreal> weight(kernelSize);
     qreal weightsum = 0.0;
 
-    //Éú³É¸ßË¹ºË
+    //ç”Ÿæˆé«˜æ–¯æ ¸
     for (qint32 i = 0; i <= twor; i++)
     {
         weight[i] = Gaussian1D(i - r, variance);
         weightsum += weight[i];
     }
-    //È¨ÖØºÍ¹éÒ»»¯
+    //æƒé‡å’Œå½’ä¸€åŒ–
     for (auto& i : weight)
     {
         i /= weightsum;
     }
 
-    //Õâ²¿·ÖÊ¹ÓÃ¿ìËÙ¸ßË¹Ä£ºıËã·¨£ºÓÃÒ»Î¬¸ßË¹º¯Êı´¦ÀíÁ½´Î£¬½µµÍÊ±¼ä¸´ÔÓ¶È
-    //±ßÔµ´¦ÀíºöÂÔ£¬µ«ÔÚÒ»¸ö·½ÏòÉÏÖÁÉÙ»á´¦ÀíÒ»´Î
-    //Ê¹ÓÃ»¬¶¯´°¿ÚËã·¨
+    //è¿™éƒ¨åˆ†ä½¿ç”¨å¿«é€Ÿé«˜æ–¯æ¨¡ç³Šç®—æ³•ï¼šç”¨ä¸€ç»´é«˜æ–¯å‡½æ•°å¤„ç†ä¸¤æ¬¡ï¼Œé™ä½æ—¶é—´å¤æ‚åº¦
+    //è¾¹ç¼˜å¤„ç†å¿½ç•¥ï¼Œä½†åœ¨ä¸€ä¸ªæ–¹å‘ä¸Šè‡³å°‘ä¼šå¤„ç†ä¸€æ¬¡
+    //ä½¿ç”¨æ»‘åŠ¨çª—å£ç®—æ³•
 
-    //ºáÏò
+    //æ¨ªå‘
     for (qint32 y = 0; y < imgh; y++)
     {
         QVector<qreal> tempred(imgw);
@@ -138,7 +138,7 @@ void GaussiamBlur(qint32 r, qreal variance, QImage& img)//¿ÉÓÃµÄÄ£ºıËã·¨£¬Ğ§ÂÊ¹ı
         }
     }
 
-    //×İÏò
+    //çºµå‘
     for (qint32 x = 0; x < imgw; x++)
     {
         QVector<qreal> tempred(imgw);

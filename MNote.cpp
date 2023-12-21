@@ -1,23 +1,23 @@
-#include"MWidget.h"
+ï»¿#include"MWidget.h"
 #include"MNote.h"
 #include"MCheckDot.h"
 
 MNote::MNote(MCheckDot* parent)
 {
-	Parent = parent;//´æ´¢parent
-	Radium = new qreal(parent->radium() - 2);//³õÊ¼»¯Òô·ûÂß¼­°ë¾¶
-	Width = new qreal(parent->width() - 2);//³õÊ¼»¯Òô·ûÊÓ¾õÏß¿í
-	VRadium = new qreal(*Radium * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//³õÊ¼»¯Òô·ûÂß¼­¿í¶È
-	VWidth = new qreal(*Width * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//³õÊ¼»¯Òô·ûµÄÂß¼­Ïß¿í
-	Type = new qint32(cat);//³õÊ¼»¯Òô·ûµÄÀàĞÍÎªcat
-	NoteColor = new QColor(parent->dotColor());//³õÊ¼»¯Òô·ûµÄÑÕÉ«
+	Parent = parent;//å­˜å‚¨parent
+	Radium = new qreal(parent->radium() - 2);//åˆå§‹åŒ–éŸ³ç¬¦é€»è¾‘åŠå¾„
+	Width = new qreal(parent->width() - 2);//åˆå§‹åŒ–éŸ³ç¬¦è§†è§‰çº¿å®½
+	VRadium = new qreal(*Radium * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//åˆå§‹åŒ–éŸ³ç¬¦é€»è¾‘å®½åº¦
+	VWidth = new qreal(*Width * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//åˆå§‹åŒ–éŸ³ç¬¦çš„é€»è¾‘çº¿å®½
+	Type = new qint32(cat);//åˆå§‹åŒ–éŸ³ç¬¦çš„ç±»å‹ä¸ºcat
+	NoteColor = new QColor(parent->dotColor());//åˆå§‹åŒ–éŸ³ç¬¦çš„é¢œè‰²
 	LineColor = new QColor(NoteColor->red() + 10, NoteColor->blue() + 10, NoteColor->green(), NoteColor->alpha());
-	Visuable = new bool(parent->visuable());//³õÊ¼»¯Òô·ûµÄ¿É¼ûĞÔ
-	BeatKey = new qint32(Qt::Key_Escape);//³õÊ¼»¯beatÒô·û×¨ÓĞµÄ¶îÍâ¼ü
-	BeatKeyText = new QString("0");//³õÊ¼»¯beatÒô·û×¨ÓĞµÄ¶îÍâ¼üÎÄ±¾
-	Time = new qint64(0);//³õÊ¼»¯Òô·ûµÄÅĞ¶¨Ê±¼ä
-	TimeLength = new qint64(0);//³õÊ¼»¯holdÒô·û×¨ÓĞµÄ³ÖĞøÊ±³¤
-	EndTime = new qint64(*Time + *TimeLength);//³õÊ¼»¯holdÒô·û×¨ÓĞµÄ½áÊøÊ±¼ä
+	Visuable = new bool(parent->visuable());//åˆå§‹åŒ–éŸ³ç¬¦çš„å¯è§æ€§
+	BeatKey = new qint32(Qt::Key_Escape);//åˆå§‹åŒ–beatéŸ³ç¬¦ä¸“æœ‰çš„é¢å¤–é”®
+	BeatKeyText = new QString("0");//åˆå§‹åŒ–beatéŸ³ç¬¦ä¸“æœ‰çš„é¢å¤–é”®æ–‡æœ¬
+	Time = new qint64(0);//åˆå§‹åŒ–éŸ³ç¬¦çš„åˆ¤å®šæ—¶é—´
+	TimeLength = new qint64(0);//åˆå§‹åŒ–holdéŸ³ç¬¦ä¸“æœ‰çš„æŒç»­æ—¶é•¿
+	EndTime = new qint64(*Time + *TimeLength);//åˆå§‹åŒ–holdéŸ³ç¬¦ä¸“æœ‰çš„ç»“æŸæ—¶é—´
 	VTime = new qint64(*Time);
 	VTimeLength = new qint64(*TimeLength);
 	VEndTime = new qint64(*VTime + *VTimeLength);

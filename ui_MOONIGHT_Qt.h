@@ -1,4 +1,4 @@
-#ifndef UI_MOONIGHT_Qt_H
+ï»¿#ifndef UI_MOONIGHT_Qt_H
 #define UI_MOONIGHT_Qt_H
 
 #include"MCenter.h"
@@ -9,10 +9,10 @@ QT_BEGIN_NAMESPACE
 class Ui_MOONIGHT_QtClass
 {
 public:
-    MWidget* main;//Ö÷½çÃæ
-    MWidget *central;//Ìá¹©¸øÆ×Ãæ±à¼­Ê¦µÄ´°¿Ú
-    QTimer* mainTime;//ÒÔ10msÎªÖÜÆÚµÄÖ÷¼ÆÊ±Æ÷£¬ÓÃÓÚÊµÏÖ¶¯Ğ§
-    QTimer* litTime;//ÒÔ1msÎªÖÜÆÚµÄ¼ÆÊ±Æ÷£¬ÓÃÓÚÇúÆ×¼ÆÊ±
+    MWidget* main;//ä¸»ç•Œé¢
+    MWidget *central;//æä¾›ç»™è°±é¢ç¼–è¾‘å¸ˆçš„çª—å£
+    QTimer* mainTime;//ä»¥10msä¸ºå‘¨æœŸçš„ä¸»è®¡æ—¶å™¨ï¼Œç”¨äºå®ç°åŠ¨æ•ˆ
+    QTimer* litTime;//ä»¥1msä¸ºå‘¨æœŸçš„è®¡æ—¶å™¨ï¼Œç”¨äºæ›²è°±è®¡æ—¶
     QElapsedTimer* disTime;
 
     void setupUi(QMainWindow *MOONIGHT_QtClass)

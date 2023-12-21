@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"MCenter.h"
 #include"MOONIGHT_Qt.h"
 #include"MWidget.h"
