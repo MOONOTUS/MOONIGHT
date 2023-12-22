@@ -108,11 +108,8 @@ public:
 	qreal speed();//返回*Speed
 	void setLineRadium(qreal lineradium);//设定轨道线的逻辑长度
 	qreal lineRadium();//返回*LineRadium
-	void addNote(qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "", QColor NoteColor = Qt::transparent, QColor LineColor = Qt::transparent);
-	void addNote(qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "", QColor NoteColor = Qt::transparent);
 	void addNote(qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");
-	void addNote(qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0);
-	void addNote(qint64 time = 0, qint64 nexttime = 0, qint32 type = click);
-	void addNote(qint64 time = 0, qint64 nexttime = 0);
+	void addNote(QColor notecolor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");
+	void addNote(QColor notecolor = Qt::transparent, QColor LineColor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");
 
 };

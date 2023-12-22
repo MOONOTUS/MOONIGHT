@@ -367,7 +367,7 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Message_::NoteList ends";
 	}
-	if (NoteList->contains(*NextTime))
+	else if (NoteList->contains(*NextTime))
 	{
 		qint64* NextTimeTemp = new qint64(*NextTime);
 		while ( *NextTime != -1 && (((NoteList->contains(*NextTime) && (NoteList->value(*NextTime)->time()) * (*Speed)) / 1000) <= (2203 - (NoteList->value(*NextTime)->radium()))))
@@ -375,26 +375,29 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 			qDebug() << "\tMOONOTUS::_Message_::Note paints";
 			NoteList->value(*NextTime)->setWidth(NoteList->value(*NextTime)->width());
 			NoteList->value(*NextTime)->setRadium(NoteList->value(*NextTime)->radium());
-			if (*HoldPressing)
+			if (*HoldPressing && NoteList->value(*HoldPressed)->visuable())
 			{
 				paintHoldNote(paint);
 			}
-			switch (NoteList->value(*NextTime)->type())
+			if (NoteList->value(*NextTime)->visuable())
 			{
-			case click:
-				paintClickNote(paint);
-				break;
-			case cat:
-				paintCatNote(paint);
-				break;
-			case beat:
-				paintBeatNote(paint);
-				break;
-			case hold:
-				paintHoldNote(paint);
-				break;
-			default:
-				qDebug() << "\tMOONOTUSYSTEM::_Error_::Unidentified type of note to be painted";
+				switch (NoteList->value(*NextTime)->type())
+				{
+				case click:
+					paintClickNote(paint);
+					break;
+				case cat:
+					paintCatNote(paint);
+					break;
+				case beat:
+					paintBeatNote(paint);
+					break;
+				case hold:
+					paintHoldNote(paint);
+					break;
+				default:
+					qDebug() << "\tMOONOTUSYSTEM::_Error_::Unidentified type of note to be painted";
+				}
 			}
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
@@ -811,7 +814,7 @@ void MCheckDot::check()
 void MCheckDot::aftercheck()
 {
 	qDebug() << "\tMOONOTUSYSTEM::_Message_::Check of hold's after";
-	if (((NoteList->value(*HoldPressed)->endTime()) - (Parent->time())) > 250)//hold音符的释放判定
+	if (((NoteList->value(*HoldPressed)->endTime()) - (Parent->time())) > 160)//hold音符的释放判定
 	{
 		qDebug()<<"\tMOONOTUSYSTEM::_Message_::Miss check of hold's after";
 		NoteCheckAnimationList->insert(Parent->time(), miss);
@@ -838,59 +841,38 @@ void MCheckDot::misscheck()
 	}
 }
 
-void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext, QColor NoteColor, QColor LineColor)//提供给谱面编辑师用于快速快速添加新音符
-{
-	MNote* newNote = new MNote(this);
-	newNote->setTime(time);
-	newNote->setType(type);
-	newNote->setTimeLength(timelength);
-	newNote->setBeatKey(beatkey, beatkeytext);
-	newNote->setNoteColor(NoteColor);
-	newNote->setLineColor(LineColor);
-	NoteList->insert(time, newNote);
-}
-
-void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext, QColor NoteColor)//提供给谱面编辑师用于快速快速添加新音符
-{
-	MNote* newNote = new MNote(this);
-	newNote->setTime(time);
-	newNote->setType(type);
-	newNote->setTimeLength(timelength);
-	newNote->setBeatKey(beatkey, beatkeytext);
-	newNote->setNoteColor(NoteColor);
-	NoteList->insert(time, newNote);
-}
-
 void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
 {
 	MNote* newNote = new MNote(this);
 	newNote->setTime(time);
+	newNote->setNextTime(nexttime);
 	newNote->setType(type);
 	newNote->setTimeLength(timelength);
 	newNote->setBeatKey(beatkey, beatkeytext);
 	NoteList->insert(time, newNote);
 }
 
-void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type, qint64 timelength)//提供给谱面编辑师用于快速快速添加新音符
+void MCheckDot::addNote(QColor notecolor, qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
 {
 	MNote* newNote = new MNote(this);
 	newNote->setTime(time);
+	newNote->setNextTime(nexttime);
 	newNote->setType(type);
 	newNote->setTimeLength(timelength);
+	newNote->setBeatKey(beatkey, beatkeytext);
+	newNote->setNoteColor(notecolor);
 	NoteList->insert(time, newNote);
 }
 
-void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type)//提供给谱面编辑师用于快速快速添加新音符
+void MCheckDot::addNote(QColor notecolor, QColor linecolor, qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
 {
 	MNote* newNote = new MNote(this);
 	newNote->setTime(time);
+	newNote->setNextTime(nexttime);
 	newNote->setType(type);
-	NoteList->insert(time, newNote);
-}
-
-void MCheckDot::addNote(qint64 time, qint64 nexttime)//提供给谱面编辑师用于快速快速添加新音符
-{
-	MNote* newNote = new MNote(this);
-	newNote->setTime(time);
+	newNote->setTimeLength(timelength);
+	newNote->setBeatKey(beatkey, beatkeytext);
+	newNote->setNoteColor(notecolor);
+	newNote->setLineColor(linecolor);
 	NoteList->insert(time, newNote);
 }

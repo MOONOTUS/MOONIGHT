@@ -69,10 +69,10 @@
     <QtMoc Include="TestDemo.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="InfinityHeaven.h">
+    <QtMoc Include="MCheckDotLine.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    </QtMoc>Moc Include="MCheckDotLine.h">
+    <QtMoc Include="InfinityHeaven.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="MNote.h">

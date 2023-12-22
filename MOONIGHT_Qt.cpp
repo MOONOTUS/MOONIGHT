@@ -9,7 +9,8 @@ MOONIGHT_Qt::MOONIGHT_Qt(QWidget *parent)
         ui.litTime,
         SIGNAL(timeout()),
         ui.central,
-        SLOT(timeAdd_ms())
+        SLOT(timeAdd_ms()),
+        Qt::DirectConnection
     );
 }
 

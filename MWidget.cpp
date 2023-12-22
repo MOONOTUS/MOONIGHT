@@ -255,6 +255,7 @@ void MWidget::playMusic(bool nodelay)
 {
 	if (!*MusicPlayed)
 	{
+		qDebug() << "MOONOTUSYSTEM::_Message_::Music plays";
 		if (nodelay)
 		{
 			if (*MusicPath != "")
