@@ -219,7 +219,7 @@ void MCheckDot::press(QKeyEvent* event)
 	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard press slot runs";
 	if (NoteList->contains(*NextTime))//触发信号的发送
 	{
-		if (NoteList->value(*NextTime)->time() - Parent->time() <= 160 && NoteList->value(*NextTime)->time() - Parent->time() >= -160)//只对时间差小于160ms的第一个音符进行判定
+		if (NoteList->value(*NextTime)->time() - Parent->time() <= 160 && NoteList->value(*NextTime)->time() - Parent->time() >= -250)//只对处在判断区间的第一个音符进行判定
 		{
 			if (NoteList->value(*NextTime)->type() == click || NoteList->value(*NextTime)->type() == hold)//对于click音符和hold音符，只在触发开始时进行判定
 			{
@@ -375,6 +375,10 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 			qDebug() << "\tMOONOTUS::_Message_::Note paints";
 			NoteList->value(*NextTime)->setWidth(NoteList->value(*NextTime)->width());
 			NoteList->value(*NextTime)->setRadium(NoteList->value(*NextTime)->radium());
+			if (*HoldPressing)
+			{
+				paintHoldNote(paint);
+			}
 			switch (NoteList->value(*NextTime)->type())
 			{
 			case click:
@@ -832,4 +836,61 @@ void MCheckDot::misscheck()
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
+}
+
+void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext, QColor NoteColor, QColor LineColor)//提供给谱面编辑师用于快速快速添加新音符
+{
+	MNote* newNote = new MNote(this);
+	newNote->setTime(time);
+	newNote->setType(type);
+	newNote->setTimeLength(timelength);
+	newNote->setBeatKey(beatkey, beatkeytext);
+	newNote->setNoteColor(NoteColor);
+	newNote->setLineColor(LineColor);
+	NoteList->insert(time, newNote);
+}
+
+void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext, QColor NoteColor)//提供给谱面编辑师用于快速快速添加新音符
+{
+	MNote* newNote = new MNote(this);
+	newNote->setTime(time);
+	newNote->setType(type);
+	newNote->setTimeLength(timelength);
+	newNote->setBeatKey(beatkey, beatkeytext);
+	newNote->setNoteColor(NoteColor);
+	NoteList->insert(time, newNote);
+}
+
+void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
+{
+	MNote* newNote = new MNote(this);
+	newNote->setTime(time);
+	newNote->setType(type);
+	newNote->setTimeLength(timelength);
+	newNote->setBeatKey(beatkey, beatkeytext);
+	NoteList->insert(time, newNote);
+}
+
+void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type, qint64 timelength)//提供给谱面编辑师用于快速快速添加新音符
+{
+	MNote* newNote = new MNote(this);
+	newNote->setTime(time);
+	newNote->setType(type);
+	newNote->setTimeLength(timelength);
+	NoteList->insert(time, newNote);
+}
+
+void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type)//提供给谱面编辑师用于快速快速添加新音符
+{
+	MNote* newNote = new MNote(this);
+	newNote->setTime(time);
+	newNote->setType(type);
+	NoteList->insert(time, newNote);
+}
+
+void MCheckDot::addNote(qint64 time, qint64 nexttime)//提供给谱面编辑师用于快速快速添加新音符
+{
+	MNote* newNote = new MNote(this);
+	newNote->setTime(time);
+	NoteList->insert(time, newNote);
 }

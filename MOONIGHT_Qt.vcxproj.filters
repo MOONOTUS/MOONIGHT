@@ -55,6 +55,9 @@
     <ClCompile Include="MCenter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InfinityHeaven.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MWidget.h">
@@ -66,7 +69,10 @@
     <QtMoc Include="TestDemo.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="MCheckDotLine.h">
+    <QtMoc Include="InfinityHeaven.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    </QtMoc>Moc Include="MCheckDotLine.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="MNote.h">
