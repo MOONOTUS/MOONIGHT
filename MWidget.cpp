@@ -16,7 +16,9 @@ MWidget::MWidget(QWidget* parent)
 	time_ms = new qint64(0);//时间置零
 	DisTime = new QElapsedTimer();
 	KeyPressingList = new QSet<qint32>;
-	Delay = new qint64(0);
+	GapDelay = new qint64(3000);
+	FixDelay = new qint64(0);
+	Delay=new qint64(*GapDelay+*FixDelay);
 	MusicPath = new QString("");
 	PlayerBase = new QAudioOutput(this);
 	Player = new QMediaPlayer(this);
@@ -231,9 +233,42 @@ QSet<qint32>*& MWidget::keyPressingList()
 	return KeyPressingList;
 }
 
-void MWidget::setDelay(qint64 delay)
+void MWidget::setGapDelay(qint64 delay)
 {
-	Delay = new qint64(delay);
+	GapDelay = new qint64(delay);
+	Delay = new qint64(*GapDelay + *FixDelay);
+	for (QMap<QString, MCheckDot*>::iterator dotptr = CheckDotList->begin(); dotptr != CheckDotList->end(); ++dotptr)
+	{
+		QMap <qint64, MNote*>* NewNoteList = new QMap <qint64, MNote*>;
+		for (QMap <qint64, MNote*>::iterator noteptr = dotptr.value()->noteList()->begin(); noteptr != dotptr.value()->noteList()->end(); ++noteptr)
+		{
+			MNote* NewNote = new MNote(noteptr.value());
+			NewNote->setTime(noteptr.value()->time() + *GapDelay);
+			if (NewNote->nextTime() != -1)
+			{
+				NewNote->setNextTime(noteptr.value()->nextTime() + *GapDelay);
+			}
+			NewNoteList->insert(noteptr.key() + *GapDelay, NewNote);
+		}
+		dotptr.value()->setNextTime(dotptr.value()->nextTime() + *GapDelay);
+		dotptr.value()->noteList() = new QMap <qint64, MNote*>(*NewNoteList);
+	}
+}
+
+void MWidget::setFixDelay(qint64 delay)
+{
+	FixDelay = new qint64(delay);
+	Delay = new qint64(*GapDelay + *FixDelay);
+}
+
+qint64 MWidget::gapDelay()
+{
+	return *GapDelay;
+}
+
+qint64 MWidget::fixDelay()
+{
+	return *FixDelay;
 }
 
 qint64 MWidget::delay()

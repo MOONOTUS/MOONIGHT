@@ -21,6 +21,29 @@ MNote::MNote(MCheckDot* parent)
 	VTime = new qint64(*Time);
 	VTimeLength = new qint64(*TimeLength);
 	VEndTime = new qint64(*VTime + *VTimeLength);
+	NextTime = new qint64(0);
+}
+
+MNote::MNote(MNote* note)
+{
+	Parent = note->MParent();
+	Visuable = new bool(note->visuable());
+	Radium = new qreal(note->radium());
+	VRadium = new qreal(note->vRadium());
+	Width = new qreal(note->width());
+	VWidth = new qreal(note->vWidth());
+	NoteColor = new QColor(note->noteColor());
+	LineColor = new QColor(note->lineColor());
+	Type = new qint32(note->type());
+	BeatKey = new qint32(note->beatKey());
+	BeatKeyText = new QString(note->beatKeyText());
+	Time = new qint64(note->time());
+	TimeLength = new qint64(note->timeLength());
+	EndTime = new qint64(note->endTime());
+	VTime = new qint64(note->vTime());
+	VTimeLength = new qint64(note->vTimeLength());
+	VEndTime = new qint64(note->vEndTime());
+	NextTime = new qint64(note->nextTime());
 }
 
 MNote::~MNote()

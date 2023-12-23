@@ -33,6 +33,7 @@ private:
 
 public:
 	MNote(MCheckDot* parent = nullptr);
+	MNote(MNote* note);
 	~MNote();
 
 	void MNoteSet(bool visuable, qreal radium = -1, qreal width = -1, QColor color = Qt::transparent, qint32 type = -1, qint64 time = -1, qint64 nextTime = -1, qint32 beatKey = -1, QString beatKeyText = "", qint64 timeLength = 0);//设定音符的各项参数，默认参数表示不改变

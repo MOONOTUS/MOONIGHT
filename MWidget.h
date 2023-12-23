@@ -36,6 +36,8 @@ private:
 	QPixmap* Logo;//MOONOIGHT的标志图片
 	QElapsedTimer* DisTime;
 	QSet<qint32>* KeyPressingList;
+	qint64* GapDelay;
+	qint64* FixDelay;
 	qint64* Delay;
 	QString* MusicPath;
 	QAudioOutput* PlayerBase;
@@ -66,8 +68,11 @@ public:
 	qint64 time();//返回time_ms
 	QElapsedTimer*& disTime();
 	QSet<qint32>*& keyPressingList();
-	void setDelay(qint64 delay);
+	void setGapDelay(qint64 delay);
+	void setFixDelay(qint64 delay);
 	qint64 delay();
+	qint64 fixDelay();
+	qint64 gapDelay();
 	void setMusicPath(QString path);
 	QString musicPath();
 	void playMusic(bool nodelay = false);
