@@ -4,15 +4,33 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	: QObject(parent)
 {
 	QPixmap backImage(".\\Grass.png");
+	parent->setShowLogo(false);
 	parent->setBackImage(backImage);
 	parent->setShowBackImage(true);
 	parent->setShowBackBackImage(true);
 	parent->setBackCoverColor(QColor(0, 0, 0, 196));
+
+	parent->setMusicPath(".\\InfinityHeaven.ogg");
+
 	parent->checkDotList()->insert("M", new MCheckDot(parent));
 	parent->checkDotList()->value("M")->setKey(Qt::Key_M, "M");
 	parent->checkDotList()->value("M")->setKeyVisuable(true);
+
+	parent->checkDotList()->insert("V2", new MCheckDot(parent));
+	parent->checkDotList()->value("V2")->setKey(Qt::Key_V, "V");
+	parent->checkDotList()->value("V2")->setKeyVisuable(true);
+
+	parent->checkDotList()->insert("V", new MCheckDot(parent));
+	parent->checkDotList()->value("V")->setKey(Qt::Key_V, "V");
+	parent->checkDotList()->value("V")->setKeyVisuable(true);
+
 	parent->checkDotList()->value("M")->setNextTime(375);
-	parent->checkDotList()->value("M")->addNote(375,			937.5, click);
+
+	parent->checkDotList()->value("V")->setNextTime(24562.5);
+
+	parent->checkDotList()->value("V2")->setNextTime(24562.5);
+
+	parent->checkDotList()->value("M")->addNote(375,		937.5, click);
 	parent->checkDotList()->value("M")->addNote(937.5,		1875, click);
 	parent->checkDotList()->value("M")->addNote(1875,		2437.5, click);
 	parent->checkDotList()->value("M")->addNote(2437.5,		3375, click);
@@ -35,28 +53,28 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->value("M")->addNote(9375,		9937.5, click);
 	parent->checkDotList()->value("M")->addNote(9937.5,		10875, click);
 	parent->checkDotList()->value("M")->addNote(10875,		11437.5, click);
-	parent->checkDotList()->value("M")->addNote(11437.5,		11625, click);
+	parent->checkDotList()->value("M")->addNote(11437.5,	11625, click);
 	parent->checkDotList()->value("M")->addNote(11625,		11812.5, click);
-	parent->checkDotList()->value("M")->addNote(11812.5,		12000, click);
+	parent->checkDotList()->value("M")->addNote(11812.5,	12000, click);
 	parent->checkDotList()->value("M")->addNote(12000,		12187.5, click);
-	parent->checkDotList()->value("M")->addNote(12187.5,		12375, click);
+	parent->checkDotList()->value("M")->addNote(12187.5,	12375, click);
 	parent->checkDotList()->value("M")->addNote(12375,		12656.25, click);
 	parent->checkDotList()->value("M")->addNote(12656.25,	12937.5, click);
-	parent->checkDotList()->value("M")->addNote(12937.5,		13125, click);
+	parent->checkDotList()->value("M")->addNote(12937.5,	13125, click);
 	parent->checkDotList()->value("M")->addNote(13125,		13312.5, click);
-	parent->checkDotList()->value("M")->addNote(13312.5,		13500, click);
+	parent->checkDotList()->value("M")->addNote(13312.5,	13500, click);
 	parent->checkDotList()->value("M")->addNote(13500,		13875, click);
 	parent->checkDotList()->value("M")->addNote(13875,		14156.25, click);
 	parent->checkDotList()->value("M")->addNote(14156.25,	14437.5, click);
-	parent->checkDotList()->value("M")->addNote(14437.5,		14625, click);
+	parent->checkDotList()->value("M")->addNote(14437.5,	14625, click);
 	parent->checkDotList()->value("M")->addNote(14625,		14812.5, click);
-	parent->checkDotList()->value("M")->addNote(14812.5,		15000, click);
+	parent->checkDotList()->value("M")->addNote(14812.5,	15000, click);
 	parent->checkDotList()->value("M")->addNote(15000,		15375, click);
 	parent->checkDotList()->value("M")->addNote(15375,		15656.25, click);
 	parent->checkDotList()->value("M")->addNote(15656.25,	15937.5, click);
-	parent->checkDotList()->value("M")->addNote(15937.5,		16125, click);
+	parent->checkDotList()->value("M")->addNote(15937.5,	16125, click);
 	parent->checkDotList()->value("M")->addNote(16125,		16312.5, click);
-	parent->checkDotList()->value("M")->addNote(16312.5,		16500, click);
+	parent->checkDotList()->value("M")->addNote(16312.5,	16500, click);
 	parent->checkDotList()->value("M")->addNote(16500, 16687.5, click);
 	parent->checkDotList()->value("M")->addNote(16687.5, 17062.5, click);
 	parent->checkDotList()->value("M")->addNote(17062.5, 17343.75, click);
@@ -82,44 +100,48 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->value("M")->addNote(23250, 23625, click);
 	parent->checkDotList()->value("M")->addNote(23625, 24000, click);
 	parent->checkDotList()->value("M")->addNote(24000, 24375, click);
-	parent->checkDotList()->value("M")->addNote(24375, 24562.5, click);
-	parent->checkDotList()->value("M")->addNote(24562.5, 24750, click);
-	parent->checkDotList()->value("M")->addNote(24750, 24843.75, click);
-	parent->checkDotList()->value("M")->addNote(24843.75, 24937.5, click);
-	parent->checkDotList()->value("M")->addNote(24937.5, 25125, click);
-	parent->checkDotList()->value("M")->addNote(25125, 25218.75, click);
-	parent->checkDotList()->value("M")->addNote(25218.75, 25312.5, click);
-	parent->checkDotList()->value("M")->addNote(25312.5, 25500, click);
-	parent->checkDotList()->value("M")->addNote(25500, 25593.75, click);
-	parent->checkDotList()->value("M")->addNote(25593.75, 25687.5, click);
-	parent->checkDotList()->value("M")->addNote(25687.5, 25875, click);
-	parent->checkDotList()->value("M")->addNote(25875, 25968.75, click);
-	parent->checkDotList()->value("M")->addNote(25968.75, 26062.5, click);
-	parent->checkDotList()->value("M")->addNote(26062.5, 26250, click);
-	parent->checkDotList()->value("M")->addNote(26250, 26343.75, click);
-	parent->checkDotList()->value("M")->addNote(26343.75, 26437.5, click);
-	parent->checkDotList()->value("M")->addNote(26437.5, 26625, click);
-	parent->checkDotList()->value("M")->addNote(26625, 26718.75, click);
-	parent->checkDotList()->value("M")->addNote(26718.75, 26812.5, click);
-	parent->checkDotList()->value("M")->addNote(26812.5, 27000, click);
-	parent->checkDotList()->value("M")->addNote(27000, 27093.75, click);
-	parent->checkDotList()->value("M")->addNote(27093.75, 27187.5, click);
-	parent->checkDotList()->value("M")->addNote(27187.5, 27375, click);
-	parent->checkDotList()->value("M")->addNote(27375, 27468.75, click);
-	parent->checkDotList()->value("M")->addNote(27468.75, 27562.5, click);
-	parent->checkDotList()->value("M")->addNote(27562.5, 27750, click);
-	parent->checkDotList()->value("M")->addNote(27750, 27843.75, click);
-	parent->checkDotList()->value("M")->addNote(27843.75, 27937.5, click);
-	parent->checkDotList()->value("M")->addNote(27937.5, 28125, click);
-	parent->checkDotList()->value("M")->addNote(28125, 28218.75, click);
-	parent->checkDotList()->value("M")->addNote(28218.75, 28312.5, click);
-	parent->checkDotList()->value("M")->addNote(28312.5, 28500, click);
-	parent->checkDotList()->value("M")->addNote(28500, 28593.75, click);
-	parent->checkDotList()->value("M")->addNote(28593.75, 28687.5, click);
-	parent->checkDotList()->value("M")->addNote(28687.5, 28875, click);
-	parent->checkDotList()->value("M")->addNote(28875, 28968.75, click);
-	parent->checkDotList()->value("M")->addNote(28968.75, 29062.5, click);
-	parent->checkDotList()->value("M")->addNote(29062.5, 29250, click);
+	parent->checkDotList()->value("M")->addNote(24375, 29250, click);
+
+	parent->checkDotList()->value("V2")->addNote(24562.5, 30750, hold, 29062.5 - 24562.5);
+
+	parent->checkDotList()->value("V")->addNote(24562.5, 24750, cat);
+	parent->checkDotList()->value("V")->addNote(24750, 24843.75, cat);
+	parent->checkDotList()->value("V")->addNote(24843.75, 24937.5, cat);
+	parent->checkDotList()->value("V")->addNote(24937.5, 25125, cat);
+	parent->checkDotList()->value("V")->addNote(25125, 25218.75, cat);
+	parent->checkDotList()->value("V")->addNote(25218.75, 25312.5, cat);
+	parent->checkDotList()->value("V")->addNote(25312.5, 25500, cat);
+	parent->checkDotList()->value("V")->addNote(25500, 25593.75, cat);
+	parent->checkDotList()->value("V")->addNote(25593.75, 25687.5, cat);
+	parent->checkDotList()->value("V")->addNote(25687.5, 25875, cat);
+	parent->checkDotList()->value("V")->addNote(25875, 25968.75, cat);
+	parent->checkDotList()->value("V")->addNote(25968.75, 26062.5, cat);
+	parent->checkDotList()->value("V")->addNote(26062.5, 26250, cat);
+	parent->checkDotList()->value("V")->addNote(26250, 26343.75, cat);
+	parent->checkDotList()->value("V")->addNote(26343.75, 26437.5, cat);
+	parent->checkDotList()->value("V")->addNote(26437.5, 26625, cat);
+	parent->checkDotList()->value("V")->addNote(26625, 26718.75, cat);
+	parent->checkDotList()->value("V")->addNote(26718.75, 26812.5, cat);
+	parent->checkDotList()->value("V")->addNote(26812.5, 27000, cat);
+	parent->checkDotList()->value("V")->addNote(27000, 27093.75, cat);
+	parent->checkDotList()->value("V")->addNote(27093.75, 27187.5, cat);
+	parent->checkDotList()->value("V")->addNote(27187.5, 27375, cat);
+	parent->checkDotList()->value("V")->addNote(27375, 27468.75, cat);
+	parent->checkDotList()->value("V")->addNote(27468.75, 27562.5, cat);
+	parent->checkDotList()->value("V")->addNote(27562.5, 27750, cat);
+	parent->checkDotList()->value("V")->addNote(27750, 27843.75, cat);
+	parent->checkDotList()->value("V")->addNote(27843.75, 27937.5, cat);
+	parent->checkDotList()->value("V")->addNote(27937.5, 28125, cat);
+	parent->checkDotList()->value("V")->addNote(28125, 28218.75, cat);
+	parent->checkDotList()->value("V")->addNote(28218.75, 28312.5, cat);
+	parent->checkDotList()->value("V")->addNote(28312.5, 28500, cat);
+	parent->checkDotList()->value("V")->addNote(28500, 28593.75, cat);
+	parent->checkDotList()->value("V")->addNote(28593.75, 28687.5, cat);
+	parent->checkDotList()->value("V")->addNote(28687.5, 28875, cat);
+	parent->checkDotList()->value("V")->addNote(28875, 28968.75, cat);
+	parent->checkDotList()->value("V")->addNote(28968.75, 29062.5, cat);
+	parent->checkDotList()->value("V")->addNote(29062.5, 30750, cat);
+
 	parent->checkDotList()->value("M")->addNote(29250, 29437.5, click);
 	parent->checkDotList()->value("M")->addNote(29437.5, 29625, click);
 	parent->checkDotList()->value("M")->addNote(29625, 29812.5, click);
@@ -127,45 +149,49 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->value("M")->addNote(30000, 30187.5, click);
 	parent->checkDotList()->value("M")->addNote(30187.5, 30375, click);
 	parent->checkDotList()->value("M")->addNote(30375, 30562.5, click);
-	parent->checkDotList()->value("M")->addNote(30562.5, 30750, click);
-	parent->checkDotList()->value("M")->addNote(30750, 30843.75, click);
-	parent->checkDotList()->value("M")->addNote(30843.75, 30937.5, click);
-	parent->checkDotList()->value("M")->addNote(30937.5, 31125, click);
-	parent->checkDotList()->value("M")->addNote(31125, 31218.75, click);
-	parent->checkDotList()->value("M")->addNote(31218.75, 31312.5, click);
-	parent->checkDotList()->value("M")->addNote(31312.5, 31500, click);
-	parent->checkDotList()->value("M")->addNote(31500, 31593.75, click);
-	parent->checkDotList()->value("M")->addNote(31593.75, 31687.5, click);
-	parent->checkDotList()->value("M")->addNote(31687.5, 31875, click);
-	parent->checkDotList()->value("M")->addNote(31875, 31968.75, click);
-	parent->checkDotList()->value("M")->addNote(31968.75, 32062.5, click);
-	parent->checkDotList()->value("M")->addNote(32062.5, 32250, click);
-	parent->checkDotList()->value("M")->addNote(32250, 32343.75, click);
-	parent->checkDotList()->value("M")->addNote(32343.75, 32437.5, click);
-	parent->checkDotList()->value("M")->addNote(32437.5, 32625, click);
-	parent->checkDotList()->value("M")->addNote(32625, 32718.75, click);
-	parent->checkDotList()->value("M")->addNote(32718.75, 32812.5, click);
-	parent->checkDotList()->value("M")->addNote(32812.5, 33000, click);
-	parent->checkDotList()->value("M")->addNote(33000, 33093.75, click);
-	parent->checkDotList()->value("M")->addNote(33093.75, 33187.5, click);
-	parent->checkDotList()->value("M")->addNote(33187.5, 33375, click);
-	parent->checkDotList()->value("M")->addNote(33375, 33468.75, click);
-	parent->checkDotList()->value("M")->addNote(33468.75, 33562.5, click);
-	parent->checkDotList()->value("M")->addNote(33562.5, 33750, click);
-	parent->checkDotList()->value("M")->addNote(33750, 33843.75, click);
-	parent->checkDotList()->value("M")->addNote(33843.75, 33937.5, click);
-	parent->checkDotList()->value("M")->addNote(33937.5, 34125, click);
-	parent->checkDotList()->value("M")->addNote(34125, 34218.75, click);
-	parent->checkDotList()->value("M")->addNote(34218.75, 34312.5, click);
-	parent->checkDotList()->value("M")->addNote(34312.5, 34500, click);
-	parent->checkDotList()->value("M")->addNote(34500, 34593.75, click);
-	parent->checkDotList()->value("M")->addNote(34593.75, 34687.5, click);
-	parent->checkDotList()->value("M")->addNote(34687.5, 34875, click);
-	parent->checkDotList()->value("M")->addNote(34875, 34968.75, click);
-	parent->checkDotList()->value("M")->addNote(34968.75, 35062.5, click);
-	parent->checkDotList()->value("M")->addNote(35062.5, 35250, click);
-	parent->checkDotList()->value("M")->addNote(35250, 35343.75, click);
-	parent->checkDotList()->value("M")->addNote(35343.75, 35437.5, click);
+	parent->checkDotList()->value("M")->addNote(30562.5, 35437.5, click);
+
+	parent->checkDotList()->value("V2")->addNote(30750, -1, hold, 35343.75 - 30750);
+
+	parent->checkDotList()->value("V")->addNote(30750, 30843.75, cat);
+	parent->checkDotList()->value("V")->addNote(30843.75, 30937.5, cat);
+	parent->checkDotList()->value("V")->addNote(30937.5, 31125, cat);
+	parent->checkDotList()->value("V")->addNote(31125, 31218.75, cat);
+	parent->checkDotList()->value("V")->addNote(31218.75, 31312.5, cat);
+	parent->checkDotList()->value("V")->addNote(31312.5, 31500, cat);
+	parent->checkDotList()->value("V")->addNote(31500, 31593.75, cat);
+	parent->checkDotList()->value("V")->addNote(31593.75, 31687.5, cat);
+	parent->checkDotList()->value("V")->addNote(31687.5, 31875, cat);
+	parent->checkDotList()->value("V")->addNote(31875, 31968.75, cat);
+	parent->checkDotList()->value("V")->addNote(31968.75, 32062.5, cat);
+	parent->checkDotList()->value("V")->addNote(32062.5, 32250, cat);
+	parent->checkDotList()->value("V")->addNote(32250, 32343.75, cat);
+	parent->checkDotList()->value("V")->addNote(32343.75, 32437.5, cat);
+	parent->checkDotList()->value("V")->addNote(32437.5, 32625, cat);
+	parent->checkDotList()->value("V")->addNote(32625, 32718.75, cat);
+	parent->checkDotList()->value("V")->addNote(32718.75, 32812.5, cat);
+	parent->checkDotList()->value("V")->addNote(32812.5, 33000, cat);
+	parent->checkDotList()->value("V")->addNote(33000, 33093.75, cat);
+	parent->checkDotList()->value("V")->addNote(33093.75, 33187.5, cat);
+	parent->checkDotList()->value("V")->addNote(33187.5, 33375, cat);
+	parent->checkDotList()->value("V")->addNote(33375, 33468.75, cat);
+	parent->checkDotList()->value("V")->addNote(33468.75, 33562.5, cat);
+	parent->checkDotList()->value("V")->addNote(33562.5, 33750, cat);
+	parent->checkDotList()->value("V")->addNote(33750, 33843.75, cat);
+	parent->checkDotList()->value("V")->addNote(33843.75, 33937.5, cat);
+	parent->checkDotList()->value("V")->addNote(33937.5, 34125, cat);
+	parent->checkDotList()->value("V")->addNote(34125, 34218.75, cat);
+	parent->checkDotList()->value("V")->addNote(34218.75, 34312.5, cat);
+	parent->checkDotList()->value("V")->addNote(34312.5, 34500, cat);
+	parent->checkDotList()->value("V")->addNote(34500, 34593.75, cat);
+	parent->checkDotList()->value("V")->addNote(34593.75, 34687.5, cat);
+	parent->checkDotList()->value("V")->addNote(34687.5, 34875, cat);
+	parent->checkDotList()->value("V")->addNote(34875, 34968.75, cat);
+	parent->checkDotList()->value("V")->addNote(34968.75, 35062.5, cat);
+	parent->checkDotList()->value("V")->addNote(35062.5, 35250, cat);
+	parent->checkDotList()->value("V")->addNote(35250, 35343.75, cat);
+	parent->checkDotList()->value("V")->addNote(35343.75, -1, cat);
+
 	parent->checkDotList()->value("M")->addNote(35437.5, 35625, click);
 	parent->checkDotList()->value("M")->addNote(35625, 35812.5, click);
 	parent->checkDotList()->value("M")->addNote(35812.5, 36000, click);
@@ -227,14 +253,27 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->value("M")->addNote(48750, 48937.5, click);
 	parent->checkDotList()->value("M")->addNote(48937.5, 49125, click);
 	parent->checkDotList()->value("M")->addNote(49125, -1, click);
-	parent->checkDotList()->value("M")->setPoint(960, 700);
+
+	parent->checkDotList()->value("M")->setPoint(1020, 700);
 	parent->checkDotList()->value("M")->dotLine()->setDownVisuable(false);
-	parent->setGapDelay(3000);
+
+	parent->checkDotList()->value("V")->setPoint(900, 380);
+	parent->checkDotList()->value("V")->dotLine()->setDownVisuable(false);
+	parent->checkDotList()->value("V")->dotLine()->setAngel(-90);
+
+	parent->checkDotList()->value("V2")->setPoint(900, 380);
+	parent->checkDotList()->value("V2")->dotLine()->setDownVisuable(false);
+	parent->checkDotList()->value("V2")->dotLine()->setAngel(-90);
+
+	parent->setGapDelay(3000);//必须写在所有音符添加完成之后
 	parent->setFixDelay(0);
-	parent->checkDotList()->value("M")->setSpeed(600);
+
+	parent->checkDotList()->value("M")->setSpeed(500);
+	parent->checkDotList()->value("V")->setSpeed(500);
 	parent->checkDotList()->value("M")->show();
+	parent->checkDotList()->value("M")->show();
+
 	parent->repaint();
-	parent->setMusicPath(".\\InfinityHeaven.ogg");
 	this->parent = parent;
 }
 

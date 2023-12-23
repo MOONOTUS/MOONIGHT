@@ -11,7 +11,7 @@ MWidget::MWidget(QWidget* parent)
 	ifShowBackBackImage = new bool(false);//初始化显示背景的背景为假
 	ifShowLogo = new bool(true);//初始化显示标志为真
 	backColor = new  QColor(245, 245, 245);//初始化背景色为（245，245，245，255）的亮灰白色
-	Logo = new QPixmap("D:\\Painting\\MOONIGHT_Beta_Little.png");//读取Logo图片，稍后改为相对路径
+	Logo = new QPixmap(".\\MOONIGHT_Beta_Little.png");//读取Logo图片，稍后改为相对路径
 	backCoverColor = new QColor(255, 255, 255, 0);//初始化背景遮罩色为全透明白色，即不显示遮罩
 	time_ms = new qint64(0);//时间置零
 	DisTime = new QElapsedTimer();
@@ -290,11 +290,11 @@ void MWidget::playMusic(bool nodelay)
 {
 	if (!*MusicPlayed)
 	{
-		qDebug() << "MOONOTUSYSTEM::_Message_::Music plays";
 		if (nodelay)
 		{
 			if (*MusicPath != "")
 			{
+				qDebug() << "MOONOTUSYSTEM::_Message_::Music plays";
 				Player->setSource(QUrl::fromLocalFile(*MusicPath));
 				Player->play();
 				MusicPlayed = new bool(true);
@@ -304,6 +304,7 @@ void MWidget::playMusic(bool nodelay)
 		{
 			if (*MusicPath != "")
 			{
+				qDebug() << "MOONOTUSYSTEM::_Message_::Music plays";
 				Player->setSource(QUrl::fromLocalFile(*MusicPath));
 				Player->play();
 				MusicPlayed = new bool(true);

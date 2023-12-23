@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include"MCenter.h"
 
@@ -9,9 +9,9 @@ class MWidget : public QWidget
 	Q_OBJECT
 
 protected:
-	void paintEvent(QPaintEvent* event);//¾­¹ıÖØĞ´µÄ»æÖÆº¯Êı
-	void keyPressEvent(QKeyEvent* event);//ÖØĞ´µÄ¼üÅÌ°´ÏÂÊÂ¼şº¯Êı
-	void keyReleaseEvent(QKeyEvent* event);//ÖØĞ´µÄ¼üÅÌÊÍ·ÅÊÂ¼şº¯Êı
+	void paintEvent(QPaintEvent* event);//ç»è¿‡é‡å†™çš„ç»˜åˆ¶å‡½æ•°
+	void keyPressEvent(QKeyEvent* event);//é‡å†™çš„é”®ç›˜æŒ‰ä¸‹äº‹ä»¶å‡½æ•°
+	void keyReleaseEvent(QKeyEvent* event);//é‡å†™çš„é”®ç›˜é‡Šæ”¾äº‹ä»¶å‡½æ•°
 
 
 signals:
@@ -19,21 +19,21 @@ signals:
 	void keyReleaseUp(QKeyEvent* event);
 
 public slots:
-	void timeAdd_ms();//¼ÆÊ±²Û£¬Óëparent->litTimeµÄĞÅºÅtimeout()Á¬½Ó
+	void timeAdd_ms();//è®¡æ—¶æ§½ï¼Œä¸parent->litTimeçš„ä¿¡å·timeout()è¿æ¥
 
 private:
-	QWidget* Parent;//´æ´¢¸¸¶ÔÏóµÄÖ¸Õë
-	QPixmap* backImage;//±³¾°Í¼Æ¬
-	QPixmap* backBackImage;//Ìî³ä±³¾°¿Õ°×µÄÄ£ºı±³¾°Í¼Æ¬£¨ÔÚÉèÖÃ±³¾°Í¼Æ¬Ê±×Ô¶¯Éú³É£©
-	QColor* backCoverColor;//±³¾°ÕÚÕÖÉ«£¨RGBA£©
-	QColor* backColor;//±³¾°É«£¨RGBA£©
-	QSize* OriSize;//Ô­Ê¼³ß´ç£¬¹ÌÓĞÖµ£¬ÓÃÓÚ×ÔÊÊÓ¦µÄÊµÏÖ
-	QMap<QString, MCheckDot*>* CheckDotList;//ÅĞ¶¨µãµÄQMapÈİÆ÷£¬¿ÉÒÔÍ¨¹ıKeyÖµ»ñÈ¡¶ÔÓ¦µÄÅĞ¶¨µã£¬Ò»°ã½¨Òé²ÉÓÃÅĞ¶¨µãµÄÅĞ¶¨¼ü×öKeyÖµ
-	bool* ifShowBackImage;//ÊÇ·ñÏÔÊ¾±³¾°Í¼Æ¬
-	bool* ifShowBackBackImage;//ÊÇ·ñÏÔÊ¾±³¾°µÄ±³¾°Í¼Æ¬
-	bool* ifShowLogo;//ÊÇ·ñÏÔÊ¾±êÖ¾
-	qint64* time_ms;//ÒÔmsÎªµ¥Î»µÄ¼ÆÊ±
-	QPixmap* Logo;//MOONOIGHTµÄ±êÖ¾Í¼Æ¬
+	QWidget* Parent;//å­˜å‚¨çˆ¶å¯¹è±¡çš„æŒ‡é’ˆ
+	QPixmap* backImage;//èƒŒæ™¯å›¾ç‰‡
+	QPixmap* backBackImage;//å¡«å……èƒŒæ™¯ç©ºç™½çš„æ¨¡ç³ŠèƒŒæ™¯å›¾ç‰‡ï¼ˆåœ¨è®¾ç½®èƒŒæ™¯å›¾ç‰‡æ—¶è‡ªåŠ¨ç”Ÿæˆï¼‰
+	QColor* backCoverColor;//èƒŒæ™¯é®ç½©è‰²ï¼ˆRGBAï¼‰
+	QColor* backColor;//èƒŒæ™¯è‰²ï¼ˆRGBAï¼‰
+	QSize* OriSize;//åŸå§‹å°ºå¯¸ï¼Œå›ºæœ‰å€¼ï¼Œç”¨äºè‡ªé€‚åº”çš„å®ç°
+	QMap<QString, MCheckDot*>* CheckDotList;//åˆ¤å®šç‚¹çš„QMapå®¹å™¨ï¼Œå¯ä»¥é€šè¿‡Keyå€¼è·å–å¯¹åº”çš„åˆ¤å®šç‚¹ï¼Œä¸€èˆ¬å»ºè®®é‡‡ç”¨åˆ¤å®šç‚¹çš„åˆ¤å®šé”®åšKeyå€¼
+	bool* ifShowBackImage;//æ˜¯å¦æ˜¾ç¤ºèƒŒæ™¯å›¾ç‰‡
+	bool* ifShowBackBackImage;//æ˜¯å¦æ˜¾ç¤ºèƒŒæ™¯çš„èƒŒæ™¯å›¾ç‰‡
+	bool* ifShowLogo;//æ˜¯å¦æ˜¾ç¤ºæ ‡å¿—
+	qint64* time_ms;//ä»¥msä¸ºå•ä½çš„è®¡æ—¶
+	QPixmap* Logo;//MOONOIGHTçš„æ ‡å¿—å›¾ç‰‡
 	QElapsedTimer* DisTime;
 	QSet<qint32>* KeyPressingList;
 	qint64* GapDelay;
@@ -48,24 +48,24 @@ public:
 	MWidget(QWidget* parent = nullptr);
 	~MWidget();
 
-	void setBackImage(QString& path);//Éè¶¨±³¾°Í¼Æ¬£¬Í¬Ê±Éú³É±³¾°µÄÄ£ºı±³¾°
-	void setBackImage(QPixmap& image);//Éè¶¨±³¾°Í¼Æ¬£¬Í¬Ê±Éú³É±³¾°µÄÄ£ºı±³¾°
-	void setBackColor(QColor color);//Éè¶¨±³¾°É«
-	void setBackColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//Éè¶¨±³¾°É«
-	void setBackCoverColor(QColor color);//Éè¶¨±³¾°ÕÚÕÖÉ«
-	void setBackCoverColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//Éè¶¨±³¾°ÕÚÕÖÉ«
-	void setShowBackImage(bool show);//Éè¶¨ÊÇ·ñÏÔÊ¾±³¾°Í¼Æ¬
-	void setShowBackBackImage(bool show);//Éè¶¨ÊÇ·ñÏÔÊ¾±³¾°µÄ±³¾°Í¼Æ¬
-	void setShowLogo(bool show);//Éè¶¨ÊÇ·ñÏÔÊ¾±êÖ¾
-	bool showBackImage();//·µ»Ø*ifShowBackImage
-	bool showBackBackImage();//·µ»Ø*ifShowBackBackImage
-	bool showLogo();//·µ»Ø*ifSHowLogo
-	void setCheckDotList(QMap<QString, MCheckDot*>*& checkdotlist);//Éè¶¨ÅĞ¶¨µãÈİÆ÷
-	QMap<QString, MCheckDot*>*& checkDotList();//·µ»ØÅĞ¶¨µãÈİÆ÷µÄÒıÓÃ
-	QSize oriSize();//·µ»Ø*OriSize£¬ÓÃÓÚ×ÔÊÊÓ¦µÄÊµÏÖ
-	QWidget*& MParent();//·µ»ØParent£¬ÓÃÓÚËİÔ´
-	void setTime(qint64 ms);//Éè¶¨µ±Ç°Ê±¼ä£¬Í¨³£Ö»ÔÚÇúÆ×¿ªÊ¼Ê±µ÷ÓÃ£¬½«Ê±¼äÖÃÁã
-	qint64 time();//·µ»Øtime_ms
+	void setBackImage(QString& path);//è®¾å®šèƒŒæ™¯å›¾ç‰‡ï¼ŒåŒæ—¶ç”ŸæˆèƒŒæ™¯çš„æ¨¡ç³ŠèƒŒæ™¯
+	void setBackImage(QPixmap& image);//è®¾å®šèƒŒæ™¯å›¾ç‰‡ï¼ŒåŒæ—¶ç”ŸæˆèƒŒæ™¯çš„æ¨¡ç³ŠèƒŒæ™¯
+	void setBackColor(QColor color);//è®¾å®šèƒŒæ™¯è‰²
+	void setBackColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//è®¾å®šèƒŒæ™¯è‰²
+	void setBackCoverColor(QColor color);//è®¾å®šèƒŒæ™¯é®ç½©è‰²
+	void setBackCoverColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//è®¾å®šèƒŒæ™¯é®ç½©è‰²
+	void setShowBackImage(bool show);//è®¾å®šæ˜¯å¦æ˜¾ç¤ºèƒŒæ™¯å›¾ç‰‡
+	void setShowBackBackImage(bool show);//è®¾å®šæ˜¯å¦æ˜¾ç¤ºèƒŒæ™¯çš„èƒŒæ™¯å›¾ç‰‡
+	void setShowLogo(bool show);//è®¾å®šæ˜¯å¦æ˜¾ç¤ºæ ‡å¿—
+	bool showBackImage();//è¿”å›*ifShowBackImage
+	bool showBackBackImage();//è¿”å›*ifShowBackBackImage
+	bool showLogo();//è¿”å›*ifSHowLogo
+	void setCheckDotList(QMap<QString, MCheckDot*>*& checkdotlist);//è®¾å®šåˆ¤å®šç‚¹å®¹å™¨
+	QMap<QString, MCheckDot*>*& checkDotList();//è¿”å›åˆ¤å®šç‚¹å®¹å™¨çš„å¼•ç”¨
+	QSize oriSize();//è¿”å›*OriSizeï¼Œç”¨äºè‡ªé€‚åº”çš„å®ç°
+	QWidget*& MParent();//è¿”å›Parentï¼Œç”¨äºæº¯æº
+	void setTime(qint64 ms);//è®¾å®šå½“å‰æ—¶é—´ï¼Œé€šå¸¸åªåœ¨æ›²è°±å¼€å§‹æ—¶è°ƒç”¨ï¼Œå°†æ—¶é—´ç½®é›¶
+	qint64 time();//è¿”å›time_ms
 	QElapsedTimer*& disTime();
 	QSet<qint32>*& keyPressingList();
 	void setGapDelay(qint64 delay);

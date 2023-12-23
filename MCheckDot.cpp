@@ -370,7 +370,7 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 	else if (NoteList->contains(*NextTime))
 	{
 		qint64* NextTimeTemp = new qint64(*NextTime);
-		while ( *NextTime != -1 && (((NoteList->contains(*NextTime) && (NoteList->value(*NextTime)->time()) * (*Speed)) / 1000) <= (2203 - (NoteList->value(*NextTime)->radium()))))
+		while ( *NextTime != -1 && (NoteList->contains(*NextTime)) && ((((NoteList->value(*NextTime)->time() - Parent->time()) * (*Speed)) / 1000) <= (2203 - (NoteList->value(*NextTime)->radium()))))
 		{
 			qDebug() << "\tMOONOTUS::_Message_::Note paints";
 			NoteList->value(*NextTime)->setWidth(NoteList->value(*NextTime)->width());
@@ -404,13 +404,9 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 		NextTime = new qint64(*NextTimeTemp);
 		delete NextTimeTemp;
 	}
-	else
+	else if (*HoldPressing)
 	{
-		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
-	}
-	if (*HoldPressing)
-	{
-		if (NoteList->value(*HoldPressed)->endTime() < Parent->time())
+		if (NoteList->value(*HoldPressed)->vEndTime() < Parent->time())
 		{
 			HoldPressing = new bool(false);
 			HoldPressed = new qint64(0);
@@ -419,6 +415,10 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 		{
 			paintHoldNote(paint);
 		}
+	}
+	else
+	{
+		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
 }
 
@@ -507,9 +507,9 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
 	}
 	else if(*HoldPressing)
 	{
+		qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note which is pressed paints";
 		NoteCheckAnimationList->insert(Parent->time(),strictperfect);
 		NoteList->value(*HoldPressed)->setVTime(Parent->time());
-		qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note which is pressed paints";
 		QPainter* paint = new QPainter(this);
 		QLineF line01, line02, line03;
 		line01.setP1(*VPoint);
