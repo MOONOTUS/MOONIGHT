@@ -404,7 +404,7 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 		NextTime = new qint64(*NextTimeTemp);
 		delete NextTimeTemp;
 	}
-	else if (*HoldPressing)
+	if (*HoldPressing)
 	{
 		if (NoteList->value(*HoldPressed)->vEndTime() < Parent->time())
 		{
@@ -505,7 +505,7 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
 		}
 
 	}
-	else if(*HoldPressing)
+	if(*HoldPressing)
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note which is pressed paints";
 		NoteCheckAnimationList->insert(Parent->time(),strictperfect);

@@ -12,10 +12,6 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 
 	parent->setMusicPath(".\\InfinityHeaven.ogg");
 
-	parent->checkDotList()->insert("M", new MCheckDot(parent));
-	parent->checkDotList()->value("M")->setKey(Qt::Key_M, "M");
-	parent->checkDotList()->value("M")->setKeyVisuable(true);
-
 	parent->checkDotList()->insert("V2", new MCheckDot(parent));
 	parent->checkDotList()->value("V2")->setKey(Qt::Key_V, "V");
 	parent->checkDotList()->value("V2")->setKeyVisuable(true);
@@ -23,6 +19,10 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->insert("V", new MCheckDot(parent));
 	parent->checkDotList()->value("V")->setKey(Qt::Key_V, "V");
 	parent->checkDotList()->value("V")->setKeyVisuable(true);
+
+	parent->checkDotList()->insert("M", new MCheckDot(parent));
+	parent->checkDotList()->value("M")->setKey(Qt::Key_M, "M");
+	parent->checkDotList()->value("M")->setKeyVisuable(true);
 
 	parent->checkDotList()->value("M")->setNextTime(375);
 
