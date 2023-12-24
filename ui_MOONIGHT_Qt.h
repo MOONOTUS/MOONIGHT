@@ -48,7 +48,8 @@ public:
 
     void retranslateUi(QMainWindow *MOONIGHT_QtClass)
     {
-        MOONIGHT_QtClass->setWindowTitle(QCoreApplication::translate("MOONIGHT_QtClass", "MOONIGHT_Qt", nullptr));
+        MOONIGHT_QtClass->setWindowTitle(QCoreApplication::translate("MOONIGHT_QtClass", "MOONIGHT", nullptr));
+        central->setWindowTitle(QCoreApplication::translate("MOONIGHT_QtClass", "MOONIGHT", nullptr));
     } // retranslateUi
 
 };

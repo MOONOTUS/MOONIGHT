@@ -5,6 +5,7 @@
 #define HEIGHT 1800
 
 class MCheckDot;
+class MFormerCalculator;
 
 class MWidget : public QWidget
 {
@@ -14,6 +15,7 @@ protected:
 	void paintEvent(QPaintEvent* event);//经过重写的绘制函数
 	void keyPressEvent(QKeyEvent* event);//重写的键盘按下事件函数
 	void keyReleaseEvent(QKeyEvent* event);//重写的键盘释放事件函数
+	void closeEvent(QCloseEvent* event);
 
 
 signals:
@@ -46,6 +48,8 @@ private:
 	QMediaPlayer* Player;
 	bool* MusicPlayed;
 	QVector<qint32>* CheckList;
+	qint64* Combo;
+	MFormerCalculator* Calculator;
 
 public:
 	MWidget(QWidget* parent = nullptr);
@@ -82,4 +86,8 @@ public:
 	void addCheck(qint32 check);
 	QVector<qint32>*& checkList();
 	qreal visualProportion();
+	void addToTitle(QString addtitle);
+	qint64 combo();
+	void setFormerCalculator(MFormerCalculator* formercalculator);
+	MFormerCalculator*& formerCalculator();
 };

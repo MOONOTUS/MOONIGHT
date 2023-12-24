@@ -1,5 +1,6 @@
 ﻿#include "MWidget.h"
-#include"MCheckDot.h"
+#include "MCheckDot.h"
+#include"MFormerCalculator.h"
 
 MWidget::MWidget(QWidget* parent)
 	: QWidget(parent)
@@ -25,6 +26,8 @@ MWidget::MWidget(QWidget* parent)
 	Player->setAudioOutput(PlayerBase);
 	MusicPlayed = new bool(false);
 	CheckList = new QVector<qint32>;
+	Combo = new qint64(0);
+
 	DisTime->start();
 	this->setFocus();
 }
@@ -105,6 +108,11 @@ void MWidget::keyReleaseEvent(QKeyEvent* event)//重写的键盘释放事件函�
 	}
 	releaseKeyboard();
 	event->accept();
+}
+
+void MWidget::closeEvent(QCloseEvent* event)
+{
+	this->Player->stop();
 }
 
 void MWidget::setBackImage(QPixmap& image)
@@ -318,6 +326,16 @@ void MWidget::playMusic(bool nodelay)
 void MWidget::addCheck(qint32 check)
 {
 	CheckList->push_back(check);
+	Calculator->setCheck(check);
+	if (check != miss && check != prebad && check != lagbad)
+	{
+		Combo = new qint64((*Combo) + 1);
+	}
+	else
+	{
+		Combo = new qint64(0);
+	}
+	Calculator->setCombo(*Combo);
 }
 
 QVector<qint32>*& MWidget::checkList()
@@ -327,5 +345,26 @@ QVector<qint32>*& MWidget::checkList()
 
 qreal MWidget::visualProportion()
 {
-	return (this->width() / this->OriSize->width());
+	qreal returnout = qreal(qreal(this->width()) / qreal(this->oriSize().width()));
+	return returnout;
+}
+
+void MWidget::addToTitle(QString addtitle)
+{
+	QString* Title =new QString("MOONIGHT   " + addtitle);
+	this->setWindowTitle(*Title);
+}
+
+qint64 MWidget::combo()
+{
+	return *Combo;
+}
+void MWidget::setFormerCalculator(MFormerCalculator* formercalculator)
+{
+	Calculator = formercalculator;
+}
+
+MFormerCalculator*& MWidget::formerCalculator()
+{
+	return Calculator;
 }
