@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include"MCenter.h"
+#define WIDTH 3200
+#define HEIGHT 1800
 
 class MCheckDot;
 
@@ -43,6 +45,7 @@ private:
 	QAudioOutput* PlayerBase;
 	QMediaPlayer* Player;
 	bool* MusicPlayed;
+	QVector<qint32>* CheckList;
 
 public:
 	MWidget(QWidget* parent = nullptr);
@@ -76,4 +79,7 @@ public:
 	void setMusicPath(QString path);
 	QString musicPath();
 	void playMusic(bool nodelay = false);
+	void addCheck(qint32 check);
+	QVector<qint32>*& checkList();
+	qreal visualProportion();
 };

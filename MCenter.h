@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <QtWidgets/QtWidgets>
+#include<QtWidgets/QtWidgets>
 #include<QtCore/QtCore>
 #include<QtGui/QtGui>
 #include<QtMultimedia/QtMultiMedia>

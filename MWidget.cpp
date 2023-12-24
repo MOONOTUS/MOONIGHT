@@ -6,7 +6,7 @@ MWidget::MWidget(QWidget* parent)
 {
 	Parent = parent;//储存parent
 	CheckDotList = new QMap<QString, MCheckDot*>;//无用的初始化
-	this->OriSize = new QSize(1920, 1080);//设定Size=（1920，1080）的原始坐标系
+	this->OriSize = new QSize(WIDTH, HEIGHT);//设定Size=（3200,1800）的原始坐标系
 	ifShowBackImage = new bool(false);//初始化显示背景图片为假
 	ifShowBackBackImage = new bool(false);//初始化显示背景的背景为假
 	ifShowLogo = new bool(true);//初始化显示标志为真
@@ -24,6 +24,7 @@ MWidget::MWidget(QWidget* parent)
 	Player = new QMediaPlayer(this);
 	Player->setAudioOutput(PlayerBase);
 	MusicPlayed = new bool(false);
+	CheckList = new QVector<qint32>;
 	DisTime->start();
 	this->setFocus();
 }
@@ -215,7 +216,7 @@ void MWidget::setTime(qint64 ms)
 
 qint64 MWidget::time()
 {
-	return *time_ms;
+	return (*time_ms + *FixDelay);
 }
 
 void MWidget::timeAdd_ms()
@@ -300,7 +301,7 @@ void MWidget::playMusic(bool nodelay)
 				MusicPlayed = new bool(true);
 			}
 		}
-		else if (*Delay <= this->time())
+		else if (*GapDelay <= this->time())
 		{
 			if (*MusicPath != "")
 			{
@@ -311,4 +312,20 @@ void MWidget::playMusic(bool nodelay)
 			}
 		}
 	}
+}
+
+
+void MWidget::addCheck(qint32 check)
+{
+	CheckList->push_back(check);
+}
+
+QVector<qint32>*& MWidget::checkList()
+{
+	return CheckList;
+}
+
+qreal MWidget::visualProportion()
+{
+	return (this->width() / this->OriSize->width());
 }

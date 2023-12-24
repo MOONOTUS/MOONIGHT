@@ -5,12 +5,14 @@ MCheckDot::MCheckDot(MWidget *parent)
 	: QPushButton(parent)
 {
 	this->Parent = parent;//存储parent
+	Digonal = new qreal(qPow((qPow(WIDTH, 2) + qPow(HEIGHT, 2)), 0.5));
 	DotColor = new QColor(217, 150, 229, 255);//初始化判定点颜色
 	DotKeyColor = new QColor(DotColor->red(), DotColor->green(), DotColor->blue(), DotColor->alpha() * 2 / 3);//初始化判定键文本颜色
-	Width = new qreal(6.0);//初始化判定点圆圈逻辑宽度
-	Radium = new qreal(30.0);//初始化判定点逻辑半径
+	Width = new qreal(10.0);//初始化判定点圆圈逻辑宽度
+	Radium = new qreal(50.0);//初始化判定点逻辑半径
 	Visuable = new bool(true);//初始化判定点可见性为真
-	Point = new QPoint(parent->width() / 2, parent->height() / 2);//初始化判定点逻辑坐标
+	Point = new QPoint(WIDTH / 2, HEIGHT / 2);//初始化判定点逻辑坐标
+	VPoint = new QPoint(Point->x() * parent->width() / parent->oriSize().width(), Point->y() * parent->width() / parent->oriSize().width());
 	DotLine = new MCheckDotLine(this);//初始化轨道线
 	NoteList = new QMap<qint64, MNote*>;//初始化音符容器
 	NextTime = new qint64(0);//没用的初始化
@@ -19,9 +21,9 @@ MCheckDot::MCheckDot(MWidget *parent)
 	KeyPressingList = new QSet<qint32>;//初始化正在按键列表
 	HoldPressing = new bool(false);//初始化hold按下状态为假
 	HoldPressed = new qint64(0);//没用的初始化
-	Speed = new qreal(200.0);//初始化音符逻辑速度
+	Speed = new qreal(500.0);//初始化音符逻辑速度
 	VSpeed = new qreal(*Speed * parent->width() / parent->oriSize().width());//初始化音符视觉速度
-	LineRadium = new qreal(2500.0);//初始化轨道线逻辑长度
+	LineRadium = new qreal(*Digonal);//初始化轨道线逻辑长度
 	VLineRadium = new qreal(*LineRadium * parent->width() / parent->oriSize().width());//初始化轨道线视觉长度
 	NoteCheckAnimationList = new QMap<qint64, qint32>;
 	this->setGeometry(0,0,parent->width(),parent->height());//设定初始绘制区域
@@ -370,7 +372,7 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 	else if (NoteList->contains(*NextTime))
 	{
 		qint64* NextTimeTemp = new qint64(*NextTime);
-		while ( *NextTime != -1 && (NoteList->contains(*NextTime)) && ((((NoteList->value(*NextTime)->time() - Parent->time()) * (*Speed)) / 1000) <= (2203 - (NoteList->value(*NextTime)->radium()))))
+		while (*NextTime != -1 && (NoteList->contains(*NextTime)) && ((((NoteList->value(*NextTime)->time() - Parent->time()) * (*Speed)) / 1000) <= (*Digonal - (NoteList->value(*NextTime)->radium()))))
 		{
 			qDebug() << "\tMOONOTUS::_Message_::Note paints";
 			NoteList->value(*NextTime)->setWidth(NoteList->value(*NextTime)->width());

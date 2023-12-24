@@ -58,6 +58,9 @@
     <ClCompile Include="InfinityHeaven.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MFormerCaculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MWidget.h">
@@ -73,6 +76,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="InfinityHeaven.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MFormerCaculator.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="MNote.h">

@@ -254,22 +254,22 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->value("M")->addNote(48937.5, 49125, click);
 	parent->checkDotList()->value("M")->addNote(49125, -1, click);
 
-	parent->checkDotList()->value("M")->setPoint(1020, 700);
+	parent->checkDotList()->value("M")->setPoint(1700, 900);
 	parent->checkDotList()->value("M")->dotLine()->setDownVisuable(false);
 
-	parent->checkDotList()->value("V")->setPoint(900, 380);
+	parent->checkDotList()->value("V")->setPoint(1500, 900);
 	parent->checkDotList()->value("V")->dotLine()->setDownVisuable(false);
 	parent->checkDotList()->value("V")->dotLine()->setAngel(-90);
 
-	parent->checkDotList()->value("V2")->setPoint(900, 380);
+	parent->checkDotList()->value("V2")->setPoint(1500, 900);
 	parent->checkDotList()->value("V2")->dotLine()->setDownVisuable(false);
 	parent->checkDotList()->value("V2")->dotLine()->setAngel(-90);
 
 	parent->setGapDelay(3000);//必须写在所有音符添加完成之后
-	parent->setFixDelay(0);
+	parent->setFixDelay(50);
 
-	parent->checkDotList()->value("M")->setSpeed(500);
-	parent->checkDotList()->value("V")->setSpeed(500);
+	parent->checkDotList()->value("M")->setSpeed(900);
+	parent->checkDotList()->value("V")->setSpeed(900);
 	parent->checkDotList()->value("M")->show();
 	parent->checkDotList()->value("M")->show();
 

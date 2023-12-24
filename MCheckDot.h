@@ -72,6 +72,7 @@ private:
 	qreal* LineRadium;//轨道线的逻辑长度
 	qreal* VLineRadium;//轨道线的视觉长度
 	QMap<qint64, qint32>* NoteCheckAnimationList;
+	qreal* Digonal;
 
 public:
 	MCheckDot(MWidget *parent = nullptr);
