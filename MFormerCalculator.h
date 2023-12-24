@@ -28,6 +28,7 @@ private:
 	qreal* VMoonRadium;
 	bool* Show;
 	qreal* Deviation;
+	QString* Type;
 
 public:
 	MFormerCalculator(MWidget *parent);
@@ -42,6 +43,7 @@ public:
 	void setCombo(qint64 combo);
 	void setAccuracy(qreal accuracy);
 	void setCheck(qint32 check);
+	void setCheckText(QString checktext);
 	QPoint vMoonPoint();
 	qreal vMoonRadium();
 	MWidget*& MParent();
@@ -49,4 +51,6 @@ public:
 	bool ifShow();
 	void setDeviation(qreal deviation);
 	qreal deviation();
+	void setType(QString type);
+	QString type();
 };

@@ -323,24 +323,33 @@ void MWidget::playMusic(bool nodelay)
 }
 
 
-void MWidget::addCheck(qint32 check, qint64 time)
+void MWidget::addCheck(qint32 check, qint64 time, qint64 timems)
 {
-	qreal deviation;
-	qint64 timems = *time_ms;
+	qreal deviation = 0;
+	QString checktext = "";
+	QString type = "";
 	if (time != -1)
 	{
 		if ((time - timems) > 0)
 		{
-			deviation = (time - timems) / 160;
+			deviation = (qreal(time) - qreal(timems)) / 160;
+			type = "Fast";
 		}
 		else if ((time - timems) < 0)
 		{
-			deviation = (time - timems) / -160;
+			deviation = (qreal(timems) - qreal(time)) / 160;
+			type = "Slow";
 		}
 		else
 		{
-			deviation = 0;
+			deviation = 100.00;
+			type = "Full";
 		}
+	}
+	else
+	{
+		deviation = 0.00;
+		type = "Miss";
 	}
 	CheckList->push_back(check);
 	if (check != miss && check != prebad && check != lagbad)
@@ -358,34 +367,42 @@ void MWidget::addCheck(qint32 check, qint64 time)
 	{
 		thisaccuracy = 100.00;
 		thisscore = *EachScore;
+		checktext = "Perfect✨";//备选✨✦
+
 	}
 	else if (check == preperfect || check == lagperfect)
 	{
 		thisaccuracy = 80.00;
 		thisscore = (*EachScore) * 3 / 4;
+		checktext = "Perfect";
 	}
 	else if (check == pregood || check == laggood)
 	{
 		thisaccuracy = 50.00;
 		thisscore = (*EachScore) / 2;
+		checktext = "Good";
 	}
 	else if(check == prebad || check == lagbad)
 	{
 		thisaccuracy = 30.00;
 		thisscore = (*EachScore) * 1 / 4;
+		checktext = "Bad";
 	}
 	else
 	{
 		thisaccuracy = 0.00;
 		thisscore = 0;
+		checktext = "Miss";
 	}
 	Accuracy = new qreal(((*Accuracy) * ((*NoteCheckedSum) - 1) + thisaccuracy) / (*NoteCheckedSum));
 	Score = new qint64((*Score) + thisscore);
 	Calculator->setCheck(check);
+	Calculator->setCheckText(checktext);
 	Calculator->setCombo(*Combo);
 	Calculator->setAccuracy(*Accuracy);
 	Calculator->setScore(*Score);
 	Calculator->setDeviation(deviation);
+	Calculator->setType(type);
 }
 
 QVector<qint32>*& MWidget::checkList()

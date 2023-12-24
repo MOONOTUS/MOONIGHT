@@ -25,13 +25,13 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->value("M")->setKey(Qt::Key_M, "M");
 	parent->checkDotList()->value("M")->setKeyVisuable(true);
 
-	parent->checkDotList()->value("M")->setNextTime(375);
+	parent->checkDotList()->value("M")->setNextTime(275);
 
 	parent->checkDotList()->value("V")->setNextTime(24562.5);
 
 	parent->checkDotList()->value("V2")->setNextTime(24562.5);
 
-	parent->checkDotList()->value("M")->addNote(375,		937.5, click);
+	parent->checkDotList()->value("M")->addNote(275,		937.5, click);
 	parent->checkDotList()->value("M")->addNote(937.5,		1875, click);
 	parent->checkDotList()->value("M")->addNote(1875,		2437.5, click);
 	parent->checkDotList()->value("M")->addNote(2437.5,		3375, click);
@@ -267,7 +267,7 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->value("V2")->dotLine()->setAngel(-90);
 
 	parent->setGapDelay(3000);
-	parent->setFixDelay(-500);
+	parent->setFixDelay(100);
 
 	parent->checkDotList()->value("M")->setSpeed(900);
 	parent->checkDotList()->value("V")->setSpeed(900);

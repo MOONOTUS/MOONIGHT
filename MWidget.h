@@ -93,7 +93,7 @@ public:
 	void setMusicName(QString name);
 	QString musicName();
 	void playMusic(bool nodelay = false);
-	void addCheck(qint32 check, qint64 time);
+	void addCheck(qint32 check, qint64 time, qint64 timems);
 	QVector<qint32>*& checkList();
 	qreal visualProportion();
 	void addToTitle(QString addtitle);

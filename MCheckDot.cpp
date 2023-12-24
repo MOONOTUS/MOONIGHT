@@ -710,7 +710,7 @@ void MCheckDot::check()
 			qDebug() << "\tMOONOTUSYSTEM::_Message_::Perfect check of cat";
 			NoteCheckAnimationList->insert(Parent->time(),strictperfect);
 			NoteCheckList->insert(*NextTime, strictperfect);
-			Parent->addCheck(strictperfect, NoteList->value(*NextTime)->time());
+			Parent->addCheck(strictperfect, NoteList->value(*NextTime)->time(), NoteList->value(*NextTime)->time());
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
 		else if (NoteList->value(*NextTime)->type() == hold)//针对hold音符的判定
@@ -720,49 +720,49 @@ void MCheckDot::check()
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::StrictPerfect checks";
 				NoteCheckAnimationList->insert(Parent->time(),strictperfect);
 				NoteCheckList->insert(*NextTime, strictperfect);
-				Parent->addCheck(strictperfect, NoteList->value(*NextTime)->time());
+				Parent->addCheck(strictperfect, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 80)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PrePerfect checks";
 				NoteCheckAnimationList->insert(Parent->time(),preperfect);
 				NoteCheckList->insert(*NextTime, preperfect);
-				Parent->addCheck(preperfect, NoteList->value(*NextTime)->time());
+				Parent->addCheck(preperfect, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -80)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagPerfect checks";
 				NoteCheckAnimationList->insert(Parent->time(),lagperfect);
 				NoteCheckList->insert(*NextTime, lagperfect);
-				Parent->addCheck(lagperfect, NoteList->value(*NextTime)->time());
+				Parent->addCheck(lagperfect, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreGood checks";
 				NoteCheckAnimationList->insert(Parent->time(),pregood);
 				NoteCheckList->insert(*NextTime, pregood);
-				Parent->addCheck(pregood, NoteList->value(*NextTime)->time());
+				Parent->addCheck(pregood, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagGood checks";
 				NoteCheckAnimationList->insert(Parent->time(),laggood);
 				NoteCheckList->insert(*NextTime, laggood);
-				Parent->addCheck(laggood, NoteList->value(*NextTime)->time());
+				Parent->addCheck(laggood, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreBad checks";
 				NoteCheckAnimationList->insert(Parent->time(),prebad);
 				NoteCheckList->insert(*NextTime, prebad);
-				Parent->addCheck(prebad, NoteList->value(*NextTime)->time());
+				Parent->addCheck(prebad, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagBad checks";
 				NoteCheckAnimationList->insert(Parent->time(),lagbad);
 				NoteCheckList->insert(*NextTime, lagbad);
-				Parent->addCheck(lagbad, NoteList->value(*NextTime)->time());
+				Parent->addCheck(lagbad, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			HoldPressing = new bool(true);
 			HoldPressed = new qint64(*NextTime);
@@ -775,49 +775,49 @@ void MCheckDot::check()
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::StrictPerfect checks";
 				NoteCheckAnimationList->insert(Parent->time(),strictperfect);
 				NoteCheckList->insert(*NextTime, strictperfect);
-				Parent->addCheck(strictperfect, NoteList->value(*NextTime)->time());
+				Parent->addCheck(strictperfect, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 80)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PrePerfect checks";
 				NoteCheckAnimationList->insert(Parent->time(),preperfect);
 				NoteCheckList->insert(*NextTime, preperfect);
-				Parent->addCheck(preperfect, NoteList->value(*NextTime)->time());
+				Parent->addCheck(preperfect, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -50 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -80)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagPerfect checks";
 				NoteCheckAnimationList->insert(Parent->time(),lagperfect);
 				NoteCheckList->insert(*NextTime, lagperfect);
-				Parent->addCheck(lagperfect, NoteList->value(*NextTime)->time());
+				Parent->addCheck(lagperfect, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreGood checks";
 				NoteCheckAnimationList->insert(Parent->time(),pregood);
 				NoteCheckList->insert(*NextTime, pregood);
-				Parent->addCheck(pregood, NoteList->value(*NextTime)->time());
+				Parent->addCheck(pregood, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -80 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -120)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagGood checks";
 				NoteCheckAnimationList->insert(Parent->time(),laggood);
 				NoteCheckList->insert(*NextTime, laggood);
-				Parent->addCheck(laggood, NoteList->value(*NextTime)->time());
+				Parent->addCheck(laggood, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) > 120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) <= 160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::PreBad checks";
 				NoteCheckAnimationList->insert(Parent->time(),prebad);
 				NoteCheckList->insert(*NextTime, prebad);
-				Parent->addCheck(prebad, NoteList->value(*NextTime)->time());
+				Parent->addCheck(prebad, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			else if (((NoteList->value(*NextTime)->time()) - (Parent->time())) < -120 && ((NoteList->value(*NextTime)->time()) - (Parent->time())) >= -160)
 			{
 				qDebug() << "\tMOONOTUSYSTEM::_Message_::LagBad checks";
 				NoteCheckAnimationList->insert(Parent->time(),lagbad);
 				NoteCheckList->insert(*NextTime, lagbad);
-				Parent->addCheck(lagbad, NoteList->value(*NextTime)->time());
+				Parent->addCheck(lagbad, NoteList->value(*NextTime)->time(), Parent->time());
 			}
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
@@ -837,7 +837,7 @@ void MCheckDot::aftercheck()
 		NoteCheckAnimationList->insert(Parent->time(), miss);
 		NoteCheckList->remove(*HoldPressed);
 		NoteCheckList->insert(*HoldPressed, miss);
-		Parent->addCheck(miss, -1);
+		Parent->addCheck(miss, -1, -1);
 		HoldPressing = new bool(false);
 		HoldPressed = new qint64(0);
 	}
@@ -851,7 +851,7 @@ void MCheckDot::misscheck()
 		qDebug() << "\tMOONOTUSYSTEM::_Message_::Miss checks";
 		NoteCheckAnimationList->insert(Parent->time(), miss);
 		NoteCheckList->insert(*NextTime, miss);
-		Parent->addCheck(miss, -1);
+		Parent->addCheck(miss, -1, -1);
 		NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 	}
 	else

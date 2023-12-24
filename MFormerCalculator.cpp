@@ -15,13 +15,15 @@ MFormerCalculator::MFormerCalculator(MWidget *parent)
 	Combo = new qint64(0);
 	ComboText = new QString(QString::number(*Combo));
 	Accuracy = new qreal(100.00);
-	AccuracyText = new QString(QString::number(*Accuracy) + "%");
+	AccuracyText = new QString(QString::number(*Accuracy, 'f', 2) + "%");
 	Check = new qint32(strictperfect);
 	CheckText = new QString("");
 	MoonPoint = new QPoint(1600, 150);
 	VMoonPoint = new QPoint(MoonPoint->x() * Parent->visualProportion(), MoonPoint->y() * Parent->visualProportion());
 	MoonRadium = new qreal(100);
 	VMoonRadium = new qreal(*MoonRadium * Parent->visualProportion());
+	Deviation = new qreal(100);
+	Type = new QString("Miss");
 }
 
 void MFormerCalculator::paintEvent(QPaintEvent* event)
@@ -36,12 +38,66 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 	if (*Show)
 	{
 		paint->drawPixmap(this->rect(), *Image);
+		textpen.setColor(QColor(255, 255, 255, 255));
+		text->setPen(textpen);
 		text->setFont(QFont("Microsoft YaHei Ui", 48 * (Parent->visualProportion()), -1));
 		text->drawText(QRect(qint32(985 * (Parent->visualProportion())), qint32(52 * (Parent->visualProportion())), qint32(500 * (Parent->visualProportion())), qint32(96 * (Parent->visualProportion()))), Qt::AlignRight | Qt::AlignBottom, *ScoreText);
 		text->drawText(QRect(qint32(1715 * (Parent->visualProportion())), qint32(52 * (Parent->visualProportion())), qint32(500 * (Parent->visualProportion())), qint32(96 * (Parent->visualProportion()))), Qt::AlignLeft | Qt::AlignBottom, *ComboText);
 		text->setFont(QFont("Microsoft YaHei Ui", ((36 * (Parent->visualProportion()) < 351 / MusicName->size()) ? (36 * (Parent->visualProportion())) : (351 / MusicName->size()), -1)));
 		text->drawText(QRect(qint32(1135 * (Parent->visualProportion())), qint32(164 * (Parent->visualProportion())), qint32(351 * (Parent->visualProportion())), qint32(72 * (Parent->visualProportion()))), Qt::AlignRight | Qt::AlignTop, *MusicName);
 		text->drawText(QRect(qint32(1714 * (Parent->visualProportion())), qint32(164 * (Parent->visualProportion())), qint32(351 * (Parent->visualProportion())), qint32(72 * (Parent->visualProportion()))), Qt::AlignLeft | Qt::AlignTop, *AccuracyText);
+		QPainter* moon = new QPainter(this);
+		QPen moonpen;
+		moonpen.setColor(QColor(255, 209, 86, 155));
+		moonpen.setWidth(1);
+		moon->setPen(moonpen);
+		moon->setBrush(Qt::transparent);
+		QPainterPath moonpath;
+		moonpath.moveTo(QPoint(1600 * (Parent->visualProportion()), 50 * (Parent->visualProportion())));
+		if ((*Type) == "Full")
+		{
+			moonpen.setColor(QColor(255, 209, 86, 155));
+			moonpen.setWidth(1);
+			moon->setPen(moonpen);
+			moon->setBrush(QColor(255, 209, 86, 155));
+			moon->drawEllipse(QPointF(1600 * (Parent->visualProportion()), 150 * (Parent->visualProportion())), 100 * (Parent->visualProportion()), 100 * (Parent->visualProportion()));
+		}
+		else if ((*Type) == "Miss")
+		{
+			moonpen.setColor(QColor(255, 209, 86, 155));
+			moonpen.setWidth(1);
+			moon->setPen(moonpen);
+			moon->setBrush(Qt::transparent);
+			moon->drawEllipse(QPointF(1600 * (Parent->visualProportion()), 150 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())));
+		}
+		else if ((*Type) == "Fast")
+		{
+			moonpen.setColor(QColor(255, 209, 86, 155));
+			moonpen.setWidth(1);
+			moon->setPen(moonpen);
+			moon->drawEllipse(QPointF(1600 * (Parent->visualProportion()), 150 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())));
+			moonpath.cubicTo(QPointF(1600 * (Parent->visualProportion()), 50 * (Parent->visualProportion())), QPointF((1500 + 100 * (*Deviation)) * (Parent->visualProportion()), 150 * (Parent->visualProportion())), QPointF(1600 * (Parent->visualProportion()), 250 * (Parent->visualProportion())));
+			moonpen.setColor(Qt::transparent);
+			moon->setPen(moonpen);
+			moon->setBrush(QColor(255, 209, 86, 155));
+			moon->drawChord(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), 90 * 16, -180 * 16);
+			moon->drawPath(moonpath);
+			qDebug() << "MOONOTUSYSTEM::_Debug_::" << *Deviation;
+		}
+		else if ((*Type) == "Slow")
+		{
+			moonpen.setColor(QColor(255, 209, 86, 155));
+			moonpen.setWidth(1);
+			moon->setPen(moonpen);
+			moon->drawEllipse(QPointF(1600 * (Parent->visualProportion()), 150 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())));
+			moonpath.cubicTo(QPointF(1600 * (Parent->visualProportion()), 50 * (Parent->visualProportion())), QPointF((1700 - 100 * (*Deviation)) * (Parent->visualProportion()), 150 * (Parent->visualProportion())), QPointF(1600 * (Parent->visualProportion()), 250 * (Parent->visualProportion())));
+			moonpen.setColor(Qt::transparent);
+			moon->setPen(moonpen);
+			moon->setBrush(QColor(255, 209, 86, 155));
+			moon->drawChord(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), 90 * 16, 180 * 16);
+			moon->drawPath(moonpath);
+		}
+		text->drawText(QRect(qint32(1480 * (Parent->visualProportion())), qint32(225 * (Parent->visualProportion())), qint32(240 * (Parent->visualProportion())), qint32(50 * (Parent->visualProportion()))), Qt::AlignHCenter | Qt::AlignVCenter, *CheckText);
 	}
 
 	event->accept();
@@ -106,28 +162,17 @@ void MFormerCalculator::setCombo(qint64 combo)
 void MFormerCalculator::setAccuracy(qreal accuracy)
 {
 	Accuracy = new qreal(accuracy);
-	AccuracyText = new QString(QString::number(*Accuracy) + "%");
+	AccuracyText = new QString(QString::number(*Accuracy, 'f', 2) + "%");
 }
 
 void MFormerCalculator::setCheck(qint32 check)
 {
 	Check = new qint32(check);
-	if (*Check == miss)
-	{
-		CheckText = new QString("Miss");
-	}
-	else if (*Check == preperfect || *Check == lagperfect)
-	{
-		CheckText = new QString("Perfect");
-	}
-	else if (*Check == pregood || *Check == laggood)
-	{
-		CheckText = new QString("Good");
-	}
-	else if (*Check == prebad || *Check == lagbad)
-	{
-		CheckText = new QString("Bad");
-	}
+}
+
+void MFormerCalculator::setCheckText(QString checktext)
+{
+	CheckText = new QString(checktext);
 }
 
 QPoint MFormerCalculator::vMoonPoint()
@@ -163,4 +208,14 @@ void MFormerCalculator::setDeviation(qreal deviation)
 qreal MFormerCalculator::deviation()
 {
 	return *Deviation;
+}
+
+void MFormerCalculator::setType(QString type)
+{
+	Type = new QString(type);
+}
+
+QString MFormerCalculator::type()
+{
+	return *Type;
 }
