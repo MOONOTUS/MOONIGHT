@@ -106,7 +106,7 @@ void MFormerCalculator::setCombo(qint64 combo)
 void MFormerCalculator::setAccuracy(qreal accuracy)
 {
 	Accuracy = new qreal(accuracy);
-	AccuracyText = new QString(QString::number(*Accuracy));
+	AccuracyText = new QString(QString::number(*Accuracy) + "%");
 }
 
 void MFormerCalculator::setCheck(qint32 check)
@@ -153,4 +153,14 @@ void MFormerCalculator::setShow(bool show)
 bool MFormerCalculator::ifShow()
 {
 	return *Show;
+}
+
+void MFormerCalculator::setDeviation(qreal deviation)
+{
+	Deviation = new qreal(deviation);
+}
+
+qreal MFormerCalculator::deviation()
+{
+	return *Deviation;
 }

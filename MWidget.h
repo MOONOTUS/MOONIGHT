@@ -1,14 +1,16 @@
 ﻿#pragma once
 
 #include"MCenter.h"
-#define WIDTH 3200
-#define HEIGHT 1800
 
 class MCheckDot;
 class MFormerCalculator;
 
 class MWidget : public QWidget
 {
+#define WIDTH 3200
+#define HEIGHT 1800
+#define FULLSCORE 1000000
+
 	Q_OBJECT
 
 protected:
@@ -44,12 +46,18 @@ private:
 	qint64* FixDelay;
 	qint64* Delay;
 	QString* MusicPath;
+	QString* MusicName;
 	QAudioOutput* PlayerBase;
 	QMediaPlayer* Player;
 	bool* MusicPlayed;
 	QVector<qint32>* CheckList;
 	qint64* Combo;
 	MFormerCalculator* Calculator;
+	qint64* NoteCheckedSum;
+	qint64* NoteSum;
+	qint64* Score;
+	qint64* EachScore;
+	qreal* Accuracy;
 
 public:
 	MWidget(QWidget* parent = nullptr);
@@ -82,12 +90,18 @@ public:
 	qint64 gapDelay();
 	void setMusicPath(QString path);
 	QString musicPath();
+	void setMusicName(QString name);
+	QString musicName();
 	void playMusic(bool nodelay = false);
-	void addCheck(qint32 check);
+	void addCheck(qint32 check, qint64 time);
 	QVector<qint32>*& checkList();
 	qreal visualProportion();
 	void addToTitle(QString addtitle);
 	qint64 combo();
 	void setFormerCalculator(MFormerCalculator* formercalculator);
 	MFormerCalculator*& formerCalculator();
+	qint64 score();
+	qint64 eachscore();
+	qreal accuracy();
+	void setover();
 };

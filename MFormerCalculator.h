@@ -27,6 +27,7 @@ private:
 	qreal* MoonRadium;
 	qreal* VMoonRadium;
 	bool* Show;
+	qreal* Deviation;
 
 public:
 	MFormerCalculator(MWidget *parent);
@@ -46,5 +47,6 @@ public:
 	MWidget*& MParent();
 	void setShow(bool show);
 	bool ifShow();
-	QWidget*& moon();
+	void setDeviation(qreal deviation);
+	qreal deviation();
 };

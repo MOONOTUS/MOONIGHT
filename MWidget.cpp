@@ -21,12 +21,18 @@ MWidget::MWidget(QWidget* parent)
 	FixDelay = new qint64(0);
 	Delay=new qint64(*GapDelay+*FixDelay);
 	MusicPath = new QString("");
+	MusicName = new QString("Unknow");
 	PlayerBase = new QAudioOutput(this);
 	Player = new QMediaPlayer(this);
 	Player->setAudioOutput(PlayerBase);
 	MusicPlayed = new bool(false);
 	CheckList = new QVector<qint32>;
 	Combo = new qint64(0);
+	NoteCheckedSum = new qint64(0);
+	NoteSum = new qint64(1);
+	Score = new qint64(0);
+	EachScore = new qint64(0);
+	Accuracy = new qreal(100.00);
 
 	DisTime->start();
 	this->setFocus();
@@ -246,22 +252,6 @@ void MWidget::setGapDelay(qint64 delay)
 {
 	GapDelay = new qint64(delay);
 	Delay = new qint64(*GapDelay + *FixDelay);
-	for (QMap<QString, MCheckDot*>::iterator dotptr = CheckDotList->begin(); dotptr != CheckDotList->end(); ++dotptr)
-	{
-		QMap <qint64, MNote*>* NewNoteList = new QMap <qint64, MNote*>;
-		for (QMap <qint64, MNote*>::iterator noteptr = dotptr.value()->noteList()->begin(); noteptr != dotptr.value()->noteList()->end(); ++noteptr)
-		{
-			MNote* NewNote = new MNote(noteptr.value());
-			NewNote->setTime(noteptr.value()->time() + *GapDelay);
-			if (NewNote->nextTime() != -1)
-			{
-				NewNote->setNextTime(noteptr.value()->nextTime() + *GapDelay);
-			}
-			NewNoteList->insert(noteptr.key() + *GapDelay, NewNote);
-		}
-		dotptr.value()->setNextTime(dotptr.value()->nextTime() + *GapDelay);
-		dotptr.value()->noteList() = new QMap <qint64, MNote*>(*NewNoteList);
-	}
 }
 
 void MWidget::setFixDelay(qint64 delay)
@@ -295,6 +285,16 @@ QString MWidget::musicPath()
 	return *MusicPath;
 }
 
+void MWidget::setMusicName(QString name)
+{
+	MusicName = new QString(name);
+}
+
+QString MWidget::musicName()
+{
+	return *MusicName;
+}
+
 void MWidget::playMusic(bool nodelay)
 {
 	if (!*MusicPlayed)
@@ -309,7 +309,7 @@ void MWidget::playMusic(bool nodelay)
 				MusicPlayed = new bool(true);
 			}
 		}
-		else if (*GapDelay <= this->time())
+		else if (*GapDelay <= *time_ms)
 		{
 			if (*MusicPath != "")
 			{
@@ -323,10 +323,26 @@ void MWidget::playMusic(bool nodelay)
 }
 
 
-void MWidget::addCheck(qint32 check)
+void MWidget::addCheck(qint32 check, qint64 time)
 {
+	qreal deviation;
+	qint64 timems = *time_ms;
+	if (time != -1)
+	{
+		if ((time - timems) > 0)
+		{
+			deviation = (time - timems) / 160;
+		}
+		else if ((time - timems) < 0)
+		{
+			deviation = (time - timems) / -160;
+		}
+		else
+		{
+			deviation = 0;
+		}
+	}
 	CheckList->push_back(check);
-	Calculator->setCheck(check);
 	if (check != miss && check != prebad && check != lagbad)
 	{
 		Combo = new qint64((*Combo) + 1);
@@ -335,7 +351,41 @@ void MWidget::addCheck(qint32 check)
 	{
 		Combo = new qint64(0);
 	}
+	NoteCheckedSum = new qint64((*NoteCheckedSum) + 1);
+	qreal thisaccuracy;
+	qint64 thisscore;
+	if (check == strictperfect)
+	{
+		thisaccuracy = 100.00;
+		thisscore = *EachScore;
+	}
+	else if (check == preperfect || check == lagperfect)
+	{
+		thisaccuracy = 80.00;
+		thisscore = (*EachScore) * 3 / 4;
+	}
+	else if (check == pregood || check == laggood)
+	{
+		thisaccuracy = 50.00;
+		thisscore = (*EachScore) / 2;
+	}
+	else if(check == prebad || check == lagbad)
+	{
+		thisaccuracy = 30.00;
+		thisscore = (*EachScore) * 1 / 4;
+	}
+	else
+	{
+		thisaccuracy = 0.00;
+		thisscore = 0;
+	}
+	Accuracy = new qreal(((*Accuracy) * ((*NoteCheckedSum) - 1) + thisaccuracy) / (*NoteCheckedSum));
+	Score = new qint64((*Score) + thisscore);
+	Calculator->setCheck(check);
 	Calculator->setCombo(*Combo);
+	Calculator->setAccuracy(*Accuracy);
+	Calculator->setScore(*Score);
+	Calculator->setDeviation(deviation);
 }
 
 QVector<qint32>*& MWidget::checkList()
@@ -367,4 +417,43 @@ void MWidget::setFormerCalculator(MFormerCalculator* formercalculator)
 MFormerCalculator*& MWidget::formerCalculator()
 {
 	return Calculator;
+}
+
+qint64 MWidget::score()
+{
+	return *Score;
+}
+
+qint64 MWidget::eachscore()
+{
+	return *EachScore;
+}
+
+qreal MWidget::accuracy()
+{
+	return *Accuracy;
+}
+
+void MWidget::setover()
+{
+	Calculator = new MFormerCalculator(this);
+	Calculator->setMusicName(*MusicName);
+	for (QMap<QString, MCheckDot*>::iterator dotptr = CheckDotList->begin(); dotptr != CheckDotList->end(); ++dotptr)
+	{
+		QMap <qint64, MNote*>* NewNoteList = new QMap <qint64, MNote*>;
+		for (QMap <qint64, MNote*>::iterator noteptr = dotptr.value()->noteList()->begin(); noteptr != dotptr.value()->noteList()->end(); ++noteptr)
+		{
+			MNote* NewNote = new MNote(noteptr.value());
+			NewNote->setTime(noteptr.value()->time() + *GapDelay);
+			if (NewNote->nextTime() != -1)
+			{
+				NewNote->setNextTime(noteptr.value()->nextTime() + *GapDelay);
+			}
+			NewNoteList->insert(noteptr.key() + *GapDelay, NewNote);
+			NoteSum = new qint64((*NoteSum) + 1);
+		}
+		dotptr.value()->setNextTime(dotptr.value()->nextTime() + *GapDelay);
+		dotptr.value()->noteList() = new QMap <qint64, MNote*>(*NewNoteList);
+	}
+	EachScore = new qint64(FULLSCORE / *NoteSum);
 }

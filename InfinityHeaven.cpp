@@ -266,19 +266,17 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->value("V2")->dotLine()->setDownVisuable(false);
 	parent->checkDotList()->value("V2")->dotLine()->setAngel(-90);
 
-	parent->setGapDelay(3000);//必须写在所有音符添加完成之后
-	parent->setFixDelay(0);
+	parent->setGapDelay(3000);
+	parent->setFixDelay(-500);
 
 	parent->checkDotList()->value("M")->setSpeed(900);
 	parent->checkDotList()->value("V")->setSpeed(900);
 	parent->checkDotList()->value("M")->show();
 	parent->checkDotList()->value("M")->show();
 
+	parent->setMusicName("Infinity Heaven");
 
-	MFormerCalculator* Former = new MFormerCalculator(parent);//必须写在构造函数最后，parent->repaint()之前
-	parent->setFormerCalculator(Former);
-
-	Former->setMusicName("Infinity Heaven");
+	parent->setover();//设定结束标志，必须写在构造函数最后，parent->repaint()之前
 
 	parent->repaint();
 	this->parent = parent;
