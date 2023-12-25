@@ -9,9 +9,10 @@ MNote::MNote(MCheckDot* parent)
 	Width = new qreal(parent->width() - 2);//初始化音符视觉线宽
 	VRadium = new qreal(*Radium * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//初始化音符逻辑宽度
 	VWidth = new qreal(*Width * Parent->MParent()->size().width() / Parent->MParent()->oriSize().width());//初始化音符的逻辑线宽
-	Type = new qint32(click);//初始化音符的类型为click
-	NoteColor = new QColor(parent->dotColor());//初始化音符的颜色
-	LineColor = new QColor(NoteColor->red(), NoteColor->green() + 80, NoteColor->blue(), NoteColor->alpha());
+	Type = new qint32(*AutoNoteType);//初始化音符的类型为click
+	NoteColor = new QColor(*AutoNoteColor);//初始化音符的颜色
+	LineColor = new QColor(*AutoLineColor);
+	KeyColor = new QColor(*AutoKeyColor);
 	Visuable = new bool(parent->visuable());//初始化音符的可见性
 	BeatKey = new qint32(Qt::Key_Escape);//初始化beat音符专有的额外键
 	BeatKeyText = new QString("0");//初始化beat音符专有的额外键文本
@@ -181,6 +182,21 @@ QColor MNote::lineColor()
 	return *LineColor;
 }
 
+void MNote::setKeyColor(QColor color)
+{
+	KeyColor = new QColor(color);
+}
+
+void MNote::setKeyColor(qint32 R, qint32 G, qint32 B, qint32 A)
+{
+	KeyColor = new QColor(R, G, B, A);
+}
+
+QColor MNote::keyColor()
+{
+	return *KeyColor;
+}
+
 void MNote::setType(qint32 type)
 {
 	Type = new qint32(type);
@@ -296,4 +312,59 @@ qreal MNote::speed()
 qreal MNote::vSpeed()
 {
 	return *VSpeed;
+}
+
+void MNote::setAutoNoteColor(QColor color)
+{
+	AutoNoteColor = new QColor(color);
+}
+
+void MNote::setAutoNoteColor(qint32 R, qint32 G, qint32 B, qint32 A = 255)
+{
+	AutoNoteColor = new QColor(R, G, B, A);
+}
+
+QColor MNote::autoNoteColor()
+{
+	return *AutoNoteColor;
+}
+
+void MNote::setAutoNoteType(qint32 type)
+{
+	AutoNoteType = new qint32(type);
+}
+
+qint32 MNote::autoNoteType()
+{
+	return *AutoNoteType;
+}
+
+void MNote::setAutoLineColor(QColor color)
+{
+	AutoLineColor = new QColor(color);
+}
+
+void MNote::setAutoLineColor(qint32 R, qint32 G, qint32 B, qint32 A)
+{
+	AutoLineColor = new QColor(R, G, B, A);
+}
+
+QColor MNote::autoLineColor()
+{
+	return *AutoLineColor;
+}
+
+void MNote::setAutoKeyColor(QColor color)
+{
+	AutoKeyColor = new QColor(color);
+}
+
+void MNote::setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255)
+{
+	AutoKeyColor = new QColor(R, G, B, A);
+}
+
+QColor MNote::autoKeyColor()
+{
+	return *AutoKeyColor;
 }

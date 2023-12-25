@@ -5,7 +5,7 @@
 MCheckDotLine::MCheckDotLine(MCheckDot* parent)
 {
 	Parent = parent;//存储parernt
-	DotLineColor = new QColor(parent->dotColor());//初始化轨道线的颜色
+	DotLineColor = new QColor(*AutoLineColor);//初始化轨道线的颜色
 	Visuable = new bool(parent->visuable());//初始化轨道线的可见性
 	UpVisuable = new bool(*Visuable);
 	DownVisuable = new bool(*Visuable);
@@ -117,6 +117,21 @@ QColor MCheckDotLine::dotLineColor()
 qreal MCheckDotLine::vWidth()
 {
 	return *VWidth;
+}
+
+void MCheckDotLine::setAutoLineColor(QColor color)
+{
+	AutoLineColor = new QColor(color);
+}
+
+void MCheckDotLine::setAutoLineColor(qint32 R,qint32 G,qint32 B,qint32 A)
+{
+	AutoLineColor = new QColor(R, G, B, A);
+}
+
+QColor MCheckDotLine::autoLineColor()
+{
+	return *AutoLineColor;
 }
 
 MCheckDot*& MCheckDotLine::MParent()

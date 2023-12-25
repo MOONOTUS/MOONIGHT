@@ -21,6 +21,10 @@ public:
 #define miss 0x0000
 #define ANIMATIONTHINESS 1.5
 
+private:
+static QColor* AutoDotColor;
+static QColor* AutoKeyColor;
+
 protected:
 	void paintEvent(QPaintEvent* event);//重写的重绘函数
 	//void keyPressEvent(QKeyEvent* event);//重写的键盘按下事件函数
@@ -113,5 +117,13 @@ public:
 	void addNote(qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
 	void addNote(QColor notecolor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
 	void addNote(QColor notecolor = Qt::transparent, QColor LineColor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
-
+	static void setAutoDotColor(QColor color);
+	static void setAutoDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	static QColor autoDotColor();
+	static void setAutoKeyColor(QColor color);
+	static void setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	static QColor autoKeyColor();
 };
+
+QColor* MCheckDot::AutoDotColor = new QColor(217, 150, 229, 255);
+QColor* MCheckDot::AutoKeyColor = new QColor(217, 150, 229, 255);

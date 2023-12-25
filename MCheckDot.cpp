@@ -6,8 +6,8 @@ MCheckDot::MCheckDot(MWidget *parent)
 {
 	this->Parent = parent;//存储parent
 	Digonal = new qreal(qPow((qPow(WIDTH, 2) + qPow(HEIGHT, 2)), 0.5));
-	DotColor = new QColor(217, 150, 229, 255);//初始化判定点颜色
-	DotKeyColor = new QColor(DotColor->red(), DotColor->green(), DotColor->blue(), DotColor->alpha() * 2 / 3);//初始化判定键文本颜色
+	DotColor = new QColor(*AutoDotColor);//初始化判定点颜色
+	DotKeyColor = new QColor(*AutoKeyColor);//初始化判定键文本颜色
 	Width = new qreal(10.0);//初始化判定点圆圈逻辑宽度
 	Radium = new qreal(50.0);//初始化判定点逻辑半径
 	Visuable = new bool(true);//初始化判定点可见性为真
@@ -548,6 +548,8 @@ void MCheckDot::paintBeatNote(QPainter* paint)//绘制beat音符
 		paint->setPen(pen);
 		paint->setBrush(NoteList->value(*NextTime)->noteColor());
 		paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+		pen.setColor(NoteList->value(*NextTime)->keyColor());
+		paint->setPen(pen);
 		paint->setFont(font());
 		paint->drawText(QRect(line0.p2().x() - QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size() / 2, line0.p2().y() - QFontMetricsF(font()).height() / 2, QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size(), QFontMetricsF(font()).height()), Qt::AlignHCenter | Qt::AlignVCenter, NoteList->value(*NextTime)->beatKeyText());
 	}
@@ -563,6 +565,8 @@ void MCheckDot::paintBeatNote(QPainter* paint)//绘制beat音符
 		paint->setPen(pen);
 		paint->setBrush(NoteList->value(*NextTime)->noteColor());
 		paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+		pen.setColor(NoteList->value(*NextTime)->keyColor());
+		paint->setPen(pen);
 		paint->setFont(font());
 		paint->drawText(QRect(line0.p2().x() - QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size() / 2, line0.p2().y() - QFontMetricsF(font()).height() / 2, QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size(), QFontMetricsF(font()).height()), Qt::AlignHCenter | Qt::AlignVCenter, NoteList->value(*NextTime)->beatKeyText());
 	}
@@ -1057,4 +1061,34 @@ void MCheckDot::addNote(QColor notecolor, QColor linecolor, qint64 time, qint64 
 	newNote->setNoteColor(notecolor);
 	newNote->setLineColor(linecolor);
 	NoteList->insert(time, newNote);
+}
+
+void MCheckDot::setAutoDotColor(QColor color)
+{
+	AutoDotColor = new QColor(color);
+}
+
+void MCheckDot::setAutoDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255)
+{
+	AutoDotColor = new QColor(R, G, B, A);
+}
+
+QColor MCheckDot::autoDotColor()
+{
+	return *AutoDotColor;
+}
+
+void MCheckDot::setAutoKeyColor(QColor color)
+{
+	AutoKeyColor = new QColor(color);
+}
+
+void MCheckDot::setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255)
+{
+	AutoKeyColor = new QColor(R, G, B, A);
+}
+
+QColor MCheckDot::autoKeyColor()
+{
+	return *AutoKeyColor;
 }

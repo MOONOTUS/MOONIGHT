@@ -12,6 +12,12 @@ public:
 #define beat 0x11
 
 private:
+	static QColor* AutoNoteColor;
+	static qint32* AutoNoteType;
+	static QColor* AutoLineColor;
+	static QColor* AutoKeyColor;
+
+private:
 	MCheckDot* Parent;//存储parent，用于溯源
 	bool* Visuable;//音符是否可见
 	qreal* Radium;//音符的逻辑半径
@@ -20,6 +26,7 @@ private:
 	qreal* VWidth;//音符边缘的视觉宽度
 	QColor* NoteColor;//音符的颜色
 	QColor* LineColor;
+	QColor* KeyColor;
 	qint32* Type;//音符的类型
 	qint32* BeatKey;//beat音符专有的额外键
 	QString* BeatKeyText;//beat音符专有的额外键文本
@@ -54,6 +61,9 @@ public:
 	void setLineColor(QColor color);//设定音符颜色（RGBA）
 	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定音符颜色（RGBA）
 	QColor lineColor();//返回*NoteColor
+	void setKeyColor(QColor color);//设定音符颜色（RGBA）
+	void setKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定音符颜色（RGBA）
+	QColor keyColor();//返回*KeyColor
 	void setType(qint32 type);//设定音符类型
 	qint32 type();//返回*Type
 	void setBeatKey(qint32 key, QString keytext);//设定beat音符专有的额外键
@@ -75,4 +85,20 @@ public:
 	void setSpeed(qreal speed);//设定音符的独立逻辑速度
 	qreal speed();//音符的独立逻辑速度
 	qreal vSpeed();//音符的独立视觉速度
+	static void setAutoNoteColor(QColor color);
+	static void setAutoNoteColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	static QColor autoNoteColor();
+	static void setAutoNoteType(qint32 type);
+	static qint32 autoNoteType();
+	static void setAutoLineColor(QColor color);
+	static void setAutoLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	static QColor autoLineColor();
+	static void setAutoKeyColor(QColor color);
+	static void setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	static QColor autoKeyColor();
 };
+
+QColor* MNote::AutoNoteColor = new QColor(217, 150, 229, 255);
+qint32* MNote::AutoNoteType = new qint32(click);
+QColor* MNote::AutoLineColor = new QColor(217, 230, 229, 255);
+QColor * MNote::AutoKeyColor = new QColor(217, 150, 229, 255);

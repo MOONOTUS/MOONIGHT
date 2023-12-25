@@ -6,6 +6,9 @@ class MCheckDot;
 class MCheckDotLine //轨道线类
 {
 private:
+	static QColor* AutoLineColor;
+
+private:
 	MCheckDot* Parent;//存储parent，用于溯源
 	bool* Visuable;//轨道线是否可见
 	qreal* Width;//轨道线的逻辑宽度
@@ -39,5 +42,10 @@ public:
 	void setDotLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定轨道线的颜色
 	QColor dotLineColor();//返回*DotLineColor
 	qreal vWidth();//返回*VWidth
+	static void setAutoLineColor(QColor color);
+	static void setAutoLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	static QColor autoLineColor();
 	MCheckDot*& MParent();//返回Parent，用于溯源
 };
+
+QColor* MCheckDotLine::AutoLineColor=new QColor(217, 150, 229, 255);
