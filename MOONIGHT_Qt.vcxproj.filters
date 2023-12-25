@@ -64,6 +64,9 @@
     <ClCompile Include="MMainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MCell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MWidget.h">
@@ -104,11 +107,9 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="MOONIGHT_Beta.png">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <ClInclude Include="MCell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MOONIGHT_Qt.rc">

@@ -5,4 +5,5 @@
 #include"MCheckDot.h"
 #include"MCheckDotLine.h"
 #include"MNote.h"
-#include "MFormerCalculator.h"
+#include"MFormerCalculator.h"
+#include"MCell.h"

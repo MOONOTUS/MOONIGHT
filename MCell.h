@@ -3,11 +3,17 @@
 
 class MWidget;
 
-class MCell //统合元件类
+class MCell  : public QPushButton //统合元件类
 {
+	Q_OBJECT
+
 #define imagecell 0x111
 #define rectcell 0x001
 #define ellipse 0x010
+
+public:
+	MCell(MWidget *parent);
+	~MCell();
 
 private:
 	MWidget* Parent;
@@ -19,11 +25,6 @@ private:
 	qreal* Radium;
 
 public:
-	MCell(MWidget* parent = nullptr);
-	MCell(QPixmap& image, QPoint& point, MWidget* parent = nullptr);
-	MCell(QPixmap* image, QPoint* point, MWidget* parent = nullptr);
-	~MCell();
-
 	void setPoint(QPoint point);
 	void setPoint(qreal x, qreal y);
 	void setImage(QString path);
