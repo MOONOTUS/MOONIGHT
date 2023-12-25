@@ -76,11 +76,12 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 			moonpen.setWidth(1);
 			moon->setPen(moonpen);
 			moon->drawEllipse(QPointF(1600 * (Parent->visualProportion()), 150 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())));
-			moonpath.cubicTo(QPointF(1600 * (Parent->visualProportion()), 50 * (Parent->visualProportion())), QPointF((1500 + 100 * (*Deviation)) * (Parent->visualProportion()), 150 * (Parent->visualProportion())), QPointF(1600 * (Parent->visualProportion()), 250 * (Parent->visualProportion())));
+			moonpath.cubicTo(QPointF(1600 * (Parent->visualProportion()), 50 * (Parent->visualProportion())), QPointF((1500 + 200 * (*Deviation)) * (Parent->visualProportion()), 150 * (Parent->visualProportion())), QPointF(1600 * (Parent->visualProportion()), 250 * (Parent->visualProportion())));
+			moonpath.arcTo(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), -90, 180);
 			moonpen.setColor(Qt::transparent);
 			moon->setPen(moonpen);
 			moon->setBrush(QColor(255, 209, 86, 155));
-			moon->drawChord(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), 90 * 16, -180 * 16);
+			//moon->drawChord(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), 90 * 16, -180 * 16);
 			moon->drawPath(moonpath);
 			qDebug() << "MOONOTUSYSTEM::_Debug_::" << *Deviation;
 		}
@@ -90,13 +91,20 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 			moonpen.setWidth(1);
 			moon->setPen(moonpen);
 			moon->drawEllipse(QPointF(1600 * (Parent->visualProportion()), 150 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())), qreal(100 * (Parent->visualProportion())));
-			moonpath.cubicTo(QPointF(1600 * (Parent->visualProportion()), 50 * (Parent->visualProportion())), QPointF((1700 - 100 * (*Deviation)) * (Parent->visualProportion()), 150 * (Parent->visualProportion())), QPointF(1600 * (Parent->visualProportion()), 250 * (Parent->visualProportion())));
+			moonpath.cubicTo(QPointF(1600 * (Parent->visualProportion()), 50 * (Parent->visualProportion())), QPointF((1700 - 200 * (*Deviation)) * (Parent->visualProportion()), 150 * (Parent->visualProportion())), QPointF(1600 * (Parent->visualProportion()), 250 * (Parent->visualProportion())));
+			moonpath.arcTo(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), -90, -180);
 			moonpen.setColor(Qt::transparent);
 			moon->setPen(moonpen);
 			moon->setBrush(QColor(255, 209, 86, 155));
-			moon->drawChord(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), 90 * 16, 180 * 16);
+			//moon->drawChord(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), 90 * 16, 180 * 16);
 			moon->drawPath(moonpath);
 		}
+		//moonpen.setColor(Qt::transparent);
+		//moon->setPen(moonpen);
+		//moon->setBrush(QColor(51, 51, 51, 155));
+		//moon->drawEllipse(QPointF(1565 * (Parent->visualProportion()), 100 * (Parent->visualProportion())), qreal(30 * (Parent->visualProportion())), qreal(30 * (Parent->visualProportion())));
+		//moon->drawEllipse(QPointF(1565 * (Parent->visualProportion()), 190 * (Parent->visualProportion())), qreal(15 * (Parent->visualProportion())), qreal(15 * (Parent->visualProportion())));
+		//moon->drawEllipse(QPointF(1645 * (Parent->visualProportion()), 170 * (Parent->visualProportion())), qreal(20 * (Parent->visualProportion())), qreal(20 * (Parent->visualProportion())));
 		text->drawText(QRect(qint32(1480 * (Parent->visualProportion())), qint32(225 * (Parent->visualProportion())), qint32(240 * (Parent->visualProportion())), qint32(50 * (Parent->visualProportion()))), Qt::AlignHCenter | Qt::AlignVCenter, *CheckText);
 	}
 
