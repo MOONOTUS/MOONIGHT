@@ -6,7 +6,7 @@
 
 class MWidget;
 
-class MCheckDot  : public QPushButton
+class MCheckDot  : public QPushButton //判定点类
 {
 	Q_OBJECT
 

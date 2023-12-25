@@ -8,7 +8,6 @@ MFormerCalculator::MFormerCalculator(MWidget *parent)
 	Parent = parent;
 	Show = new bool(true);
 	Image = new QPixmap(".\\MOONIGHT_Front_Little.png");
-	Mask = new QPixmap(".\\MOONIGHT_Mask_Front.png");
 	Score = new qint64(0);
 	ScoreText = new QString("0");
 	MusicName = new QString("Unkown");
@@ -119,7 +118,6 @@ MFormerCalculator::~MFormerCalculator()
 {
 	delete Parent;
 	delete Image;
-	delete Mask;
 	delete Score;
 	delete ScoreText;
 	delete MusicName;
@@ -139,19 +137,9 @@ void MFormerCalculator::setImage(QString path)
 	Image = new QPixmap(path);
 }
 
-void MFormerCalculator::setMask(QString path)
-{
-	Mask = new QPixmap(path);
-}
-
 void MFormerCalculator::setImage(QPixmap image)
 {
 	Image = new QPixmap(image);
-}
-
-void MFormerCalculator::setMask(QPixmap image)
-{
-	Mask = new QPixmap(image);
 }
 
 void MFormerCalculator::setScore(qint64 score)
@@ -197,11 +185,6 @@ qreal MFormerCalculator::vMoonRadium()
 	return *VMoonRadium;
 }
 
-MWidget*& MFormerCalculator::MParent()
-{
-	return Parent;
-}
-
 void MFormerCalculator::setShow(bool show)
 {
 	Show = new bool(show);
@@ -230,4 +213,9 @@ void MFormerCalculator::setType(QString type)
 QString MFormerCalculator::type()
 {
 	return *Type;
+}
+
+MWidget*& MFormerCalculator::MParent()
+{
+	return Parent;
 }

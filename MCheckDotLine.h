@@ -3,7 +3,7 @@
 
 class MCheckDot;
 
-class MCheckDotLine
+class MCheckDotLine //轨道线类
 {
 private:
 	MCheckDot* Parent;//存储parent，用于溯源

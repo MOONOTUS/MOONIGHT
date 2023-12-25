@@ -26,12 +26,12 @@ private:
 	qint64* Time;//音符的判定时间
 	qint64* TimeLength;//hold音符专有的持续时长
 	qint64* EndTime;//hold音符专有的判定介绍时间
-	qint64* VTime;
-	qint64* VTimeLength;
-	qint64* VEndTime;
+	qint64* VTime;//音符的视觉时间
+	qint64* VTimeLength;//hold音符专有的视觉时长
+	qint64* VEndTime;//hold音符专有的视觉结束时间
 	qint64* NextTime;//下一个音符的判定时间，用于音符判定和音符绘制的实现
-	qreal* Speed;
-	qreal* VSpeed;
+	qreal* Speed;//音符的独立逻辑速度，-1代表依照判定点指定的速度运动
+	qreal* VSpeed;//音符的独立视觉速度，-1代表依照判定点指定的速度运动
 
 public:
 	MNote(MCheckDot* parent = nullptr);
@@ -64,15 +64,15 @@ public:
 	void setTimeLength(qint64 time_ms);//设定hold音符专有的判定时长
 	qint64 timeLength();//返回*TimeLength
 	qint64 endTime();//返回*EndTime
-	void setVTime(qint64 time_ms);
-	qint64 vTime();
-	void setVTimeLength(qint64 time_ms);
-	qint64 vTimeLength();
-	qint64 vEndTime();
+	void setVTime(qint64 time_ms);//设定音符的视觉时间
+	qint64 vTime();//音符的视觉时间
+	void setVTimeLength(qint64 time_ms);//设定hold音符专有的视觉时长
+	qint64 vTimeLength();//hold音符专有的视觉时长
+	qint64 vEndTime();//hold音符专有的视觉结束时间
 	void setNextTime(qint64 time_ms);//设定下一个音符的判定时间，用于音符判定和音符绘制的实现
 	qint64 nextTime();//返回*NextTime
 	MCheckDot*& MParent();//返回Parent，用于溯源
-	void setSpeed(qreal speed);
-	qreal speed();
-	qreal vSpeed();
+	void setSpeed(qreal speed);//设定音符的独立逻辑速度
+	qreal speed();//音符的独立逻辑速度
+	qreal vSpeed();//音符的独立视觉速度
 };
