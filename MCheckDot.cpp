@@ -322,41 +322,41 @@ void MCheckDot::paintCheckAnimation(QPainter* paint)
 			{
 				QPen pen;
 				pen.setColor(QColor(255, 25, 0, 60));//朱红
-				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
+				pen.setWidth(((300 + (listptr.key() - Parent->time())) / ANIMATIONTHINESS) * Parent->visualProportion());
 				paint->setPen(pen);
-				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key())) / 2, qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
+				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()), qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()));
 			}
 			if (listptr.value() == strictperfect)
 			{
 				QPen pen;
 				pen.setColor(QColor(255, 209, 86, 60));//夕霞
-				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
+				pen.setWidth(((300 + (listptr.key() - Parent->time())) / ANIMATIONTHINESS) * Parent->visualProportion());
 				paint->setPen(pen);
-				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key())) / 2, qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
+				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()), qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()));
 			}
 			else if (listptr.value() == preperfect || listptr.value() == lagperfect)
 			{
 				QPen pen;
 				pen.setColor(QColor(224, 212, 254, 60));//晚云
-				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
+				pen.setWidth(((300 + (listptr.key() - Parent->time())) / ANIMATIONTHINESS) * Parent->visualProportion());
 				paint->setPen(pen);
-				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) / 2), qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
+				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()), qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()));
 			}
 			else if (listptr.value() == pregood || listptr.value() == laggood)
 			{
 				QPen pen;
 				pen.setColor(QColor(255, 178, 162, 60));//海日
-				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
+				pen.setWidth(((300 + (listptr.key() - Parent->time())) / ANIMATIONTHINESS) * Parent->visualProportion());
 				paint->setPen(pen);
-				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) / 2), qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
+				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()), qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()));
 			}
 			if (listptr.value() == prebad || listptr.value() == lagbad)
 			{
 				QPen pen;
 				pen.setColor(QColor(86, 143, 168, 60));//沉沦
-				pen.setWidth((100 + (listptr.key() - Parent->time()) / 3));
+				pen.setWidth(((300 + (listptr.key() - Parent->time())) / ANIMATIONTHINESS) * Parent->visualProportion());
 				paint->setPen(pen);
-				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) / 2), qint32(*VRadium + (Parent->time() - listptr.key())) / 2);
+				paint->drawEllipse(*VPoint, qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()), qint32(*VRadium + (Parent->time() - listptr.key()) * Parent->visualProportion()));
 			}
 			listptr++;
 		}
@@ -374,35 +374,69 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 		qint64* NextTimeTemp = new qint64(*NextTime);
 		while (*NextTime != -1 && (NoteList->contains(*NextTime)) && ((((NoteList->value(*NextTime)->time() - Parent->time()) * (*Speed)) / 1000) <= (*Digonal - (NoteList->value(*NextTime)->radium()))))
 		{
-			qDebug() << "\tMOONOTUS::_Message_::Note paints";
-			NoteList->value(*NextTime)->setWidth(NoteList->value(*NextTime)->width());
-			NoteList->value(*NextTime)->setRadium(NoteList->value(*NextTime)->radium());
-			if (*HoldPressing && NoteList->value(*HoldPressed)->visuable())
+			if (NoteList->value(*NextTime)->speed() == -1)
 			{
-				paintHoldNote(paint);
-			}
-			if (NoteList->value(*NextTime)->visuable())
-			{
-				switch (NoteList->value(*NextTime)->type())
+				NoteList->value(*NextTime)->setWidth(NoteList->value(*NextTime)->width());
+				NoteList->value(*NextTime)->setRadium(NoteList->value(*NextTime)->radium());
+				if (*HoldPressing && NoteList->value(*HoldPressed)->visuable())
 				{
-				case click:
-					paintClickNote(paint);
-					break;
-				case cat:
-					paintCatNote(paint);
-					break;
-				case beat:
-					paintBeatNote(paint);
-					break;
-				case hold:
 					paintHoldNote(paint);
-					break;
-				default:
-					qDebug() << "\tMOONOTUSYSTEM::_Error_::Unidentified type of note to be painted";
 				}
+				if (NoteList->value(*NextTime)->visuable())
+				{
+					switch (NoteList->value(*NextTime)->type())
+					{
+					case click:
+						paintClickNote(paint);
+						break;
+					case cat:
+						paintCatNote(paint);
+						break;
+					case beat:
+						paintBeatNote(paint);
+						break;
+					case hold:
+						paintHoldNote(paint);
+						break;
+					default:
+						qDebug() << "\tMOONOTUSYSTEM::_Error_::Unidentified type of note to be painted";
+					}
+				}
+			}
+			else
+			{
+				NoteList->value(*NextTime)->setSpeed(NoteList->value(*NextTime)->speed());
+				NoteList->value(*NextTime)->setWidth(NoteList->value(*NextTime)->width());
+				NoteList->value(*NextTime)->setRadium(NoteList->value(*NextTime)->radium());
+				if (*HoldPressing && NoteList->value(*HoldPressed)->visuable())
+				{
+					paintHoldNote(paint);
+				}
+				if (NoteList->value(*NextTime)->visuable())
+				{
+					switch (NoteList->value(*NextTime)->type())
+					{
+					case click:
+						paintClickNote(paint);
+						break;
+					case cat:
+						paintCatNote(paint);
+						break;
+					case beat:
+						paintBeatNote(paint);
+						break;
+					case hold:
+						paintHoldNote(paint);
+						break;
+					default:
+						qDebug() << "\tMOONOTUSYSTEM::_Error_::Unidentified type of note to be painted";
+					}
+				}
+
 			}
 			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
 		}
+		qDebug() << "\tMOONOTUS::_Message_::Note on " << *KeyText << "paints";
 		NextTime = new qint64(*NextTimeTemp);
 		delete NextTimeTemp;
 	}
@@ -415,7 +449,19 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 		}
 		else
 		{
-			paintHoldNote(paint);
+			if (NoteList->value(*HoldPressed)->speed() == -1)
+			{
+				NoteList->value(*HoldPressed)->setWidth(NoteList->value(*NextTime)->width());
+				NoteList->value(*HoldPressed)->setRadium(NoteList->value(*NextTime)->radium());
+				paintHoldNote(paint);
+			}
+			else
+			{
+				NoteList->value(*HoldPressed)->setSpeed(NoteList->value(*NextTime)->speed());
+				NoteList->value(*HoldPressed)->setWidth(NoteList->value(*NextTime)->width());
+				NoteList->value(*HoldPressed)->setRadium(NoteList->value(*NextTime)->radium());
+				paintHoldNote(paint);
+			}
 		}
 	}
 	else
@@ -427,48 +473,99 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 void MCheckDot::paintClickNote(QPainter* paint)//绘制click音符
 {
 	qDebug() << "\tMOONOTUSYSTEM::_Message_::Click note paints";
-	QLineF line0;
-	line0.setP1(*VPoint);
-	line0.setAngle(DotLine->angle());
-	line0.setLength((NoteList->value(*NextTime)->vTime()-Parent->time())*(*VSpeed)/1000);
-	QPen pen;
-	pen.setWidth(NoteList->value(*NextTime)->vWidth());
-	pen.setColor(NoteList->value(*NextTime)->lineColor());
-	paint->setPen(pen);
-	paint->setBrush(NoteList->value(*NextTime)->noteColor());
-	paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+	if (NoteList->value(*NextTime)->speed() == -1)
+	{
+		QLineF line0;
+		line0.setP1(*VPoint);
+		line0.setAngle(DotLine->angle());
+		line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
+		QPen pen;
+		pen.setWidth(NoteList->value(*NextTime)->vWidth());
+		pen.setColor(NoteList->value(*NextTime)->lineColor());
+		paint->setPen(pen);
+		paint->setBrush(NoteList->value(*NextTime)->noteColor());
+		paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+	}
+	else
+	{
+		QLineF line0;
+		line0.setP1(*VPoint);
+		line0.setAngle(DotLine->angle());
+		line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (NoteList->value(*NextTime)->vSpeed()) / 1000);
+		QPen pen;
+		pen.setWidth(NoteList->value(*NextTime)->vWidth());
+		pen.setColor(NoteList->value(*NextTime)->lineColor());
+		paint->setPen(pen);
+		paint->setBrush(NoteList->value(*NextTime)->noteColor());
+		paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+
+	}
 }
 
 void MCheckDot::paintCatNote(QPainter* paint)//绘制cat音符
 {
 	qDebug() << "\tMOONOTUSYSTEM::_Message_::Cat note paints";
-	QLineF line0;
-	line0.setP1(*VPoint);
-	line0.setAngle(DotLine->angle());
-	line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
-	QPen pen;
-	pen.setWidth(NoteList->value(*NextTime)->vWidth());
-	pen.setColor(NoteList->value(*NextTime)->lineColor());
-	paint->setBrush(Qt::transparent);
-	paint->setPen(pen);
-	paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+	if (NoteList->value(*NextTime)->speed() == -1)
+	{
+		QLineF line0;
+		line0.setP1(*VPoint);
+		line0.setAngle(DotLine->angle());
+		line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
+		QPen pen;
+		pen.setWidth(NoteList->value(*NextTime)->vWidth());
+		pen.setColor(NoteList->value(*NextTime)->lineColor());
+		paint->setBrush(Qt::transparent);
+		paint->setPen(pen);
+		paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+	}
+	else
+	{
+		QLineF line0;
+		line0.setP1(*VPoint);
+		line0.setAngle(DotLine->angle());
+		line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (NoteList->value(*NextTime)->vSpeed()) / 1000);
+		QPen pen;
+		pen.setWidth(NoteList->value(*NextTime)->vWidth());
+		pen.setColor(NoteList->value(*NextTime)->lineColor());
+		paint->setBrush(Qt::transparent);
+		paint->setPen(pen);
+		paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+	}
 }
 
 void MCheckDot::paintBeatNote(QPainter* paint)//绘制beat音符
 {
 	qDebug() << "\tMOONOTUSYSTEM::_Message_::Beat note paints";
-	QLineF line0;
-	line0.setP1(*VPoint);
-	line0.setAngle(DotLine->angle());
-	line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
-	QPen pen;
-	pen.setWidth(NoteList->value(*NextTime)->vWidth());
-	pen.setColor(NoteList->value(*NextTime)->lineColor());
-	paint->setPen(pen);
-	paint->setBrush(NoteList->value(*NextTime)->noteColor());
-	paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
-	paint->setFont(font());
-	paint->drawText(QRect(line0.p2().x() - QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size() / 2, line0.p2().y() - QFontMetricsF(font()).height() / 2, QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size(), QFontMetricsF(font()).height()), Qt::AlignHCenter | Qt::AlignVCenter, NoteList->value(*NextTime)->beatKeyText());
+	if (NoteList->value(*NextTime)->speed() == -1)
+	{
+		QLineF line0;
+		line0.setP1(*VPoint);
+		line0.setAngle(DotLine->angle());
+		line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
+		QPen pen;
+		pen.setWidth(NoteList->value(*NextTime)->vWidth());
+		pen.setColor(NoteList->value(*NextTime)->lineColor());
+		paint->setPen(pen);
+		paint->setBrush(NoteList->value(*NextTime)->noteColor());
+		paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+		paint->setFont(font());
+		paint->drawText(QRect(line0.p2().x() - QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size() / 2, line0.p2().y() - QFontMetricsF(font()).height() / 2, QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size(), QFontMetricsF(font()).height()), Qt::AlignHCenter | Qt::AlignVCenter, NoteList->value(*NextTime)->beatKeyText());
+	}
+	else
+	{
+		QLineF line0;
+		line0.setP1(*VPoint);
+		line0.setAngle(DotLine->angle());
+		line0.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (NoteList->value(*NextTime)->vSpeed()) / 1000);
+		QPen pen;
+		pen.setWidth(NoteList->value(*NextTime)->vWidth());
+		pen.setColor(NoteList->value(*NextTime)->lineColor());
+		paint->setPen(pen);
+		paint->setBrush(NoteList->value(*NextTime)->noteColor());
+		paint->drawEllipse(line0.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+		paint->setFont(font());
+		paint->drawText(QRect(line0.p2().x() - QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size() / 2, line0.p2().y() - QFontMetricsF(font()).height() / 2, QFontMetricsF(font()).maxWidth() * NoteList->value(*NextTime)->beatKeyText().size(), QFontMetricsF(font()).height()), Qt::AlignHCenter | Qt::AlignVCenter, NoteList->value(*NextTime)->beatKeyText());
+	}
 }
 
 void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
@@ -478,66 +575,132 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
 		if (NoteList->value(*NextTime)->type() == hold)
 		{
 			qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note paints";
-			QPainter* paint = new QPainter(this);
-			QLineF line01, line02, line03;
-			line01.setP1(*VPoint);
-			line01.setAngle(DotLine->angle());
-			line01.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
-			line02.setP1(*VPoint);
-			line02.setAngle(DotLine->angle());
-			line02.setLength((NoteList->value(*NextTime)->vEndTime() - Parent->time()) * (*VSpeed) / 1000);
-			QPen pen;
-			pen.setWidth(NoteList->value(*NextTime)->vWidth());
-			pen.setColor(NoteList->value(*NextTime)->lineColor());
-			paint->setPen(pen);
-			paint->setBrush(NoteList->value(*NextTime)->noteColor());
-			paint->drawEllipse(line01.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
-			pen.setColor(Qt::transparent);
-			paint->setPen(pen);
-			paint->drawEllipse(line02.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
-			line03.setP1(line02.p2());
-			line03.setLength(NoteList->value(*NextTime)->vRadium());
-			line03.setAngle(DotLine->angle() + 90);
-			pen.setColor(Qt::transparent);
-			paint->setPen(pen);
-			paint->translate(line03.p2());
-			paint->rotate(90 - DotLine->angle());
-			paint->drawRect(QRect(0, 0, NoteList->value(*NextTime)->vRadium() * 2, (NoteList->value(*NextTime)->vEndTime() - NoteList->value(*NextTime)->vTime()) * (*VSpeed) / 1000));
-			delete paint;
+			if (NoteList->value(*NextTime)->speed() == -1)
+			{
+				QPainter* paint = new QPainter(this);
+				QLineF line01, line02, line03;
+				line01.setP1(*VPoint);
+				line01.setAngle(DotLine->angle());
+				line01.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (*VSpeed) / 1000);
+				line02.setP1(*VPoint);
+				line02.setAngle(DotLine->angle());
+				line02.setLength((NoteList->value(*NextTime)->vEndTime() - Parent->time()) * (*VSpeed) / 1000);
+				QPen pen;
+				pen.setWidth(NoteList->value(*NextTime)->vWidth());
+				pen.setColor(NoteList->value(*NextTime)->lineColor());
+				paint->setPen(pen);
+				paint->setBrush(NoteList->value(*NextTime)->noteColor());
+				paint->drawEllipse(line01.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+				pen.setColor(Qt::transparent);
+				paint->setPen(pen);
+				paint->drawEllipse(line02.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+				line03.setP1(line02.p2());
+				line03.setLength(NoteList->value(*NextTime)->vRadium());
+				line03.setAngle(DotLine->angle() + 90);
+				pen.setColor(Qt::transparent);
+				paint->setPen(pen);
+				paint->translate(line03.p2());
+				paint->rotate(90 - DotLine->angle());
+				paint->drawRect(QRect(0, 0, NoteList->value(*NextTime)->vRadium() * 2, (NoteList->value(*NextTime)->vEndTime() - NoteList->value(*NextTime)->vTime()) * (*VSpeed) / 1000));
+				delete paint;
+			}
+			else
+			{
+				QPainter* paint = new QPainter(this);
+				QLineF line01, line02, line03;
+				line01.setP1(*VPoint);
+				line01.setAngle(DotLine->angle());
+				line01.setLength((NoteList->value(*NextTime)->vTime() - Parent->time()) * (NoteList->value(*NextTime)->vSpeed()) / 1000);
+				line02.setP1(*VPoint);
+				line02.setAngle(DotLine->angle());
+				line02.setLength((NoteList->value(*NextTime)->vEndTime() - Parent->time()) * (NoteList->value(*NextTime)->vSpeed()) / 1000);
+				QPen pen;
+				pen.setWidth(NoteList->value(*NextTime)->vWidth());
+				pen.setColor(NoteList->value(*NextTime)->lineColor());
+				paint->setPen(pen);
+				paint->setBrush(NoteList->value(*NextTime)->noteColor());
+				paint->drawEllipse(line01.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+				pen.setColor(Qt::transparent);
+				paint->setPen(pen);
+				paint->drawEllipse(line02.p2(), qint32(NoteList->value(*NextTime)->vRadium()), qint32(NoteList->value(*NextTime)->vRadium()));
+				line03.setP1(line02.p2());
+				line03.setLength(NoteList->value(*NextTime)->vRadium());
+				line03.setAngle(DotLine->angle() + 90);
+				pen.setColor(Qt::transparent);
+				paint->setPen(pen);
+				paint->translate(line03.p2());
+				paint->rotate(90 - DotLine->angle());
+				paint->drawRect(QRect(0, 0, NoteList->value(*NextTime)->vRadium() * 2, (NoteList->value(*NextTime)->vEndTime() - NoteList->value(*NextTime)->vTime()) * (NoteList->value(*NextTime)->vSpeed()) / 1000));
+				delete paint;
+			}
 		}
 
 	}
 	if(*HoldPressing)
 	{
 		qDebug() << "\tMOONOTUSYSTEM::_Message_::Hold note which is pressed paints";
-		NoteCheckAnimationList->insert(Parent->time(),strictperfect);
-		NoteList->value(*HoldPressed)->setVTime(Parent->time());
-		QPainter* paint = new QPainter(this);
-		QLineF line01, line02, line03;
-		line01.setP1(*VPoint);
-		line01.setAngle(DotLine->angle());
-		line01.setLength((NoteList->value(*HoldPressed)->vTime() - Parent->time()) * (*VSpeed) / 1000);
-		line02.setP1(*VPoint);
-		line02.setAngle(DotLine->angle());
-		line02.setLength((NoteList->value(*HoldPressed)->vEndTime() - Parent->time()) * (*VSpeed) / 1000);
-		QPen pen;
-		pen.setWidth(NoteList->value(*HoldPressed)->vWidth());
-		pen.setColor(NoteList->value(*HoldPressed)->lineColor());
-		paint->setPen(pen);
-		paint->setBrush(NoteList->value(*HoldPressed)->noteColor());
-		paint->drawEllipse(line01.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
-		pen.setColor(Qt::transparent);
-		paint->setPen(pen);
-		paint->drawEllipse(line02.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
-		line03.setP1(line02.p2());
-		line03.setLength(NoteList->value(*HoldPressed)->vRadium());
-		line03.setAngle(DotLine->angle() + 90);
-		pen.setColor(Qt::transparent);
-		paint->setPen(pen);
-		paint->translate(line03.p2());
-		paint->rotate(90 - DotLine->angle());
-		paint->drawRect(QRect(0, 0, NoteList->value(*HoldPressed)->vRadium() * 2, (NoteList->value(*HoldPressed)->vEndTime() - NoteList->value(*HoldPressed)->vTime()) * (*VSpeed) / 1000));
-		delete paint;
+		if (NoteList->value(*HoldPressed)->speed() == -1)
+		{
+			NoteCheckAnimationList->insert(Parent->time(), strictperfect);
+			NoteList->value(*HoldPressed)->setVTime(Parent->time());
+			QPainter* paint = new QPainter(this);
+			QLineF line01, line02, line03;
+			line01.setP1(*VPoint);
+			line01.setAngle(DotLine->angle());
+			line01.setLength((NoteList->value(*HoldPressed)->vTime() - Parent->time()) * (*VSpeed) / 1000);
+			line02.setP1(*VPoint);
+			line02.setAngle(DotLine->angle());
+			line02.setLength((NoteList->value(*HoldPressed)->vEndTime() - Parent->time()) * (*VSpeed) / 1000);
+			QPen pen;
+			pen.setWidth(NoteList->value(*HoldPressed)->vWidth());
+			pen.setColor(NoteList->value(*HoldPressed)->lineColor());
+			paint->setPen(pen);
+			paint->setBrush(NoteList->value(*HoldPressed)->noteColor());
+			paint->drawEllipse(line01.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
+			pen.setColor(Qt::transparent);
+			paint->setPen(pen);
+			paint->drawEllipse(line02.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
+			line03.setP1(line02.p2());
+			line03.setLength(NoteList->value(*HoldPressed)->vRadium());
+			line03.setAngle(DotLine->angle() + 90);
+			pen.setColor(Qt::transparent);
+			paint->setPen(pen);
+			paint->translate(line03.p2());
+			paint->rotate(90 - DotLine->angle());
+			paint->drawRect(QRect(0, 0, NoteList->value(*HoldPressed)->vRadium() * 2, (NoteList->value(*HoldPressed)->vEndTime() - NoteList->value(*HoldPressed)->vTime()) * (*VSpeed) / 1000));
+			delete paint;
+		}
+		else
+		{
+			NoteCheckAnimationList->insert(Parent->time(), strictperfect);
+			NoteList->value(*HoldPressed)->setVTime(Parent->time());
+			QPainter* paint = new QPainter(this);
+			QLineF line01, line02, line03;
+			line01.setP1(*VPoint);
+			line01.setAngle(DotLine->angle());
+			line01.setLength((NoteList->value(*HoldPressed)->vTime() - Parent->time())* (NoteList->value(*HoldPressed)->vSpeed()) / 1000);
+			line02.setP1(*VPoint);
+			line02.setAngle(DotLine->angle());
+			line02.setLength((NoteList->value(*HoldPressed)->vEndTime() - Parent->time())* (NoteList->value(*HoldPressed)->vSpeed()) / 1000);
+			QPen pen;
+			pen.setWidth(NoteList->value(*HoldPressed)->vWidth());
+			pen.setColor(NoteList->value(*HoldPressed)->lineColor());
+			paint->setPen(pen);
+			paint->setBrush(NoteList->value(*HoldPressed)->noteColor());
+			paint->drawEllipse(line01.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
+			pen.setColor(Qt::transparent);
+			paint->setPen(pen);
+			paint->drawEllipse(line02.p2(), qint32(NoteList->value(*HoldPressed)->vRadium()), qint32(NoteList->value(*HoldPressed)->vRadium()));
+			line03.setP1(line02.p2());
+			line03.setLength(NoteList->value(*HoldPressed)->vRadium());
+			line03.setAngle(DotLine->angle() + 90);
+			pen.setColor(Qt::transparent);
+			paint->setPen(pen);
+			paint->translate(line03.p2());
+			paint->rotate(90 - DotLine->angle());
+			paint->drawRect(QRect(0, 0, NoteList->value(*HoldPressed)->vRadium() * 2, (NoteList->value(*HoldPressed)->vEndTime() - NoteList->value(*HoldPressed)->vTime())* (NoteList->value(*HoldPressed)->vSpeed()) / 1000));
+			delete paint;
+		}
 	}
 }
 

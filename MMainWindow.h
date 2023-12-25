@@ -1,4 +1,5 @@
 #pragma once
+#include"MCenter.h"
 
 #include <QWidget>
 
@@ -9,4 +10,9 @@ class MMainWindow  : public QWidget
 public:
 	MMainWindow(QWidget *parent);
 	~MMainWindow();
+
+private:
+	bool* Started;
+	QTimer* UiTime;
+
 };

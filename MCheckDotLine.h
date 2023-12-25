@@ -10,10 +10,10 @@ private:
 	bool* Visuable;//轨道线是否可见
 	qreal* Width;//轨道线的逻辑宽度
 	qreal* Angel;//轨道线的角度
-	qreal* UpAngle;
-	qreal* DownAngle;
-	bool* UpVisuable;
-	bool* DownVisuable;
+	qreal* UpAngle;//上部线角
+	qreal* DownAngle;//下部线角
+	bool* UpVisuable;//上部线可见性
+	bool* DownVisuable;//下部线可见性
 	QColor* DotLineColor;//轨道线的颜色（RGBA）
 	qreal* VWidth;//轨道线的视觉宽度
 
@@ -22,19 +22,19 @@ public:
 	~MCheckDotLine();
 
 	void setVisuable(bool visuable);//设定轨道线是否可见
-	bool visuable();//返回*Visuable
-	void setUpVisuable(bool visuable);
-	bool upVisuable();
-	void setDownVisuable(bool visuable);
-	bool downVisuable();
+	bool visuable();//轨道线可见性
+	void setUpVisuable(bool visuable);//设定上部轨道线可见性
+	bool upVisuable();//上部轨道线可见性
+	void setDownVisuable(bool visuable);//设定下部轨道线可见性
+	bool downVisuable();//下部轨道线可见性
 	void setWidth(qreal width);//设定轨道线的逻辑宽度
-	qreal width();//返回*Width
+	qreal width();//轨道线逻辑宽度
 	void setAngel(qreal angle);//设定轨道线的角度
-	qreal angle();//返回*Angle
-	void setUpAngle(qreal angle);
-	qreal upAngle();
-	void setDownAngle(qreal angle);
-	qreal downAngle();
+	qreal angle();//轨道线角度
+	void setUpAngle(qreal angle);//设定上部线角
+	qreal upAngle();//上部线角
+	void setDownAngle(qreal angle);//设定下部线角
+	qreal downAngle();//下部线角
 	void setDotLineColor(QColor color);//设定轨道线的颜色
 	void setDotLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定轨道线的颜色
 	QColor dotLineColor();//返回*DotLineColor

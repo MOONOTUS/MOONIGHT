@@ -19,6 +19,7 @@ public:
 #define prebad 0x1001
 #define lagbad 0x0001
 #define miss 0x0000
+#define ANIMATIONTHINESS 1.5
 
 protected:
 	void paintEvent(QPaintEvent* event);//重写的重绘函数
@@ -71,8 +72,8 @@ private:
 	qreal* VSpeed;//音符的视觉速度
 	qreal* LineRadium;//轨道线的逻辑长度
 	qreal* VLineRadium;//轨道线的视觉长度
-	QMap<qint64, qint32>* NoteCheckAnimationList;
-	qreal* Digonal;
+	QMap<qint64, qint32>* NoteCheckAnimationList;//打击特效列表
+	qreal* Digonal;//打击误差
 
 public:
 	MCheckDot(MWidget *parent = nullptr);
@@ -106,11 +107,11 @@ public:
 	void setKeyVisuable(bool visuable);//设定判定键文本是否可见
 	bool keyVisuable();//返回*KeyVisuable
 	void setSpeed(qreal speed_px_ps);//设定音符的逻辑速度
-	qreal speed();//返回*Speed
+	qreal speed();//返回音符逻辑速度
 	void setLineRadium(qreal lineradium);//设定轨道线的逻辑长度
-	qreal lineRadium();//返回*LineRadium
-	void addNote(qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");
-	void addNote(QColor notecolor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");
-	void addNote(QColor notecolor = Qt::transparent, QColor LineColor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");
+	qreal lineRadium();//返回轨道线逻辑长度
+	void addNote(qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
+	void addNote(QColor notecolor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
+	void addNote(QColor notecolor = Qt::transparent, QColor LineColor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
 
 };

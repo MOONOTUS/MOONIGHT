@@ -3,13 +3,14 @@
 
 #include"MCenter.h"
 #include"MWidget.h"
+#include"MMainWindow.h"
 
 QT_BEGIN_NAMESPACE
 
 class Ui_MOONIGHT_QtClass
 {
 public:
-    MWidget* main;//主界面
+    MMainWindow* main;//主界面
     MWidget *central;//提供给谱面编辑师的窗口
     QTimer* mainTime;//以10ms为周期的主计时器，用于实现动效
     QElapsedTimer* disTime;
@@ -19,7 +20,7 @@ public:
         if (MOONIGHT_QtClass->objectName().isEmpty())
             MOONIGHT_QtClass->setObjectName("MOONIGHT_QtClass");
         MOONIGHT_QtClass->resize(960, 540);
-        main = new MWidget(MOONIGHT_QtClass);
+        main = new MMainWindow(MOONIGHT_QtClass);
         main->setObjectName("mainWidget");
         MOONIGHT_QtClass->setCentralWidget(main);
 

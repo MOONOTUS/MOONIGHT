@@ -22,6 +22,8 @@ MNote::MNote(MCheckDot* parent)
 	VTimeLength = new qint64(*TimeLength);
 	VEndTime = new qint64(*VTime + *VTimeLength);
 	NextTime = new qint64(0);
+	Speed = new qreal(-1);
+	VSpeed = new qreal(-1);
 }
 
 MNote::MNote(MNote* note)
@@ -44,6 +46,8 @@ MNote::MNote(MNote* note)
 	VTimeLength = new qint64(note->vTimeLength());
 	VEndTime = new qint64(note->vEndTime());
 	NextTime = new qint64(note->nextTime());
+	Speed = new qreal(note->speed());
+	VSpeed = new qreal(note->vSpeed());
 }
 
 MNote::~MNote()
@@ -64,7 +68,7 @@ MNote::~MNote()
 	delete NextTime;
 }
 
-void MNote::MNoteSet(bool visuable, qreal radium, qreal width, QColor color, qint32 type, qint64 time, qint64 nextTime, qint32 beatKey, QString beatKeyText, qint64 timeLength)
+void MNote::MNoteSet(bool visuable, qreal radium, qreal width, QColor color, qint32 type, qint64 time, qint64 nextTime, qint32 beatKey, QString beatKeyText, qint64 timeLength, qreal speed)
 {
 	setVisuable(visuable);
 	if (!(radium == -1))
@@ -98,6 +102,10 @@ void MNote::MNoteSet(bool visuable, qreal radium, qreal width, QColor color, qin
 	if (!(timeLength == -1))
 	{
 		setTimeLength(timeLength);
+	}
+	if (!(speed == -1))
+	{
+		setSpeed(speed);
 	}
 }
 
@@ -269,4 +277,23 @@ void MNote::setNextTime(qint64 time_ms)
 qint64 MNote::nextTime()
 {
 	return *NextTime;
+}
+
+void MNote::setSpeed(qreal speed)
+{
+	Speed = new qreal(speed);
+	if (*Speed != -1)
+	{
+		VSpeed = new qreal((*Speed) * Parent->MParent()->visualProportion());
+	}
+}
+
+qreal MNote::speed()
+{
+	return *Speed;
+}
+
+qreal MNote::vSpeed()
+{
+	return *VSpeed;
 }

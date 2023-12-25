@@ -30,13 +30,15 @@ private:
 	qint64* VTimeLength;
 	qint64* VEndTime;
 	qint64* NextTime;//下一个音符的判定时间，用于音符判定和音符绘制的实现
+	qreal* Speed;
+	qreal* VSpeed;
 
 public:
 	MNote(MCheckDot* parent = nullptr);
 	MNote(MNote* note);
 	~MNote();
 
-	void MNoteSet(bool visuable, qreal radium = -1, qreal width = -1, QColor color = Qt::transparent, qint32 type = -1, qint64 time = -1, qint64 nextTime = -1, qint32 beatKey = -1, QString beatKeyText = "", qint64 timeLength = 0);//设定音符的各项参数，默认参数表示不改变
+	void MNoteSet(bool visuable, qreal radium = -1, qreal width = -1, QColor color = Qt::transparent, qint32 type = -1, qint64 time = -1, qint64 nextTime = -1, qint32 beatKey = -1, QString beatKeyText = "", qint64 timeLength = 0, qreal speed  = -1);//设定音符的各项参数，默认参数表示不改变
 
 	void setVisuable(bool visuable);//设定音符是否可见
 	bool visuable();//返回*Visuable
@@ -70,4 +72,7 @@ public:
 	void setNextTime(qint64 time_ms);//设定下一个音符的判定时间，用于音符判定和音符绘制的实现
 	qint64 nextTime();//返回*NextTime
 	MCheckDot*& MParent();//返回Parent，用于溯源
+	void setSpeed(qreal speed);
+	qreal speed();
+	qreal vSpeed();
 };

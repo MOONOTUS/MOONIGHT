@@ -28,6 +28,8 @@ MFormerCalculator::MFormerCalculator(MWidget *parent)
 
 void MFormerCalculator::paintEvent(QPaintEvent* event)
 {
+	VMoonPoint = new QPoint(MoonPoint->x() * Parent->visualProportion(), MoonPoint->y() * Parent->visualProportion());
+	VMoonRadium = new qreal(*MoonRadium * Parent->visualProportion());
 	qDebug() << "MOONOTUSYSTEM::_Message_::MFormer Calculator paints";
 	this->setGeometry(0, (Parent->height() - Parent->width() * 9 / 16) / 2, Parent->width(), Parent->width() * 9 / 16);//，以屏幕宽度为基准，设定16：9中央绘制区域，保证在不同尺寸的比例正常的设备上谱面的比例一样
 	QPainter* paint = new QPainter(this);
