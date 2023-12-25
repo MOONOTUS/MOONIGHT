@@ -1095,6 +1095,29 @@ void MCheckDot::addNote(QColor notecolor, QColor linecolor, qint64 time, qint32 
 	LastAdd = new qint64(time);
 }
 
+void MCheckDot::addNote(QColor notecolor, QColor linecolor, QColor keycolor, qint64 time, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
+{
+	MNote* newNote = new MNote(this);
+	newNote->setTime(time);
+	newNote->setNextTime(-1);
+	newNote->setType(type);
+	newNote->setTimeLength(timelength);
+	newNote->setBeatKey(beatkey, beatkeytext);
+	newNote->setNoteColor(notecolor);
+	newNote->setLineColor(linecolor);
+	newNote->setKeyColor(keycolor);
+	NoteList->insert(time, newNote);
+	if ((*LastAdd) != -1 && NoteList->contains(*LastAdd))
+	{
+		NoteList->value(*LastAdd)->setNextTime(time);
+	}
+	else
+	{
+		this->setNextTime(time);
+	}
+	LastAdd = new qint64(time);
+}
+
 void MCheckDot::setAutoDotColor(QColor color)
 {
 	AutoDotColor = new QColor(color);

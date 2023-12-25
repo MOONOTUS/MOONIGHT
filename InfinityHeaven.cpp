@@ -249,14 +249,14 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	parent->checkDotList()->value("M")->addNote(48937.5, click);
 	parent->checkDotList()->value("M")->addNote(49125, click);
 
-	parent->checkDotList()->value("M")->setPoint(1700, 900);
+	parent->checkDotList()->value("M")->setPoint(1700, -50);
 	parent->checkDotList()->value("M")->dotLine()->setDownVisuable(false);
 
-	parent->checkDotList()->value("V")->setPoint(1500, 900);
+	parent->checkDotList()->value("V")->setPoint(1500, 1850);
 	parent->checkDotList()->value("V")->dotLine()->setDownVisuable(false);
 	parent->checkDotList()->value("V")->dotLine()->setAngel(-90);
 
-	parent->checkDotList()->value("V2")->setPoint(1500, 900);
+	parent->checkDotList()->value("V2")->setPoint(1500, 1850);
 	parent->checkDotList()->value("V2")->dotLine()->setDownVisuable(false);
 	parent->checkDotList()->value("V2")->dotLine()->setAngel(-90);
 
@@ -301,6 +301,21 @@ void TestDemo_InfinityHeaven(MOONIGHT_Qt* w)
 
 void InfinityHeaven_Class::InfinityHeaven()
 {
+	if (parent->checkDotList()->value("M")->point().y() < 900)
+	{
+		QPoint newpoint(parent->checkDotList()->value("M")->point().x(), parent->checkDotList()->value("M")->point().y() + 25 - qreal(parent->time()) / 100);
+		parent->checkDotList()->value("M")->setPoint(newpoint);
+	}
+	if (parent->checkDotList()->value("V2")->point().y() > 900)
+	{
+		QPoint newpoint(parent->checkDotList()->value("V")->point().x(), parent->checkDotList()->value("V")->point().y() - 25 + qreal(parent->time()) / 100);
+		parent->checkDotList()->value("V")->setPoint(newpoint);
+	}
+	if (parent->checkDotList()->value("V2")->point().y() > 900)
+	{
+		QPoint newpoint(parent->checkDotList()->value("V2")->point().x(), parent->checkDotList()->value("V2")->point().y() - 25 + qreal(parent->time()) / 100);
+		parent->checkDotList()->value("V2")->setPoint(newpoint);
+	}
 	parent->playMusic();
 }
 
