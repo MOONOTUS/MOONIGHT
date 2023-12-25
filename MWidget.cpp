@@ -25,6 +25,10 @@ MWidget::MWidget(QWidget* parent , MWidget* linkmain)
 	MainTime->stop();
 	MainTime->setSingleShot(false);
 	MainTime->setInterval(10);
+	FlushTime = new QTimer(this);
+	FlushTime->stop();
+	FlushTime->setSingleShot(false);
+	FlushTime->setInterval(5);
 	DisTime = new QElapsedTimer();
 	FixTime = new QElapsedTimer();
 	KeyPressingList = new QSet<qint32>;
@@ -45,6 +49,7 @@ MWidget::MWidget(QWidget* parent , MWidget* linkmain)
 	EachScore = new qint64(0);
 	Accuracy = new qreal(100.00);
 	Pausing = new bool(false);
+
 	connect
 	(
 		LitTime,
@@ -53,9 +58,18 @@ MWidget::MWidget(QWidget* parent , MWidget* linkmain)
 		SLOT(timeAdd_ms()),
 		Qt::DirectConnection
 	);
+	connect
+	(
+		FlushTime,
+		SIGNAL(timeout()),
+		this,
+		SLOT(repaint()),
+		Qt::DirectConnection
+	);
 
 	DisTime->start();
 	FixTime->start();
+	FlushTime->start();
 	this->setFocus();
 }
 

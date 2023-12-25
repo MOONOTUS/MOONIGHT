@@ -302,14 +302,6 @@ void TestDemo_InfinityHeaven(MOONIGHT_Qt* w)
 		SLOT(InfinityHeaven()),
 		Qt::DirectConnection
 	);
-	w->connect
-	(
-		w->Ui()->central->litTime(),
-		SIGNAL(timeout()),
-		w->Ui()->central,
-		SLOT(repaint()),
-		Qt::DirectConnection
-	);
 	w->Ui()->central->show();
 }
 

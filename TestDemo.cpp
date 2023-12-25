@@ -129,14 +129,6 @@ void TestDemo_Rotate(MOONIGHT_Qt* w)
 		SLOT(rotateCheckDot()),
 		Qt::DirectConnection
 	);
-	w->connect
-	(
-		w->Ui()->central->litTime(),
-		SIGNAL(timeout()),
-		w->Ui()->central,
-		SLOT(repaint()),
-		Qt::DirectConnection
-	);
 	w->Ui()->central->show();
 }
 

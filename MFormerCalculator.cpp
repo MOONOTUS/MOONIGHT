@@ -43,7 +43,8 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 		text->setFont(QFont("Microsoft YaHei Ui", 48 * (Parent->visualProportion()), -1));
 		text->drawText(QRect(qint32(985 * (Parent->visualProportion())), qint32(52 * (Parent->visualProportion())), qint32(500 * (Parent->visualProportion())), qint32(96 * (Parent->visualProportion()))), Qt::AlignRight | Qt::AlignBottom, *ScoreText);
 		text->drawText(QRect(qint32(1715 * (Parent->visualProportion())), qint32(52 * (Parent->visualProportion())), qint32(500 * (Parent->visualProportion())), qint32(96 * (Parent->visualProportion()))), Qt::AlignLeft | Qt::AlignBottom, *ComboText);
-		text->setFont(QFont("Microsoft YaHei Ui", ((36 * (Parent->visualProportion()) < 351 / MusicName->size()) ? (36 * (Parent->visualProportion())) : (351 / MusicName->size()), -1)));
+		text->setFont(QFont("Microsoft YaHei Ui", ((36 * (Parent->visualProportion()) < 1.5 * 351 * (Parent->visualProportion()) / MusicName->size()) ? (36 * (Parent->visualProportion())) : (1.5 * 351 * (Parent->visualProportion()) / MusicName->size())), -1));
+		//qDebug() << "\tMOONOTUSYSTEM::_Debug_::" << 36 * (Parent->visualProportion()) << "\t" << 351 * Parent->visualProportion() / MusicName->size() << "\t" << ((36 * (Parent->visualProportion()) < 351 * (Parent->visualProportion()) / MusicName->size()) ? (36 * (Parent->visualProportion())) : (351 * (Parent->visualProportion()) / MusicName->size()));
 		text->drawText(QRect(qint32(1135 * (Parent->visualProportion())), qint32(164 * (Parent->visualProportion())), qint32(351 * (Parent->visualProportion())), qint32(72 * (Parent->visualProportion()))), Qt::AlignRight | Qt::AlignTop, *MusicName);
 		text->drawText(QRect(qint32(1714 * (Parent->visualProportion())), qint32(164 * (Parent->visualProportion())), qint32(351 * (Parent->visualProportion())), qint32(72 * (Parent->visualProportion()))), Qt::AlignLeft | Qt::AlignTop, *AccuracyText);
 		QPainter* moon = new QPainter(this);
@@ -54,6 +55,10 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 		moon->setBrush(Qt::transparent);
 		QPainterPath moonpath;
 		moonpath.moveTo(QPoint(1600 * (Parent->visualProportion()), 50 * (Parent->visualProportion())));
+		if (Parent->pausing())
+		{
+			paint->fillRect(this->rect(), QColor(0, 0, 0, 155));
+		}
 		if ((*Type) == "Full")
 		{
 			moonpen.setColor(QColor(255, 209, 86, 155));
@@ -99,12 +104,9 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 			//moon->drawChord(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), 90 * 16, 180 * 16);
 			moon->drawPath(moonpath);
 		}
-		//moonpen.setColor(Qt::transparent);
-		//moon->setPen(moonpen);
-		//moon->setBrush(QColor(51, 51, 51, 155));
-		//moon->drawEllipse(QPointF(1565 * (Parent->visualProportion()), 100 * (Parent->visualProportion())), qreal(30 * (Parent->visualProportion())), qreal(30 * (Parent->visualProportion())));
-		//moon->drawEllipse(QPointF(1565 * (Parent->visualProportion()), 190 * (Parent->visualProportion())), qreal(15 * (Parent->visualProportion())), qreal(15 * (Parent->visualProportion())));
-		//moon->drawEllipse(QPointF(1645 * (Parent->visualProportion()), 170 * (Parent->visualProportion())), qreal(20 * (Parent->visualProportion())), qreal(20 * (Parent->visualProportion())));
+		textpen.setColor(QColor(255, 255, 255, 255));
+		text->setPen(textpen);
+		text->setFont(QFont("Microsoft YaHei Ui", 36 * (Parent->visualProportion()), -1));
 		text->drawText(QRect(qint32(1480 * (Parent->visualProportion())), qint32(225 * (Parent->visualProportion())), qint32(240 * (Parent->visualProportion())), qint32(50 * (Parent->visualProportion()))), Qt::AlignHCenter | Qt::AlignVCenter, *CheckText);
 	}
 

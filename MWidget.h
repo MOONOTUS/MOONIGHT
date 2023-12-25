@@ -43,8 +43,9 @@ private:
 	qint64* time_ms;//以ms为单位的计时
 	qint64* fixtime_ms;
 	QPixmap* Logo;//MOONOIGHT的标志图片
-	QTimer* MainTime;//以1ms为周期的计时器，用于画面刷新
+	QTimer* MainTime;//以10ms为周期的计时器，用于谱面设计
 	QTimer* LitTime;//以1ms为周期的计时器，用于曲谱计时
+	QTimer* FlushTime;//以5ms为周期的计时器，用于画面刷新
 	QElapsedTimer* DisTime;
 	QElapsedTimer* FixTime;
 	QSet<qint32>* KeyPressingList;
