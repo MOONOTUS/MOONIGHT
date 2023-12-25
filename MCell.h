@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"MCenter.h"
 
+class MMainWindow;
 class MWidget;
 
 class MCell  : public QPushButton //统合元件类
@@ -14,21 +15,27 @@ class MCell  : public QPushButton //统合元件类
 #define pathcell 0x004
 #define textcell 0x005
 
+protected:
+	void paintEvent(QPaintEvent* event);
+
 public:
-	MCell(MWidget *parent);
+	MCell(MMainWindow* parent);
+	MCell(MWidget* parent);
 	~MCell();
 
 private:
-	MWidget* Parent;
+	MMainWindow* ParentMMainWindow;
+	MWidget* ParentMWidget;
 
 	qint32* Type;
 
 	QPoint* Point;
 	QPixmap* Image;
 	QRect* Rect;
-	qreal* Radium;
+	qreal* XRadium;
+	qreal* YRadium;
 	QLine* Line;
-	QPainterPath* Path;
+	QPainterPath* PainterPath;
 	QString* Text;
 
 	bool* Visuable;
@@ -52,12 +59,13 @@ public:
 	void setLine(QLine line);
 	void setLine(QPoint start, QPoint end);
 	void setLine(qreal x1, qreal y1, qreal x2, qreal y2);
-	void setPath(QPainterPath path);
+	void setPainterPath(QPainterPath painterpath);
 	void setText(QString text);
 
 	QPixmap image();
 	QPoint point();
 	bool visuable();
 	void draw();
-	MWidget*& MParent();
+	MMainWindow*& MParentMMainWindow();
+	MWidget*& MParentMWidget();
 };

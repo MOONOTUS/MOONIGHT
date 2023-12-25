@@ -301,19 +301,20 @@ void TestDemo_InfinityHeaven(MOONIGHT_Qt* w)
 
 void InfinityHeaven_Class::InfinityHeaven()
 {
+	//由于Qt事件循环的阻塞特性，建议谱师以位置而非时刻作为动画依据
 	if (parent->checkDotList()->value("M")->point().y() < 900)
 	{
-		QPoint newpoint(parent->checkDotList()->value("M")->point().x(), parent->checkDotList()->value("M")->point().y() + 25 - qreal(parent->time()) / 100);
+		QPoint newpoint(parent->checkDotList()->value("M")->point().x(), parent->checkDotList()->value("M")->point().y() + qreal(900 - parent->checkDotList()->value("M")->point().y()) / 10);
 		parent->checkDotList()->value("M")->setPoint(newpoint);
 	}
-	if (parent->checkDotList()->value("V2")->point().y() > 900)
+	if (parent->checkDotList()->value("V")->point().y() > 900)
 	{
-		QPoint newpoint(parent->checkDotList()->value("V")->point().x(), parent->checkDotList()->value("V")->point().y() - 25 + qreal(parent->time()) / 100);
+		QPoint newpoint(parent->checkDotList()->value("V")->point().x(), parent->checkDotList()->value("V")->point().y() - qreal(parent->checkDotList()->value("V")->point().y() - 900) / 10);
 		parent->checkDotList()->value("V")->setPoint(newpoint);
 	}
 	if (parent->checkDotList()->value("V2")->point().y() > 900)
 	{
-		QPoint newpoint(parent->checkDotList()->value("V2")->point().x(), parent->checkDotList()->value("V2")->point().y() - 25 + qreal(parent->time()) / 100);
+		QPoint newpoint(parent->checkDotList()->value("V2")->point().x(), parent->checkDotList()->value("V2")->point().y() - qreal(parent->checkDotList()->value("V2")->point().y() - 900) / 10);
 		parent->checkDotList()->value("V2")->setPoint(newpoint);
 	}
 	parent->playMusic();
