@@ -112,6 +112,7 @@
     <ClCompile Include="MCheckDot.cpp" />
     <ClCompile Include="MCheckDotLine.cpp" />
     <ClCompile Include="MFormerCalculator.cpp" />
+    <ClCompile Include="MMainWindow.cpp" />
     <ClCompile Include="MNote.cpp" />
     <ClCompile Include="MWidget.cpp" />
     <ClCompile Include="TestDemo.cpp" />
@@ -130,6 +131,7 @@
     <QtMoc Include="InfinityHeaven.h" />
     <ClInclude Include="MCenter.h" />
     <QtMoc Include="MFormerCalculator.h" />
+    <QtMoc Include="MMainWindow.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ui_MOONIGHT_Qt.h" />
     <QtMoc Include="MCheckDotLine.h" />
