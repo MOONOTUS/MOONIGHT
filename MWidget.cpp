@@ -116,9 +116,23 @@ void MWidget::keyPressEvent(QKeyEvent* event)//重写的键盘按下事件函数
 {
 	if (!event->isAutoRepeat())
 	{
-		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Press " << event->key();
-		KeyPressingList->insert(event->key());//向按键列表中添加按下的键
-		emit(keyPressDown(event));
+		if (event->key() == Qt::Key_Escape)
+		{
+			if (*Pausing)
+			{
+				this->continues();
+			}
+			else
+			{
+				this->pause();
+			}
+		}
+		if (!*Pausing)
+		{
+			qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Press " << event->key();
+			KeyPressingList->insert(event->key());//向按键列表中添加按下的键
+			emit(keyPressDown(event));
+		}
 	}
 	releaseKeyboard();
 	event->accept();
@@ -128,10 +142,12 @@ void MWidget::keyReleaseEvent(QKeyEvent* event)//重写的键盘释放事件函�
 {
 	if (!event->isAutoRepeat())
 	{
-		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release " << event->key();
-		KeyPressingList->remove(event->key());//向按键列表中添加按下的键
-		emit(keyReleaseUp(event));
-
+		if (!*Pausing)
+		{
+			qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release " << event->key();
+			KeyPressingList->remove(event->key());//向按键列表中添加按下的键
+			emit(keyReleaseUp(event));
+		}
 	}
 	releaseKeyboard();
 	event->accept();
