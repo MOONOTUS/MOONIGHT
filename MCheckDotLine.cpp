@@ -2,6 +2,8 @@
 #include"MCheckDot.h"
 #include"MCheckDotLine.h"
 
+QColor* MCheckDotLine::AutoLineColor = new QColor(217, 150, 229, 255);
+
 MCheckDotLine::MCheckDotLine(MCheckDot* parent)
 {
 	Parent = parent;//存储parernt

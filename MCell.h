@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include"MCenter.h"
 
 class MWidget;
 
-class MCell  : public QPushButton //Í³ºÏÔª¼şÀà
+class MCell  : public QPushButton //ç»Ÿåˆå…ƒä»¶ç±»
 {
 	Q_OBJECT
 

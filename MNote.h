@@ -97,8 +97,3 @@ public:
 	static void setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 	static QColor autoKeyColor();
 };
-
-QColor* MNote::AutoNoteColor = new QColor(217, 150, 229, 255);
-qint32* MNote::AutoNoteType = new qint32(click);
-QColor* MNote::AutoLineColor = new QColor(217, 230, 229, 255);
-QColor * MNote::AutoKeyColor = new QColor(217, 150, 229, 255);

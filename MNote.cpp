@@ -2,6 +2,11 @@
 #include"MNote.h"
 #include"MCheckDot.h"
 
+QColor* MNote::AutoNoteColor = new QColor(217, 150, 229, 255);
+qint32* MNote::AutoNoteType = new qint32(click);
+QColor* MNote::AutoLineColor = new QColor(217, 230, 229, 255);
+QColor* MNote::AutoKeyColor = new QColor(217, 150, 229, 255);
+
 MNote::MNote(MCheckDot* parent)
 {
 	Parent = parent;//存储parent
@@ -319,7 +324,7 @@ void MNote::setAutoNoteColor(QColor color)
 	AutoNoteColor = new QColor(color);
 }
 
-void MNote::setAutoNoteColor(qint32 R, qint32 G, qint32 B, qint32 A = 255)
+void MNote::setAutoNoteColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
 	AutoNoteColor = new QColor(R, G, B, A);
 }
@@ -359,7 +364,7 @@ void MNote::setAutoKeyColor(QColor color)
 	AutoKeyColor = new QColor(color);
 }
 
-void MNote::setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255)
+void MNote::setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
 	AutoKeyColor = new QColor(R, G, B, A);
 }

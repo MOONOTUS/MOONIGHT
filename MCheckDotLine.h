@@ -48,4 +48,3 @@ public:
 	MCheckDot*& MParent();//返回Parent，用于溯源
 };
 
-QColor* MCheckDotLine::AutoLineColor=new QColor(217, 150, 229, 255);

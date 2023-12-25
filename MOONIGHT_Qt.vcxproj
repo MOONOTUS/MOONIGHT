@@ -130,7 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="InfinityHeaven.h" />
-    <ClInclude Include="MCell.h" />
+    <QtMoc Include="MCell.h" />
     <ClInclude Include="MCenter.h" />
     <QtMoc Include="MFormerCalculator.h" />
     <QtMoc Include="MMainWindow.h" />

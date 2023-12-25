@@ -1,6 +1,10 @@
 ﻿#include"MCheckDot.h"
 #include"MWidget.h"
 
+
+QColor* MCheckDot::AutoDotColor = new QColor(217, 150, 229, 255);
+QColor* MCheckDot::AutoKeyColor = new QColor(217, 150, 229, 255);
+
 MCheckDot::MCheckDot(MWidget *parent)
 	: QPushButton(parent)
 {
@@ -26,6 +30,7 @@ MCheckDot::MCheckDot(MWidget *parent)
 	LineRadium = new qreal(*Digonal);//初始化轨道线逻辑长度
 	VLineRadium = new qreal(*LineRadium * Parent->visualProportion());//初始化轨道线视觉长度
 	NoteCheckAnimationList = new QMap<qint64, qint32>;
+	LastAdd = new qint64(-1);
 	this->setGeometry(0,0,parent->width(),parent->height());//设定初始绘制区域
 	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);//设定尺寸可变性
 	this->setFont(QFont("Microsoft YaHei Ui", *Radium, *Width - 2));//设定文本字体
@@ -451,15 +456,15 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 		{
 			if (NoteList->value(*HoldPressed)->speed() == -1)
 			{
-				NoteList->value(*HoldPressed)->setWidth(NoteList->value(*NextTime)->width());
-				NoteList->value(*HoldPressed)->setRadium(NoteList->value(*NextTime)->radium());
+				NoteList->value(*HoldPressed)->setWidth(NoteList->value(*HoldPressed)->width());
+				NoteList->value(*HoldPressed)->setRadium(NoteList->value(*HoldPressed)->radium());
 				paintHoldNote(paint);
 			}
 			else
 			{
-				NoteList->value(*HoldPressed)->setSpeed(NoteList->value(*NextTime)->speed());
-				NoteList->value(*HoldPressed)->setWidth(NoteList->value(*NextTime)->width());
-				NoteList->value(*HoldPressed)->setRadium(NoteList->value(*NextTime)->radium());
+				NoteList->value(*HoldPressed)->setSpeed(NoteList->value(*HoldPressed)->speed());
+				NoteList->value(*HoldPressed)->setWidth(NoteList->value(*HoldPressed)->width());
+				NoteList->value(*HoldPressed)->setRadium(NoteList->value(*HoldPressed)->radium());
 				paintHoldNote(paint);
 			}
 		}
@@ -1027,40 +1032,67 @@ void MCheckDot::misscheck()
 	}
 }
 
-void MCheckDot::addNote(qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
+void MCheckDot::addNote(qint64 time, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
 {
 	MNote* newNote = new MNote(this);
 	newNote->setTime(time);
-	newNote->setNextTime(nexttime);
+	newNote->setNextTime(-1);
 	newNote->setType(type);
 	newNote->setTimeLength(timelength);
 	newNote->setBeatKey(beatkey, beatkeytext);
 	NoteList->insert(time, newNote);
+	if ((*LastAdd) != -1 && NoteList->contains(*LastAdd))
+	{
+		NoteList->value(*LastAdd)->setNextTime(time);
+	}
+	else
+	{
+		this->setNextTime(time);
+	}
+	LastAdd = new qint64(time);
 }
 
-void MCheckDot::addNote(QColor notecolor, qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
+void MCheckDot::addNote(QColor notecolor, qint64 time, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
 {
 	MNote* newNote = new MNote(this);
 	newNote->setTime(time);
-	newNote->setNextTime(nexttime);
+	newNote->setNextTime(-1);
 	newNote->setType(type);
 	newNote->setTimeLength(timelength);
 	newNote->setBeatKey(beatkey, beatkeytext);
 	newNote->setNoteColor(notecolor);
 	NoteList->insert(time, newNote);
+	if ((*LastAdd) != -1 && NoteList->contains(*LastAdd))
+	{
+		NoteList->value(*LastAdd)->setNextTime(time);
+	}
+	else
+	{
+		this->setNextTime(time);
+	}
+	LastAdd = new qint64(time);
 }
 
-void MCheckDot::addNote(QColor notecolor, QColor linecolor, qint64 time, qint64 nexttime, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
+void MCheckDot::addNote(QColor notecolor, QColor linecolor, qint64 time, qint32 type, qint64 timelength, qint32 beatkey, QString beatkeytext)//提供给谱面编辑师用于快速快速添加新音符
 {
 	MNote* newNote = new MNote(this);
 	newNote->setTime(time);
-	newNote->setNextTime(nexttime);
+	newNote->setNextTime(-1);
 	newNote->setType(type);
 	newNote->setTimeLength(timelength);
 	newNote->setBeatKey(beatkey, beatkeytext);
 	newNote->setNoteColor(notecolor);
 	newNote->setLineColor(linecolor);
 	NoteList->insert(time, newNote);
+	if ((*LastAdd) != -1 && NoteList->contains(*LastAdd))
+	{
+		NoteList->value(*LastAdd)->setNextTime(time);
+	}
+	else
+	{
+		this->setNextTime(time);
+	}
+	LastAdd = new qint64(time);
 }
 
 void MCheckDot::setAutoDotColor(QColor color)
@@ -1068,7 +1100,7 @@ void MCheckDot::setAutoDotColor(QColor color)
 	AutoDotColor = new QColor(color);
 }
 
-void MCheckDot::setAutoDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255)
+void MCheckDot::setAutoDotColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
 	AutoDotColor = new QColor(R, G, B, A);
 }
@@ -1083,7 +1115,7 @@ void MCheckDot::setAutoKeyColor(QColor color)
 	AutoKeyColor = new QColor(color);
 }
 
-void MCheckDot::setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255)
+void MCheckDot::setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
 	AutoKeyColor = new QColor(R, G, B, A);
 }

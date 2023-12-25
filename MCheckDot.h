@@ -78,6 +78,7 @@ private:
 	qreal* VLineRadium;//轨道线的视觉长度
 	QMap<qint64, qint32>* NoteCheckAnimationList;//打击特效列表
 	qreal* Digonal;//打击误差
+	qint64* LastAdd;
 
 public:
 	MCheckDot(MWidget *parent = nullptr);
@@ -114,9 +115,9 @@ public:
 	qreal speed();//返回音符逻辑速度
 	void setLineRadium(qreal lineradium);//设定轨道线的逻辑长度
 	qreal lineRadium();//返回轨道线逻辑长度
-	void addNote(qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
-	void addNote(QColor notecolor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
-	void addNote(QColor notecolor = Qt::transparent, QColor LineColor = Qt::transparent, qint64 time = 0, qint64 nexttime = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
+	void addNote(qint64 time = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
+	void addNote(QColor notecolor = Qt::transparent, qint64 time = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
+	void addNote(QColor notecolor = Qt::transparent, QColor LineColor = Qt::transparent, qint64 time = 0, qint32 type = click, qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
 	static void setAutoDotColor(QColor color);
 	static void setAutoDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 	static QColor autoDotColor();
@@ -124,6 +125,3 @@ public:
 	static void setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 	static QColor autoKeyColor();
 };
-
-QColor* MCheckDot::AutoDotColor = new QColor(217, 150, 229, 255);
-QColor* MCheckDot::AutoKeyColor = new QColor(217, 150, 229, 255);
