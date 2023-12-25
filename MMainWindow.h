@@ -15,4 +15,5 @@ private:
 	bool* Started;
 	QTimer* UiTime;
 
+
 };
