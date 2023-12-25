@@ -23,7 +23,7 @@ public:
         main->setObjectName("mainWidget");
         MOONIGHT_QtClass->setCentralWidget(main);
 
-        central = new MWidget(nullptr, main);
+        central = new MWidget();
         central->setObjectName("centralWidget");
         central->resize(960, 540);
         central->close();

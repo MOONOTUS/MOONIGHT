@@ -68,7 +68,7 @@ private:
 	bool* Pausing;
 
 public:
-	MWidget(QWidget* parent = nullptr, MWidget* linkmain = nullptr);
+	MWidget(QWidget* parent = nullptr);
 	~MWidget();
 
 	void setBackImage(QString& path);//设定背景图片，同时生成背景的模糊背景
@@ -113,7 +113,6 @@ public:
 	qint64 eachscore();
 	qreal accuracy();
 	void setover();
-	MWidget*& linkMain();
 	void pause();
 	void continues();
 	bool pausing();

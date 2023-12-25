@@ -2,11 +2,10 @@
 #include "MCheckDot.h"
 #include"MFormerCalculator.h"
 
-MWidget::MWidget(QWidget* parent , MWidget* linkmain)
+MWidget::MWidget(QWidget* parent)
 	: QWidget(parent)
 {
 	Parent = parent;//储存parent
-	LinkMain = linkmain;
 	CheckDotList = new QMap<QString, MCheckDot*>;//无用的初始化
 	this->OriSize = new QSize(WIDTH, HEIGHT);//设定Size=（3200,1800）的原始坐标系
 	ifShowBackImage = new bool(false);//初始化显示背景图片为假
@@ -547,11 +546,6 @@ void MWidget::setover()
 		dotptr.value()->noteList() = new QMap <qint64, MNote*>(*NewNoteList);
 	}
 	EachScore = new qint64(FULLSCORE / *NoteSum);
-}
-
-MWidget*& MWidget::linkMain()
-{
-	return LinkMain;
 }
 
 void MWidget::pause()

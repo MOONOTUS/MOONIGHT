@@ -37,9 +37,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MCheckDot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -58,7 +55,10 @@
     <ClCompile Include="InfinityHeaven.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MFormerCaculator.cpp">
+    <ClCompile Include="MFormerCalculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -78,10 +78,10 @@
     <QtMoc Include="InfinityHeaven.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="MFormerCaculator.h">
+    <QtMoc Include="MNote.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="MNote.h">
+    <QtMoc Include="MFormerCalculator.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
