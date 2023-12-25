@@ -118,8 +118,8 @@ void TestDemo_Rotate(MOONIGHT_Qt* w)
 	TestDemo_Rotate_Class* r = new TestDemo_Rotate_Class(w->Ui()->central);
 	QCoreApplication::processEvents();
 	w->Ui()->central->setTime(0);
-	w->Ui()->mainTime->start();
-	w->Ui()->litTime->start();
+	w->Ui()->central->mainTime()->start();
+	w->Ui()->central->litTime()->start();
 	w->Ui()->central->disTime()->restart();
 	w->connect
 	(
@@ -131,7 +131,7 @@ void TestDemo_Rotate(MOONIGHT_Qt* w)
 	);
 	w->connect
 	(
-		w->Ui()->litTime,
+		w->Ui()->central->litTime(),
 		SIGNAL(timeout()),
 		w->Ui()->central,
 		SLOT(repaint()),
@@ -205,7 +205,6 @@ void TestDemo_Rotate_Class::rotateCheckDot()
 	//{
 	//	parent->repaint();
 	//}
-	parent->repaint();
 }
 
 MWidget*& TestDemo_Rotate_Class::Parent()

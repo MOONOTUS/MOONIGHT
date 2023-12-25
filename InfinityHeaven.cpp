@@ -290,13 +290,13 @@ void TestDemo_InfinityHeaven(MOONIGHT_Qt* w)
 	InfinityHeaven_Class* IF = new InfinityHeaven_Class(w->Ui()->central);
 	QCoreApplication::processEvents();
 	w->Ui()->central->setTime(0);
-	w->Ui()->mainTime->start();
-	w->Ui()->litTime->start();
+	w->Ui()->central->mainTime()->start();
+	w->Ui()->central->litTime()->start();
 	w->Ui()->central->disTime()->restart();
 	qDebug() << "MOONOTUSystem::_Message_::Timer of central start";
 	w->connect
 	(
-		w->Ui()->mainTime,
+		w->Ui()->central->mainTime(),
 		SIGNAL(timeout()),
 		IF,
 		SLOT(InfinityHeaven()),
@@ -304,7 +304,7 @@ void TestDemo_InfinityHeaven(MOONIGHT_Qt* w)
 	);
 	w->connect
 	(
-		w->Ui()->litTime,
+		w->Ui()->central->litTime(),
 		SIGNAL(timeout()),
 		w->Ui()->central,
 		SLOT(repaint()),
@@ -316,7 +316,6 @@ void TestDemo_InfinityHeaven(MOONIGHT_Qt* w)
 void InfinityHeaven_Class::InfinityHeaven()
 {
 	parent->playMusic();
-	parent->repaint();
 }
 
 MWidget*& InfinityHeaven_Class::Parent()

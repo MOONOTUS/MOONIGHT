@@ -2,10 +2,11 @@
 #include "MCheckDot.h"
 #include"MFormerCalculator.h"
 
-MWidget::MWidget(QWidget* parent)
+MWidget::MWidget(QWidget* parent , MWidget* linkmain)
 	: QWidget(parent)
 {
 	Parent = parent;//储存parent
+	LinkMain = linkmain;
 	CheckDotList = new QMap<QString, MCheckDot*>;//无用的初始化
 	this->OriSize = new QSize(WIDTH, HEIGHT);//设定Size=（3200,1800）的原始坐标系
 	ifShowBackImage = new bool(false);//初始化显示背景图片为假
@@ -15,7 +16,17 @@ MWidget::MWidget(QWidget* parent)
 	Logo = new QPixmap(".\\MOONIGHT_Beta_Little.png");//读取Logo图片，稍后改为相对路径
 	backCoverColor = new QColor(255, 255, 255, 0);//初始化背景遮罩色为全透明白色，即不显示遮罩
 	time_ms = new qint64(0);//时间置零
+	fixtime_ms = new qint64(0);
+	LitTime = new QTimer(this);
+	LitTime->stop();
+	LitTime->setSingleShot(false);
+	LitTime->setInterval(1);
+	MainTime = new QTimer(this);
+	MainTime->stop();
+	MainTime->setSingleShot(false);
+	MainTime->setInterval(10);
 	DisTime = new QElapsedTimer();
+	FixTime = new QElapsedTimer();
 	KeyPressingList = new QSet<qint32>;
 	GapDelay = new qint64(3000);
 	FixDelay = new qint64(0);
@@ -33,8 +44,18 @@ MWidget::MWidget(QWidget* parent)
 	Score = new qint64(0);
 	EachScore = new qint64(0);
 	Accuracy = new qreal(100.00);
+	Pausing = new bool(false);
+	connect
+	(
+		LitTime,
+		SIGNAL(timeout()),
+		this,
+		SLOT(timeAdd_ms()),
+		Qt::DirectConnection
+	);
 
 	DisTime->start();
+	FixTime->start();
 	this->setFocus();
 }
 
@@ -114,6 +135,24 @@ void MWidget::keyReleaseEvent(QKeyEvent* event)//重写的键盘释放事件函�
 	}
 	releaseKeyboard();
 	event->accept();
+}
+
+void MWidget::mouseDoubleClickEvent(QMouseEvent* event)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		if (qPow((qPow(event->pos().x() - Calculator->vMoonPoint().x(), 2) + qPow(event->pos().y() - Calculator->vMoonPoint().y(), 2)), 0.5) <= Calculator->vMoonRadium())
+		{
+			if (*Pausing)
+			{
+				this->continues();
+			}
+			else
+			{
+				this->pause();
+			}
+		}
+	}
 }
 
 void MWidget::closeEvent(QCloseEvent* event)
@@ -230,7 +269,12 @@ void MWidget::setTime(qint64 ms)
 
 qint64 MWidget::time()
 {
-	return (*time_ms + *FixDelay);
+	return (*time_ms + *FixDelay - *fixtime_ms);
+}
+
+qint64 MWidget::fixtime()
+{
+	return *fixtime_ms;
 }
 
 void MWidget::timeAdd_ms()
@@ -473,4 +517,43 @@ void MWidget::setover()
 		dotptr.value()->noteList() = new QMap <qint64, MNote*>(*NewNoteList);
 	}
 	EachScore = new qint64(FULLSCORE / *NoteSum);
+}
+
+MWidget*& MWidget::linkMain()
+{
+	return LinkMain;
+}
+
+void MWidget::pause()
+{
+	Pausing = new bool(true);
+	FixTime->restart();
+	this->LitTime->stop();
+	this->MainTime->stop();
+	this->Player->pause();
+}
+
+void MWidget::continues()
+{
+	Pausing = new bool(false);
+	fixtime_ms = new qint64((*fixtime_ms) + FixTime->elapsed());
+	this->LitTime->start();
+	this->MainTime->start();
+	this->Player->play();
+}
+
+bool MWidget::pausing()
+{
+	return *Pausing;
+}
+
+
+QTimer*& MWidget::mainTime()
+{
+	return MainTime;
+}
+
+QTimer*& MWidget::litTime()
+{
+	return LitTime;
 }

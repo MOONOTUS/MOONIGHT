@@ -17,6 +17,7 @@ protected:
 	void paintEvent(QPaintEvent* event);//经过重写的绘制函数
 	void keyPressEvent(QKeyEvent* event);//重写的键盘按下事件函数
 	void keyReleaseEvent(QKeyEvent* event);//重写的键盘释放事件函数
+	void mouseDoubleClickEvent(QMouseEvent* event);
 	void closeEvent(QCloseEvent* event);
 
 
@@ -29,6 +30,7 @@ public slots:
 
 private:
 	QWidget* Parent;//存储父对象的指针
+	MWidget* LinkMain;
 	QPixmap* backImage;//背景图片
 	QPixmap* backBackImage;//填充背景空白的模糊背景图片（在设置背景图片时自动生成）
 	QColor* backCoverColor;//背景遮罩色（RGBA）
@@ -39,8 +41,12 @@ private:
 	bool* ifShowBackBackImage;//是否显示背景的背景图片
 	bool* ifShowLogo;//是否显示标志
 	qint64* time_ms;//以ms为单位的计时
+	qint64* fixtime_ms;
 	QPixmap* Logo;//MOONOIGHT的标志图片
+	QTimer* MainTime;//以1ms为周期的计时器，用于画面刷新
+	QTimer* LitTime;//以1ms为周期的计时器，用于曲谱计时
 	QElapsedTimer* DisTime;
+	QElapsedTimer* FixTime;
 	QSet<qint32>* KeyPressingList;
 	qint64* GapDelay;
 	qint64* FixDelay;
@@ -58,9 +64,10 @@ private:
 	qint64* Score;
 	qint64* EachScore;
 	qreal* Accuracy;
+	bool* Pausing;
 
 public:
-	MWidget(QWidget* parent = nullptr);
+	MWidget(QWidget* parent = nullptr, MWidget* linkmain = nullptr);
 	~MWidget();
 
 	void setBackImage(QString& path);//设定背景图片，同时生成背景的模糊背景
@@ -81,6 +88,7 @@ public:
 	QWidget*& MParent();//返回Parent，用于溯源
 	void setTime(qint64 ms);//设定当前时间，通常只在曲谱开始时调用，将时间置零
 	qint64 time();//返回time_ms
+	qint64 fixtime();
 	QElapsedTimer*& disTime();
 	QSet<qint32>*& keyPressingList();
 	void setGapDelay(qint64 delay);
@@ -104,4 +112,10 @@ public:
 	qint64 eachscore();
 	qreal accuracy();
 	void setover();
+	MWidget*& linkMain();
+	void pause();
+	void continues();
+	bool pausing();
+	QTimer*& mainTime();
+	QTimer*& litTime();
 };

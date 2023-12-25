@@ -4,14 +4,6 @@ MOONIGHT_Qt::MOONIGHT_Qt(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
-    connect
-    (
-        ui.litTime,
-        SIGNAL(timeout()),
-        ui.central,
-        SLOT(timeAdd_ms()),
-        Qt::DirectConnection
-    );
 }
 
 MOONIGHT_Qt::~MOONIGHT_Qt()
