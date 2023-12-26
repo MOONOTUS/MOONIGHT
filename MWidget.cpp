@@ -12,6 +12,8 @@ MWidget::MWidget(QWidget* parent)
 	ifShowBackBackImage = new bool(false);//初始化显示背景的背景为假
 	ifShowLogo = new bool(true);//初始化显示标志为真
 	backColor = new  QColor(245, 245, 245);//初始化背景色为（245，245，245，255）的亮灰白色
+	backImage = nullptr;
+	backBackImage = nullptr;
 	Logo = new QPixmap(".\\MOONIGHT_Beta_Little.png");//读取Logo图片，稍后改为相对路径
 	backCoverColor = new QColor(255, 255, 255, 0);//初始化背景遮罩色为全透明白色，即不显示遮罩
 	time_ms = new qint64(0);//时间置零
@@ -48,6 +50,7 @@ MWidget::MWidget(QWidget* parent)
 	EachScore = new qint64(0);
 	Accuracy = new qreal(100.00);
 	Pausing = new bool(false);
+	Calculator = nullptr;
 
 	connect
 	(
@@ -120,6 +123,7 @@ void MWidget::paintEvent(QPaintEvent* event)
 	{
 		paint->fillRect(QRect(0, 0, this->width(), this->height()), *backCoverColor);
 	}
+	delete paint;
 
 	event->accept();
 }
@@ -191,68 +195,99 @@ void MWidget::closeEvent(QCloseEvent* event)
 
 void MWidget::setBackImage(QPixmap& image)
 {
+	if (backImage != nullptr)
+	{
+		delete backImage;
+	}
 	backImage = new QPixmap(image);
 	if (backImage->width() / backImage->height() > 16 / 9)//自适应模块，自动以合适的方案将图片裁剪为16：9的比例
 	{
-		backImage = new QPixmap(backImage->copy((backImage->width() - backImage->height() * 16 / 9) / 2, 0, backImage->height() * 16 / 9, backImage->height()));
+		QPixmap backImage_(*backImage);
+		delete backImage;
+		backImage = new QPixmap(backImage_.copy((backImage_.width() - backImage_.height() * 16 / 9) / 2, 0, backImage_.height() * 16 / 9, backImage_.height()));
 	}
 	else if (backImage->width() / backImage->height() < 16 / 9)
 	{
-		backImage = new QPixmap(backImage->copy(0, (backImage->height() - backImage->width() * 9 / 16) / 2, backImage->width(), backImage->width() * 9 / 16));
+		QPixmap backImage_(*backImage);
+		delete backImage;
+		backImage = new QPixmap(backImage_.copy(0, (backImage_.height() - backImage_.width() * 9 / 16) / 2, backImage_.width(), backImage_.width() * 9 / 16));
 	}
 	QImage backBack = backImage->toImage();
 	GaussiamBlur(36, 2000, backBack);//生成背景图片的模糊拷贝
+	if (backBackImage != nullptr)
+	{
+		delete backBackImage;
+	}
 	backBackImage = new QPixmap(QPixmap::fromImage(backBack));//存储背景的背景图片
 }
 
 void MWidget::setBackImage(QString& path)
 {
+	if (backImage != nullptr)
+	{
+		delete backImage;
+	}
 	backImage = new QPixmap(path);
 	if (backImage->width() / backImage->height() > 16 / 9)//自适应模块，自动以合适的方案将图片裁剪为16：9的比例
 	{
-		backImage = new QPixmap(backImage->copy((backImage->width() - backImage->height() * 16 / 9) / 2, 0, backImage->height() * 16 / 9, backImage->height()));
+		QPixmap backImage_(*backImage);
+		delete backImage;
+		backImage = new QPixmap(backImage_.copy((backImage_.width() - backImage_.height() * 16 / 9) / 2, 0, backImage_.height() * 16 / 9, backImage_.height()));
 	}
 	else if (backImage->width() / backImage->height() < 16 / 9)
 	{
-		backImage = new QPixmap(backImage->copy(0, (backImage->height() - backImage->width() * 9 / 16) / 2, backImage->width(),backImage->width() * 9 / 16));
+		QPixmap backImage_(*backImage);
+		delete backImage;
+		backImage = new QPixmap(backImage_.copy(0, (backImage_.height() - backImage_.width() * 9 / 16) / 2, backImage_.width(), backImage_.width() * 9 / 16));
 	}
 	QImage backBack = backImage->toImage();
 	GaussiamBlur(36, 2000, backBack);//生成背景图片的模糊拷贝
+	if (backBackImage != nullptr)
+	{
+		delete backBackImage;
+	}
 	backBackImage = new QPixmap(QPixmap::fromImage(backBack));//存储背景的背景图片
 }
 
 void MWidget::setBackColor(QColor color)
 {
+	delete backColor;
 	backColor = new QColor(color);
 }
 
 void MWidget::setBackColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete backColor;
 	backColor = new QColor(R, G, B, A);
 }
 
 void MWidget::setBackCoverColor(QColor color)
 {
+	delete backCoverColor;
 	backCoverColor = new QColor(color);
 }
 
 void MWidget::setBackCoverColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete backCoverColor;
 	backCoverColor = new QColor(R, G, B, A);
 }
 
 void MWidget::setShowBackImage(bool show)
 {
+	delete ifShowBackImage;
 	ifShowBackImage = new bool(show);
 }
 
 void MWidget::setShowBackBackImage(bool show)
 {
+	delete ifShowBackBackImage;
 	ifShowBackBackImage = new bool(show);
 }
 
 void MWidget::setShowLogo(bool show)
 {
+	delete ifShowLogo;
 	ifShowLogo = new bool(show);
 }
 
@@ -293,6 +328,7 @@ QWidget*& MWidget::MParent()
 
 void MWidget::setTime(qint64 ms)
 {
+	delete time_ms;
 	time_ms = new qint64(ms);
 }
 
@@ -308,6 +344,7 @@ qint64 MWidget::fixtime()
 
 void MWidget::timeAdd_ms()
 {
+	delete time_ms;
 	time_ms = new qint64(DisTime->elapsed());
 }
 
@@ -323,12 +360,16 @@ QSet<qint32>*& MWidget::keyPressingList()
 
 void MWidget::setGapDelay(qint64 delay)
 {
+	delete GapDelay;
+	delete Delay;
 	GapDelay = new qint64(delay);
 	Delay = new qint64(*GapDelay + *FixDelay);
 }
 
 void MWidget::setFixDelay(qint64 delay)
 {
+	delete FixDelay;
+	delete Delay;
 	FixDelay = new qint64(delay);
 	Delay = new qint64(*GapDelay + *FixDelay);
 }
@@ -350,6 +391,7 @@ qint64 MWidget::delay()
 
 void MWidget::setMusicPath(QString path)
 {
+	delete MusicPath;
 	MusicPath = new QString(path);
 }
 
@@ -360,6 +402,7 @@ QString MWidget::musicPath()
 
 void MWidget::setMusicName(QString name)
 {
+	delete MusicName;
 	MusicName = new QString(name);
 }
 
@@ -379,6 +422,7 @@ void MWidget::playMusic(bool nodelay)
 				qDebug() << "MOONOTUSYSTEM::_Message_::Music plays";
 				Player->setSource(QUrl::fromLocalFile(*MusicPath));
 				Player->play();
+				delete MusicPlayed;
 				MusicPlayed = new bool(true);
 			}
 		}
@@ -389,6 +433,7 @@ void MWidget::playMusic(bool nodelay)
 				qDebug() << "MOONOTUSYSTEM::_Message_::Music plays";
 				Player->setSource(QUrl::fromLocalFile(*MusicPath));
 				Player->play();
+				delete MusicPlayed;
 				MusicPlayed = new bool(true);
 			}
 		}
@@ -427,13 +472,18 @@ void MWidget::addCheck(qint32 check, qint64 time, qint64 timems)
 	CheckList->push_back(check);
 	if (check != miss && check != prebad && check != lagbad)
 	{
-		Combo = new qint64((*Combo) + 1);
+		qint64 Combo_(*Combo);
+		delete Combo;
+		Combo = new qint64((Combo_) + 1);
 	}
 	else
 	{
+		delete Combo;
 		Combo = new qint64(0);
 	}
-	NoteCheckedSum = new qint64((*NoteCheckedSum) + 1);
+	qint64 NoteCheckedSum_(*NoteCheckedSum);
+	delete NoteCheckedSum;
+	NoteCheckedSum = new qint64((NoteCheckedSum_) + 1);
 	qreal thisaccuracy;
 	qint64 thisscore;
 	if (check == strictperfect)
@@ -467,8 +517,12 @@ void MWidget::addCheck(qint32 check, qint64 time, qint64 timems)
 		thisscore = 0;
 		checktext = "Miss";
 	}
-	Accuracy = new qreal(((*Accuracy) * ((*NoteCheckedSum) - 1) + thisaccuracy) / (*NoteCheckedSum));
-	Score = new qint64((*Score) + thisscore);
+	qreal Accuracy_(*Accuracy);
+	delete Accuracy;
+	Accuracy = new qreal(((Accuracy_) * ((*NoteCheckedSum) - 1) + thisaccuracy) / (*NoteCheckedSum));
+	qint64 Score_(*Score);
+	delete Score;
+	Score = new qint64((Score_) + thisscore);
 	Calculator->setCheck(check);
 	Calculator->setCheckText(checktext);
 	Calculator->setCombo(*Combo);
@@ -493,6 +547,7 @@ void MWidget::addToTitle(QString addtitle)
 {
 	QString* Title =new QString("MOONIGHT   " + addtitle);
 	this->setWindowTitle(*Title);
+	delete Title;
 }
 
 qint64 MWidget::combo()
@@ -526,6 +581,10 @@ qreal MWidget::accuracy()
 
 void MWidget::setover()
 {
+	if (Calculator != nullptr)
+	{
+		delete Calculator;
+	}
 	Calculator = new MFormerCalculator(this);
 	Calculator->setMusicName(*MusicName);
 	for (QMap<QString, MCheckDot*>::iterator dotptr = CheckDotList->begin(); dotptr != CheckDotList->end(); ++dotptr)
@@ -543,13 +602,16 @@ void MWidget::setover()
 			NoteSum = new qint64((*NoteSum) + 1);
 		}
 		dotptr.value()->setNextTime(dotptr.value()->nextTime() + *GapDelay);
+		delete(dotptr.value()->noteList());
 		dotptr.value()->noteList() = new QMap <qint64, MNote*>(*NewNoteList);
+		delete NewNoteList;
 	}
 	EachScore = new qint64(FULLSCORE / *NoteSum);
 }
 
 void MWidget::pause()
 {
+	delete Pausing;
 	Pausing = new bool(true);
 	FixTime->restart();
 	this->LitTime->stop();
@@ -559,6 +621,7 @@ void MWidget::pause()
 
 void MWidget::continues()
 {
+	delete Pausing;
 	Pausing = new bool(false);
 	fixtime_ms = new qint64((*fixtime_ms) + FixTime->elapsed());
 	this->LitTime->start();

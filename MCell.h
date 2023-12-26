@@ -16,7 +16,7 @@ class MCell  : public QPushButton //统合元件类
 #define textcell 0x005
 
 protected:
-	void paintEvent(QPaintEvent* event);
+	//void paintEvent(QPaintEvent* event);
 
 public:
 	MCell(MMainWindow* parent);
@@ -46,6 +46,7 @@ private:
 	QColor* FillColor;
 
 public:
+	void setType(qint32 type);
 	void setPoint(QPoint point);
 	void setPoint(qreal x, qreal y);
 	void setImage(QString path);
@@ -61,6 +62,12 @@ public:
 	void setLine(qreal x1, qreal y1, qreal x2, qreal y2);
 	void setPainterPath(QPainterPath painterpath);
 	void setText(QString text);
+	void setIfLine(bool ifline);
+	void setIfFill(bool iffill);
+	void setLineColor(QColor color);
+	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	void setLineColor(QColor color);
+	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 
 	QPixmap image();
 	QPoint point();

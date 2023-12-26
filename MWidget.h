@@ -30,7 +30,6 @@ public slots:
 
 private:
 	QWidget* Parent;//存储父对象的指针
-	MWidget* LinkMain;
 	QPixmap* backImage;//背景图片
 	QPixmap* backBackImage;//填充背景空白的模糊背景图片（在设置背景图片时自动生成）
 	QColor* backCoverColor;//背景遮罩色（RGBA）
