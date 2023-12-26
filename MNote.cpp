@@ -42,6 +42,7 @@ MNote::MNote(MNote* note)
 	VWidth = new qreal(note->vWidth());
 	NoteColor = new QColor(note->noteColor());
 	LineColor = new QColor(note->lineColor());
+	KeyColor = new QColor(note->keyColor());
 	Type = new qint32(note->type());
 	BeatKey = new qint32(note->beatKey());
 	BeatKeyText = new QString(note->beatKeyText());
@@ -117,6 +118,7 @@ void MNote::MNoteSet(bool visuable, qreal radium, qreal width, QColor color, qin
 
 void MNote::setVisuable(bool visuable)
 {
+	delete Visuable;
 	Visuable = new bool(visuable);
 }
 
@@ -127,7 +129,9 @@ bool MNote::visuable()
 
 void MNote::setRadium(qreal r)
 {
+	delete Radium;
 	Radium = new qreal(r);
+	delete VRadium;
 	VRadium = new qreal(*Radium * Parent->MParent()->width() / Parent->MParent()->oriSize().width());
 }
 
@@ -143,7 +147,9 @@ qreal MNote::vRadium()
 
 void MNote::setWidth(qreal width)
 {
+	delete Width;
 	Width = new qreal(width);
+	delete VWidth;
 	VWidth = new qreal(*Width * Parent->MParent()->width() / Parent->MParent()->oriSize().width());
 }
 
@@ -159,11 +165,13 @@ qreal MNote::vWidth()
 
 void MNote::setNoteColor(QColor color)
 {
+	delete NoteColor;
 	NoteColor = new QColor(color);
 }
 
 void MNote::setNoteColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete NoteColor;
 	NoteColor = new QColor(R, G, B, A);
 }
 
@@ -174,11 +182,13 @@ QColor MNote::noteColor()
 
 void MNote::setLineColor(QColor color)
 {
+	delete LineColor;
 	LineColor = new QColor(color);
 }
 
 void MNote::setLineColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete LineColor;
 	LineColor = new QColor(R, G, B, A);
 }
 
@@ -189,11 +199,13 @@ QColor MNote::lineColor()
 
 void MNote::setKeyColor(QColor color)
 {
+	delete KeyColor;
 	KeyColor = new QColor(color);
 }
 
 void MNote::setKeyColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete KeyColor;
 	KeyColor = new QColor(R, G, B, A);
 }
 
@@ -204,12 +216,15 @@ QColor MNote::keyColor()
 
 void MNote::setType(qint32 type)
 {
+	delete Type;
 	Type = new qint32(type);
 }
 
 void MNote::setBeatKey(qint32 key, QString keytext)
 {
+	delete BeatKey;
 	BeatKey = new qint32(key);
+	delete BeatKeyText;
 	BeatKeyText = new QString(keytext);
 }
 
@@ -230,9 +245,13 @@ qint32 MNote::type()
 
 void MNote::setTime(qint64 time_ms)
 {
+	delete Time;
 	Time = new qint64(time_ms);
+	delete EndTime;
 	EndTime = new qint64(*Time + *TimeLength);
+	delete VTime;
 	VTime = new qint64(*Time);
+	delete VEndTime;
 	VEndTime = new qint64(*VTime + *VTimeLength);
 }
 
@@ -243,9 +262,13 @@ qint64 MNote::time()
 
 void MNote::setTimeLength(qint64 time_ms)
 {
+	delete TimeLength;
 	TimeLength = new qint64(time_ms);
+	delete EndTime;
 	EndTime = new qint64(*Time + *TimeLength);
+	delete VTimeLength;
 	VTimeLength = new qint64(*TimeLength);
+	delete VEndTime;
 	VEndTime = new qint64(*VTime + *VTimeLength);
 }
 
@@ -261,6 +284,7 @@ qint64 MNote::endTime()
 
 void MNote::setVTime(qint64 time_ms)
 {
+	delete VTime;
 	VTime = new qint64(time_ms);
 }
 
@@ -271,7 +295,9 @@ qint64 MNote::vTime()
 
 void MNote::setVTimeLength(qint64 time_ms)
 {
+	delete VTimeLength;
 	VTimeLength = new qint64(time_ms);
+	delete VEndTime;
 	VEndTime = new qint64(*VTime + *VTimeLength);
 }
 
@@ -292,6 +318,7 @@ MCheckDot*& MNote::MParent()
 
 void MNote::setNextTime(qint64 time_ms)
 {
+	delete NextTime;
 	NextTime = new qint64(time_ms);
 }
 
@@ -302,9 +329,11 @@ qint64 MNote::nextTime()
 
 void MNote::setSpeed(qreal speed)
 {
+	delete Speed;
 	Speed = new qreal(speed);
 	if (*Speed != -1)
 	{
+		delete VSpeed;
 		VSpeed = new qreal((*Speed) * Parent->MParent()->visualProportion());
 	}
 }
@@ -321,11 +350,13 @@ qreal MNote::vSpeed()
 
 void MNote::setAutoNoteColor(QColor color)
 {
+	delete AutoNoteColor;
 	AutoNoteColor = new QColor(color);
 }
 
 void MNote::setAutoNoteColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete AutoNoteColor;
 	AutoNoteColor = new QColor(R, G, B, A);
 }
 
@@ -336,6 +367,7 @@ QColor MNote::autoNoteColor()
 
 void MNote::setAutoNoteType(qint32 type)
 {
+	delete AutoNoteType;
 	AutoNoteType = new qint32(type);
 }
 
@@ -346,11 +378,13 @@ qint32 MNote::autoNoteType()
 
 void MNote::setAutoLineColor(QColor color)
 {
+	delete AutoLineColor;
 	AutoLineColor = new QColor(color);
 }
 
 void MNote::setAutoLineColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete AutoLineColor;
 	AutoLineColor = new QColor(R, G, B, A);
 }
 
@@ -361,11 +395,13 @@ QColor MNote::autoLineColor()
 
 void MNote::setAutoKeyColor(QColor color)
 {
+	delete AutoKeyColor;
 	AutoKeyColor = new QColor(color);
 }
 
 void MNote::setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete AutoKeyColor;
 	AutoKeyColor = new QColor(R, G, B, A);
 }
 

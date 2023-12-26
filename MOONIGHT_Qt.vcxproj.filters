@@ -46,9 +46,6 @@
     <ClCompile Include="MNote.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestDemo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MCenter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,9 +70,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="MCheckDot.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="TestDemo.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="InfinityHeaven.h">

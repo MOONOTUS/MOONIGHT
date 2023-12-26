@@ -117,7 +117,6 @@
     <ClCompile Include="MMainWindow.cpp" />
     <ClCompile Include="MNote.cpp" />
     <ClCompile Include="MWidget.cpp" />
-    <ClCompile Include="TestDemo.cpp" />
     <QtRcc Include="MOONIGHT_Qt.qrc" />
     <QtMoc Include="MOONIGHT_Qt.h" />
     <ClCompile Include="MOONIGHT_Qt.cpp" />
@@ -140,7 +139,6 @@
     <ClInclude Include="MCheckDotLine.h" />
     <QtMoc Include="MNote.h" />
     <ClInclude Include="MPivot.h" />
-    <QtMoc Include="TestDemo.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MOONIGHT_Qt.rc" />
