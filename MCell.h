@@ -66,8 +66,8 @@ public:
 	void setIfFill(bool iffill);
 	void setLineColor(QColor color);
 	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
-	void setLineColor(QColor color);
-	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	void setFillColor(QColor color);
+	void setFillColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 
 	QPixmap image();
 	QPoint point();

@@ -12,7 +12,7 @@ private:
 	MCheckDot* Parent;//存储parent，用于溯源
 	bool* Visuable;//轨道线是否可见
 	qreal* Width;//轨道线的逻辑宽度
-	qreal* Angel;//轨道线的角度
+	qreal* Angle;//轨道线的角度
 	qreal* UpAngle;//上部线角
 	qreal* DownAngle;//下部线角
 	bool* UpVisuable;//上部线可见性
@@ -32,7 +32,7 @@ public:
 	bool downVisuable();//下部轨道线可见性
 	void setWidth(qreal width);//设定轨道线的逻辑宽度
 	qreal width();//轨道线逻辑宽度
-	void setAngel(qreal angle);//设定轨道线的角度
+	void setAngle(qreal angle);//设定轨道线的角度
 	qreal angle();//轨道线角度
 	void setUpAngle(qreal angle);//设定上部线角
 	qreal upAngle();//上部线角

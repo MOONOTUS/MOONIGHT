@@ -47,6 +47,11 @@ MCell::MCell(MWidget *parent)
 MCell::~MCell()
 {}
 
+void MCell::setType(qint32 type)
+{
+
+}
+
 void paintEvent(QPaintEvent* event)
 {
 
@@ -225,3 +230,32 @@ MWidget*& MCell::MParentMWidget()
 	return ParentMWidget;
 }
 
+void MCell::setIfLine(bool ifline)
+{
+
+}
+
+void MCell::setIfFill(bool iffill)
+{
+
+}
+
+void MCell::setLineColor(QColor color)
+{
+
+}
+
+void MCell::setLineColor(qint32 R, qint32 G, qint32 B, qint32 A)
+{
+
+}
+
+void MCell::setFillColor(QColor color)
+{
+
+}
+
+void MCell::setFillColor(qint32 R, qint32 G, qint32 B, qint32 A)
+{
+
+}

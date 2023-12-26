@@ -137,7 +137,7 @@
     <QtMoc Include="MMainWindow.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ui_MOONIGHT_Qt.h" />
-    <QtMoc Include="MCheckDotLine.h" />
+    <ClInclude Include="MCheckDotLine.h" />
     <QtMoc Include="MNote.h" />
     <ClInclude Include="MPivot.h" />
     <QtMoc Include="TestDemo.h" />

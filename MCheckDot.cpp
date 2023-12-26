@@ -9,11 +9,13 @@ MCheckDot::MCheckDot(MWidget *parent)
 	: QPushButton(parent)
 {
 	this->Parent = parent;//存储parent
-	Digonal = new qreal(qPow((qPow(WIDTH, 2) + qPow(HEIGHT, 2)), 0.5));
+	Digonal = new qreal(qPow((qPow(WIDTH, 2) + qPow(HEIGHT, 2)), 0.5));//对角线长
 	DotColor = new QColor(*AutoDotColor);//初始化判定点颜色
 	DotKeyColor = new QColor(*AutoKeyColor);//初始化判定键文本颜色
 	Width = new qreal(10.0);//初始化判定点圆圈逻辑宽度
+	VWidth = new qreal((*Width) * Parent->visualProportion());
 	Radium = new qreal(50.0);//初始化判定点逻辑半径
+	VRadium = new qreal((*Radium) * Parent->visualProportion());
 	Visuable = new bool(true);//初始化判定点可见性为真
 	Point = new QPoint(WIDTH / 2, HEIGHT / 2);//初始化判定点逻辑坐标
 	VPoint = new QPoint(Point->x() * Parent->visualProportion(), Point->y() * Parent->visualProportion());
@@ -31,6 +33,8 @@ MCheckDot::MCheckDot(MWidget *parent)
 	VLineRadium = new qreal(*LineRadium * Parent->visualProportion());//初始化轨道线视觉长度
 	NoteCheckAnimationList = new QMap<qint64, qint32>;
 	LastAdd = new qint64(-1);
+	Key = new qint32(Qt::Key_Escape);
+	KeyText = new QString("N/A");
 	this->setGeometry(0,0,parent->width(),parent->height());//设定初始绘制区域
 	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);//设定尺寸可变性
 	this->setFont(QFont("Microsoft YaHei Ui", *Radium, *Width - 2));//设定文本字体
@@ -116,11 +120,11 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 		listptr.value()->setRadium(listptr.value()->radium());
 		listptr.value()->setWidth(listptr.value()->width());
 	}
-	VPoint = new QPoint(Point->x() * this->size().width() / Parent->oriSize().width(), Point->y() * this->size().height() / Parent->oriSize().height());//刷新视觉坐标
-	VWidth = new qreal(*Width * Parent->visualProportion());//刷新视觉线宽
-	VRadium = new qreal(*Radium * Parent->visualProportion());//刷新视觉半径
-	VSpeed = new qreal(*Speed * Parent->visualProportion());//刷新视觉速度
-	VLineRadium = new qreal(*LineRadium * Parent->visualProportion());//刷新轨道线视觉长度
+	this->setPoint(*Point);
+	this->setWidth(*Width);
+	this->setRadium(*Radium);
+	this->setSpeed(*Speed);
+	this->setLineRadium(*LineRadium);
 	this->setFont(QFont("Microsoft YaHei Ui", *VRadium, *VWidth - 2));//刷新字体视觉样式
 	QPainter* paint = new QPainter(this);
 	paint->setRenderHint(QPainter::Antialiasing);
@@ -158,6 +162,8 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
 	qDebug() << "\tMOONOTUSYSTEM_::_Data_::_*NextTime_::" << *NextTime;
+	delete paint;
+
 	event->accept();
 }
 
@@ -376,6 +382,7 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 	}
 	else if (NoteList->contains(*NextTime))
 	{
+		qDebug() << "\tMOONOTUS::_Message_::Note on " << *KeyText << "paints";
 		qint64* NextTimeTemp = new qint64(*NextTime);
 		while (*NextTime != -1 && (NoteList->contains(*NextTime)) && ((((NoteList->value(*NextTime)->time() - Parent->time()) * (*Speed)) / 1000) <= (*Digonal - (NoteList->value(*NextTime)->radium()))))
 		{
@@ -439,17 +446,25 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 				}
 
 			}
-			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+			qint64 NextTime_(*NextTime);
+			delete NextTime;
+			NextTime = new qint64(NoteList->value(NextTime_)->nextTime());
 		}
-		qDebug() << "\tMOONOTUS::_Message_::Note on " << *KeyText << "paints";
+		delete NextTime;
 		NextTime = new qint64(*NextTimeTemp);
 		delete NextTimeTemp;
+	}
+	else
+	{
+		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)\t" << "*NextTime = " << *NextTime;
 	}
 	if (*HoldPressing)
 	{
 		if (NoteList->value(*HoldPressed)->vEndTime() < Parent->time())
 		{
+			delete HoldPressing;
 			HoldPressing = new bool(false);
+			delete HoldPressed;
 			HoldPressed = new qint64(0);
 		}
 		else
@@ -468,10 +483,6 @@ void MCheckDot::paintNote(QPainter* paint)//待实现的绘制音符的函数
 				paintHoldNote(paint);
 			}
 		}
-	}
-	else
-	{
-		qDebug() << "\tMOONOTUSYSTEM::_Error_::Do not exist that NoteList->value(*NextTime)";
 	}
 }
 
@@ -715,6 +726,7 @@ void MCheckDot::paintHoldNote(QPainter* paint_)//绘制hold音符
 
 void MCheckDot::setDotLine(MCheckDotLine& dotline)
 {
+	delete DotLine;
 	DotLine = new MCheckDotLine(dotline);
 }
 
@@ -725,6 +737,7 @@ MCheckDotLine*& MCheckDot::dotLine()
 
 void MCheckDot::setVisuable(bool visuable)
 {
+	delete Visuable;
 	Visuable = new bool(visuable);
 }
 
@@ -733,14 +746,20 @@ bool MCheckDot::visuable()
 	return *Visuable;
 }
 
-void MCheckDot::setPoint(QPoint& point)
+void MCheckDot::setPoint(QPoint point)
 {
+	delete Point;
 	Point = new QPoint(point);
+	delete VPoint;
+	VPoint = new QPoint(Point->x() * Parent->visualProportion(), Point->y() * Parent->visualProportion());
 }
 
 void MCheckDot::setPoint(qreal x, qreal y)
 {
+	delete Point;
 	Point = new QPoint(x, y);
+	delete VPoint;
+	VPoint = new QPoint(Point->x() * Parent->visualProportion(), Point->y() * Parent->visualProportion());
 }
 
 QPoint MCheckDot::point()
@@ -750,7 +769,10 @@ QPoint MCheckDot::point()
 
 void MCheckDot::setRadium(qreal r)
 {
+	delete Radium;
 	Radium = new qreal(r);
+	delete VRadium;
+	VRadium = new qreal((*Radium) * Parent->visualProportion());
 }
 
 qreal MCheckDot::radium()
@@ -760,7 +782,10 @@ qreal MCheckDot::radium()
 
 void MCheckDot::setWidth(qreal width)
 {
+	delete Width;
 	Width = new qreal(width);
+	delete VWidth;
+	VWidth = new qreal((*Width) * Parent->visualProportion());
 }
 
 qreal MCheckDot::width()
@@ -770,11 +795,13 @@ qreal MCheckDot::width()
 
 void MCheckDot::setDotColor(QColor color)
 {
+	delete DotColor;
 	DotColor = new QColor(color);
 }
 
 void MCheckDot::setDotColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete DotColor;
 	DotColor = new QColor(R, G, B, A);
 }
 
@@ -785,11 +812,13 @@ QColor MCheckDot::dotColor()
 
 void MCheckDot::setDotKeyColor(QColor color)
 {
+	delete DotKeyColor;
 	DotKeyColor = new QColor(color);
 }
 
 void MCheckDot::setDotKeyColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete DotKeyColor;
 	DotKeyColor = new QColor(R, G, B, A);
 }
 
@@ -800,7 +829,9 @@ QColor MCheckDot::dotKeyColor()
 
 void MCheckDot::setKey(qint32 key, QString keytext)
 {
+	delete Key;
 	Key = new qint32(key);
+	delete KeyText;
 	KeyText = new QString(keytext);
 }
 
@@ -821,6 +852,7 @@ QMap<qint64, MNote*>*& MCheckDot::noteList()
 
 void MCheckDot::setNextTime(qint64 time_ms)
 {
+	delete NextTime;
 	NextTime = new qint64(time_ms);
 }
 
@@ -841,6 +873,7 @@ MWidget*& MCheckDot::MParent()
 
 void MCheckDot::setKeyVisuable(bool visuable)
 {
+	delete KeyVisuable;
 	KeyVisuable = new bool(visuable);
 }
 
@@ -851,7 +884,9 @@ bool MCheckDot::keyVisuable()
 
 void MCheckDot::setSpeed(qreal speed_px_ps)
 {
+	delete Speed;
 	Speed = new qreal(speed_px_ps);
+	delete VSpeed;
 	VSpeed = new qreal(*Speed * Parent->visualProportion());
 }
 
@@ -862,7 +897,9 @@ qreal MCheckDot::speed()
 
 void MCheckDot::setLineRadium(qreal lineradium)
 {
+	delete LineRadium;
 	LineRadium = new qreal(lineradium);
+	delete VLineRadium;
 	VLineRadium = new qreal(*LineRadium * Parent->visualProportion());
 }
 
@@ -883,7 +920,9 @@ void MCheckDot::check()
 			NoteCheckAnimationList->insert(Parent->time(),strictperfect);
 			NoteCheckList->insert(*NextTime, strictperfect);
 			Parent->addCheck(strictperfect, NoteList->value(*NextTime)->time(), NoteList->value(*NextTime)->time());
-			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+			qint64 NextTime_(*NextTime);
+			delete NextTime;
+			NextTime = new qint64(NoteList->value(NextTime_)->nextTime());
 		}
 		else if (NoteList->value(*NextTime)->type() == hold)//针对hold音符的判定
 		{
@@ -936,9 +975,13 @@ void MCheckDot::check()
 				NoteCheckList->insert(*NextTime, lagbad);
 				Parent->addCheck(lagbad, NoteList->value(*NextTime)->time(), Parent->time());
 			}
+			delete HoldPressing;
 			HoldPressing = new bool(true);
+			delete HoldPressed;
 			HoldPressed = new qint64(*NextTime);
-			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+			qint64 NextTime_(*NextTime);
+			delete NextTime;
+			NextTime = new qint64(NoteList->value(NextTime_)->nextTime());
 		}
 		else//针对click和beat音符的判定
 		{
@@ -991,7 +1034,9 @@ void MCheckDot::check()
 				NoteCheckList->insert(*NextTime, lagbad);
 				Parent->addCheck(lagbad, NoteList->value(*NextTime)->time(), Parent->time());
 			}
-			NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+			qint64 NextTime_(*NextTime);
+			delete NextTime;
+			NextTime = new qint64(NoteList->value(NextTime_)->nextTime());
 		}
 	}
 	else
@@ -1010,7 +1055,9 @@ void MCheckDot::aftercheck()
 		NoteCheckList->remove(*HoldPressed);
 		NoteCheckList->insert(*HoldPressed, miss);
 		Parent->addCheck(miss, -1, -1);
+		delete HoldPressing;
 		HoldPressing = new bool(false);
+		delete HoldPressed;
 		HoldPressed = new qint64(0);
 	}
 }
@@ -1024,7 +1071,9 @@ void MCheckDot::misscheck()
 		NoteCheckAnimationList->insert(Parent->time(), miss);
 		NoteCheckList->insert(*NextTime, miss);
 		Parent->addCheck(miss, -1, -1);
-		NextTime = new qint64(NoteList->value(*NextTime)->nextTime());
+		qint64 NextTime_(*NextTime);
+		delete NextTime;
+		NextTime = new qint64(NoteList->value(NextTime_)->nextTime());
 	}
 	else
 	{
@@ -1120,11 +1169,13 @@ void MCheckDot::addNote(QColor notecolor, QColor linecolor, QColor keycolor, qin
 
 void MCheckDot::setAutoDotColor(QColor color)
 {
+	delete AutoDotColor;
 	AutoDotColor = new QColor(color);
 }
 
 void MCheckDot::setAutoDotColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete AutoDotColor;
 	AutoDotColor = new QColor(R, G, B, A);
 }
 
@@ -1135,11 +1186,13 @@ QColor MCheckDot::autoDotColor()
 
 void MCheckDot::setAutoKeyColor(QColor color)
 {
+	delete AutoKeyColor;
 	AutoKeyColor = new QColor(color);
 }
 
 void MCheckDot::setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	delete AutoKeyColor;
 	AutoKeyColor = new QColor(R, G, B, A);
 }
 

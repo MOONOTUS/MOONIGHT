@@ -77,8 +77,8 @@ private:
 	qreal* LineRadium;//轨道线的逻辑长度
 	qreal* VLineRadium;//轨道线的视觉长度
 	QMap<qint64, qint32>* NoteCheckAnimationList;//打击特效列表
-	qreal* Digonal;//打击误差
-	qint64* LastAdd;
+	qreal* Digonal;//对角线长
+	qint64* LastAdd;//上一个添加的音符
 
 public:
 	MCheckDot(MWidget *parent = nullptr);
@@ -88,7 +88,7 @@ public:
 	MCheckDotLine*& dotLine();//返回轨道线的引用
 	void setVisuable(bool visuable);//设定判定点是否可见
 	bool visuable();//返回*Visuable
-	void setPoint(QPoint& point);//设定判定点的逻辑坐标
+	void setPoint(QPoint point);//设定判定点的逻辑坐标
 	void setPoint(qreal x, qreal y);//设定判定点的逻辑坐标
 	QPoint point();//返回判定点的逻辑坐标
 	void setRadium(qreal r);//设定判定点的逻辑半径
