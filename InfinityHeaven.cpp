@@ -4,7 +4,7 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	: QObject(parent)
 {
 	parent->addToTitle("Infinity Heaven");
-	QPixmap backImage(".\\Grass.png");
+	QPixmap backImage(".\\Infinity_Heaven_Phigros.png");
 	parent->setShowLogo(false);
 	parent->setBackImage(backImage);
 	parent->setShowBackImage(true);
@@ -298,7 +298,7 @@ void TestDemo_InfinityHeaven(MOONIGHT_Qt* w)
 	w->Ui()->central->mainTime()->start();
 	w->Ui()->central->litTime()->start();
 	w->Ui()->central->disTime()->restart();
-	qDebug() << "MOONOTUSystem::_Message_::Timer of central start";
+	qDebug() << "\tMOONOTUSystem::_Message_::Timer of central start";
 	w->connect
 	(
 		w->Ui()->central->mainTime(),

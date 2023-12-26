@@ -31,7 +31,7 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 	VMoonPoint = new QPoint(MoonPoint->x() * Parent->visualProportion(), MoonPoint->y() * Parent->visualProportion());
 	delete VMoonRadium;
 	VMoonRadium = new qreal(*MoonRadium * Parent->visualProportion());
-	qDebug() << "MOONOTUSYSTEM::_Message_::MFormer Calculator paints";
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::MFormer Calculator paints";
 	this->setGeometry(0, (Parent->height() - Parent->width() * 9 / 16) / 2, Parent->width(), Parent->width() * 9 / 16);//，以屏幕宽度为基准，设定16：9中央绘制区域，保证在不同尺寸的比例正常的设备上谱面的比例一样
 	QPainter* paint = new QPainter(this);
 	if (*Show)
@@ -45,7 +45,6 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 		text->drawText(QRect(qint32(985 * (Parent->visualProportion())), qint32(52 * (Parent->visualProportion())), qint32(500 * (Parent->visualProportion())), qint32(96 * (Parent->visualProportion()))), Qt::AlignRight | Qt::AlignBottom, *ScoreText);
 		text->drawText(QRect(qint32(1715 * (Parent->visualProportion())), qint32(52 * (Parent->visualProportion())), qint32(500 * (Parent->visualProportion())), qint32(96 * (Parent->visualProportion()))), Qt::AlignLeft | Qt::AlignBottom, *ComboText);
 		text->setFont(QFont("Microsoft YaHei Ui", ((36 * (Parent->visualProportion()) < 1.5 * 351 * (Parent->visualProportion()) / MusicName->size()) ? (36 * (Parent->visualProportion())) : (1.5 * 351 * (Parent->visualProportion()) / MusicName->size())), -1));
-		//qDebug() << "\tMOONOTUSYSTEM::_Debug_::" << 36 * (Parent->visualProportion()) << "\t" << 351 * Parent->visualProportion() / MusicName->size() << "\t" << ((36 * (Parent->visualProportion()) < 351 * (Parent->visualProportion()) / MusicName->size()) ? (36 * (Parent->visualProportion())) : (351 * (Parent->visualProportion()) / MusicName->size()));
 		text->drawText(QRect(qint32(1135 * (Parent->visualProportion())), qint32(164 * (Parent->visualProportion())), qint32(351 * (Parent->visualProportion())), qint32(72 * (Parent->visualProportion()))), Qt::AlignRight | Qt::AlignTop, *MusicName);
 		text->drawText(QRect(qint32(1714 * (Parent->visualProportion())), qint32(164 * (Parent->visualProportion())), qint32(351 * (Parent->visualProportion())), qint32(72 * (Parent->visualProportion()))), Qt::AlignLeft | Qt::AlignTop, *AccuracyText);
 		QPainter* moon = new QPainter(this);
@@ -89,7 +88,6 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 			moon->setBrush(QColor(255, 209, 86, 155));
 			//moon->drawChord(QRect(1500 * (Parent->visualProportion()), 50 * (Parent->visualProportion()), 200 * (Parent->visualProportion()), 200 * (Parent->visualProportion())), 90 * 16, -180 * 16);
 			moon->drawPath(moonpath);
-			qDebug() << "MOONOTUSYSTEM::_Debug_::" << *Deviation;
 		}
 		else if ((*Type) == "Slow")
 		{

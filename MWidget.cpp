@@ -95,7 +95,7 @@ MWidget::~MWidget()
 void MWidget::paintEvent(QPaintEvent* event)
 {
 	this->setFocus();
-	qDebug() << "MOONOTUSYSTEM::_Data::_*time_ms_::" << *time_ms;
+	qDebug() << "\tMOONOTUSYSTEM::_Data::_*time_ms_::" << *time_ms;
 	QPainter* paint = new QPainter(this);
 	paint->setRenderHint(QPainter::Antialiasing);
 	paint->setRenderHint(QPainter::TextAntialiasing);
@@ -146,7 +146,7 @@ void MWidget::keyPressEvent(QKeyEvent* event)//重写的键盘按下事件函数
 		}
 		if (!*Pausing)
 		{
-			qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Press " << event->key();
+			qDebug() << "\tMOONOTUSYSTEM::_Message_::Keyboard Press " << event->key();
 			KeyPressingList->insert(event->key());//向按键列表中添加按下的键
 			emit(keyPressDown(event));
 		}
@@ -161,7 +161,7 @@ void MWidget::keyReleaseEvent(QKeyEvent* event)//重写的键盘释放事件函�
 	{
 		if (!*Pausing)
 		{
-			qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release " << event->key();
+			qDebug() << "\tMOONOTUSYSTEM::_Message_::Keyboard Release " << event->key();
 			KeyPressingList->remove(event->key());//向按键列表中添加按下的键
 			emit(keyReleaseUp(event));
 		}
@@ -200,13 +200,13 @@ void MWidget::setBackImage(QPixmap& image)
 		delete backImage;
 	}
 	backImage = new QPixmap(image);
-	if (backImage->width() / backImage->height() > 16 / 9)//自适应模块，自动以合适的方案将图片裁剪为16：9的比例
+	if (qreal(qreal(backImage->width()) / qreal(backImage->height())) > qreal(qreal(16.0) / qreal(9.0)))//自适应模块，自动以合适的方案将图片裁剪为16：9的比例
 	{
 		QPixmap backImage_(*backImage);
 		delete backImage;
 		backImage = new QPixmap(backImage_.copy((backImage_.width() - backImage_.height() * 16 / 9) / 2, 0, backImage_.height() * 16 / 9, backImage_.height()));
 	}
-	else if (backImage->width() / backImage->height() < 16 / 9)
+	else if (qreal(qreal(backImage->width()) / qreal(backImage->height())) < qreal(qreal(16.0) / qreal(9.0)))
 	{
 		QPixmap backImage_(*backImage);
 		delete backImage;
@@ -214,6 +214,7 @@ void MWidget::setBackImage(QPixmap& image)
 	}
 	QImage backBack = backImage->toImage();
 	GaussiamBlur(36, 2000, backBack);//生成背景图片的模糊拷贝
+	backBack = backBack.copy(1 * qreal(backBack.width()) / 30, 1 * qreal(backBack.height()) / 30, 28 * qreal(backBack.width()) / 30, 28 * qreal(backBack.height()) / 30);
 	if (backBackImage != nullptr)
 	{
 		delete backBackImage;
@@ -228,13 +229,13 @@ void MWidget::setBackImage(QString& path)
 		delete backImage;
 	}
 	backImage = new QPixmap(path);
-	if (backImage->width() / backImage->height() > 16 / 9)//自适应模块，自动以合适的方案将图片裁剪为16：9的比例
+	if (qreal(qreal(backImage->width()) / qreal(backImage->height())) > qreal(qreal(16.0) / qreal(9.0)))//自适应模块，自动以合适的方案将图片裁剪为16：9的比例
 	{
 		QPixmap backImage_(*backImage);
 		delete backImage;
 		backImage = new QPixmap(backImage_.copy((backImage_.width() - backImage_.height() * 16 / 9) / 2, 0, backImage_.height() * 16 / 9, backImage_.height()));
 	}
-	else if (backImage->width() / backImage->height() < 16 / 9)
+	else if (qreal(qreal(backImage->width()) / qreal(backImage->height())) < qreal(qreal(16.0) / qreal(9.0)))
 	{
 		QPixmap backImage_(*backImage);
 		delete backImage;
@@ -419,7 +420,7 @@ void MWidget::playMusic(bool nodelay)
 		{
 			if (*MusicPath != "")
 			{
-				qDebug() << "MOONOTUSYSTEM::_Message_::Music plays";
+				qDebug() << "\tMOONOTUSYSTEM::_Message_::Music plays";
 				Player->setSource(QUrl::fromLocalFile(*MusicPath));
 				Player->play();
 				delete MusicPlayed;
@@ -430,7 +431,7 @@ void MWidget::playMusic(bool nodelay)
 		{
 			if (*MusicPath != "")
 			{
-				qDebug() << "MOONOTUSYSTEM::_Message_::Music plays";
+				qDebug() << "\tMOONOTUSYSTEM::_Message_::Music plays";
 				Player->setSource(QUrl::fromLocalFile(*MusicPath));
 				Player->play();
 				delete MusicPlayed;

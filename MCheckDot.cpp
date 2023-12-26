@@ -112,7 +112,7 @@ MCheckDot::~MCheckDot()
 
 void MCheckDot::paintEvent(QPaintEvent* event)
 {
-	qDebug() << "MOONOTUSYSTEM::_Message_::MCheckDot " << *KeyText << " paints";
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::MCheckDot " << *KeyText << " paints";
 	this->setGeometry(0, (Parent->height() - Parent->width() * 9 / 16) / 2, Parent->width(), Parent->width() * 9 / 16);//，以屏幕宽度为基准，设定16：9中央绘制区域，保证在不同尺寸的比例正常的设备上谱面的比例一样
 	DotLine->setWidth(DotLine->width());//刷新轨道线的视觉宽度
 	for (QMap<qint64, MNote*>::iterator listptr = NoteList->begin(); listptr != NoteList->end(); ++listptr)//刷新各个音符的视觉尺寸
@@ -171,7 +171,7 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 //{
 //	if (!event->isAutoRepeat())
 //	{
-//		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Press";
+//		qDebug() << "\tMOONOTUSYSTEM::_Message_::Keyboard Press";
 //		KeyPressingList->insert(event->key());//向按键列表中添加按下的键
 //		if (NoteList->contains(*NextTime))//触发信号的发送
 //		{
@@ -214,7 +214,7 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 //{
 //	if (!event->isAutoRepeat())
 //	{
-//		qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard Release";
+//		qDebug() << "\tMOONOTUSYSTEM::_Message_::Keyboard Release";
 //		KeyPressingList->remove(event->key());//从按键列表中删除松开的键
 //		if (*HoldPressing && !KeyPressingList->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
 //		{
@@ -229,7 +229,7 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 
 void MCheckDot::press(QKeyEvent* event)
 {
-	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard press slot runs";
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Keyboard press slot runs";
 	if (NoteList->contains(*NextTime))//触发信号的发送
 	{
 		if (NoteList->value(*NextTime)->time() - Parent->time() <= 160 && NoteList->value(*NextTime)->time() - Parent->time() >= -160)//只对处在判断区间的第一个音符进行判定
@@ -265,7 +265,7 @@ void MCheckDot::press(QKeyEvent* event)
 
 void MCheckDot::release(QKeyEvent* event)
 {
-	qDebug() << "MOONOTUSYSTEM::_Message_::Keyboard release slot runs";
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Keyboard release slot runs";
 	if (*HoldPressing && !Parent->keyPressingList()->contains(*Key))//如果有hold正被按下且触发状态已经结束，则发送释放信号
 	{
 		emit(released());
