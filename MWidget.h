@@ -7,8 +7,6 @@ class MFormerCalculator;
 
 class MWidget : public QWidget
 {
-#define WIDTH 3200
-#define HEIGHT 1800
 #define FULLSCORE 1000000
 
 	Q_OBJECT
@@ -29,12 +27,12 @@ public slots:
 	void timeAdd_ms();//计时槽，与parent->litTime的信号timeout()连接
 
 private:
+	static QSize* OriSize;//原始尺寸，固有值，用于自适应的实现
 	QWidget* Parent;//存储父对象的指针
 	QPixmap* backImage;//背景图片
 	QPixmap* backBackImage;//填充背景空白的模糊背景图片（在设置背景图片时自动生成）
 	QColor* backCoverColor;//背景遮罩色（RGBA）
 	QColor* backColor;//背景色（RGBA）
-	QSize* OriSize;//原始尺寸，固有值，用于自适应的实现
 	QMap<QString, MCheckDot*>* CheckDotList;//判定点的QMap容器，可以通过Key值获取对应的判定点，一般建议采用判定点的判定键做Key值
 	bool* ifShowBackImage;//是否显示背景图片
 	bool* ifShowBackBackImage;//是否显示背景的背景图片
@@ -103,6 +101,8 @@ public:
 	void addCheck(qint32 check, qint64 time, qint64 timems);//添加判定结果
 	QVector<qint32>*& checkList();//判定列表
 	qreal visualProportion();//视觉比例
+	qreal visualProportionX();//视觉比例
+	qreal visualProportionY();//视觉比例
 	void addToTitle(QString addtitle);//向窗口标题追加文本
 	qint64 combo();//连击数
 	void setFormerCalculator(MFormerCalculator* formercalculator);//设定计数器

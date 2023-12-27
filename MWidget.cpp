@@ -2,12 +2,13 @@
 #include "MCheckDot.h"
 #include"MFormerCalculator.h"
 
+QSize* MWidget::OriSize = new QSize(WIDTH, HEIGHT);//设定Size=（3200,1800）的原始坐标系
+
 MWidget::MWidget(QWidget* parent)
 	: QWidget(parent)
 {
 	Parent = parent;//储存parent
 	CheckDotList = new QMap<QString, MCheckDot*>;//无用的初始化
-	this->OriSize = new QSize(WIDTH, HEIGHT);//设定Size=（3200,1800）的原始坐标系
 	ifShowBackImage = new bool(false);//初始化显示背景图片为假
 	ifShowBackBackImage = new bool(false);//初始化显示背景的背景为假
 	ifShowLogo = new bool(true);//初始化显示标志为真
@@ -541,6 +542,18 @@ QVector<qint32>*& MWidget::checkList()
 qreal MWidget::visualProportion()
 {
 	qreal returnout = qreal(qreal(this->width()) / qreal(this->oriSize().width()));
+	return returnout;
+}
+
+qreal MWidget::visualProportionX()
+{
+	qreal returnout = qreal(qreal(this->width()) / qreal(this->oriSize().width()));
+	return returnout;
+}
+
+qreal MWidget::visualProportionY()
+{
+	qreal returnout = qreal(qreal(this->height()) / qreal(this->oriSize().height()));
 	return returnout;
 }
 

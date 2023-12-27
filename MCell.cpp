@@ -1,6 +1,6 @@
-﻿#include "MCell.h"
-#include "MMainWindow.h"
-#include "MWidget.h"
+﻿#include"MCell.h"
+#include"MMainWindow.h"
+#include"MWidget.h"
 
 MCell::MCell(MMainWindow* parent)
 	: QPushButton(parent)
@@ -11,9 +11,9 @@ MCell::MCell(MMainWindow* parent)
 	IfLine = new bool(true);
 	IfFill = new bool(false);
 	Type = new qint32(imagecell);
-	Point = nullptr;
 	Image = nullptr;
-	Rect = nullptr;
+	Rect = new QRect(0, 0, 0, 0);
+	EllpiseCenter = nullptr;
 	XRadium = nullptr;
 	YRadium = nullptr;
 	Line = nullptr;
@@ -32,9 +32,9 @@ MCell::MCell(MWidget *parent)
 	IfLine = new bool(true);
 	IfFill = new bool(false);
 	Type = new qint32(imagecell);
-	Point = nullptr;
+	Rect = new QRect(0, 0, 0, 0);
 	Image = nullptr;
-	Rect = nullptr;
+	EllpiseCenter = nullptr;
 	XRadium = nullptr;
 	YRadium = nullptr;
 	Line = nullptr;
@@ -49,31 +49,26 @@ MCell::~MCell()
 
 void MCell::setType(qint32 type)
 {
-
+	delete Type;
+	Type = new qint32(type);
 }
 
-void paintEvent(QPaintEvent* event)
+void MCell::paintEvent(QPaintEvent* event)
 {
+	QPainter* paint = new QPainter(this);
+	this->setRect(*Rect);
+	if (*Visuable)
+	{
+		if (*Type == imagecell)
+		{
+			if (Image != nullptr)
+			{
+				paint->drawPixmap(this->rect(), *Image);
+			}
+		}
+	}
 
 	event->accept();
-}
-
-void MCell::setPoint(QPoint point)
-{
-	if (Point != nullptr)
-	{
-		delete Point;
-	}
-	Point = new QPoint(point);
-}
-
-void MCell::setPoint(qreal x, qreal y)
-{
-	if (Point != nullptr)
-	{
-		delete Point;
-	}
-	Point = new QPoint(x, y);
 }
 
 void MCell::setImage(QString path)
@@ -111,20 +106,50 @@ void MCell::setVisuable(bool visuable)
 
 void MCell::setRect(QRect rect)
 {
-	if (Rect != nullptr)
-	{
-		delete Rect;
-	}
+	delete Rect;
 	Rect = new QRect(rect);
+	if (ParentMMainWindow != nullptr)
+	{
+		VRect = new QRect(Rect->x() * ParentMMainWindow->visualProportionX(), Rect->y() * ParentMMainWindow->visualProportionY(), Rect->width() * ParentMMainWindow->visualProportionX(), Rect->height() * ParentMMainWindow->visualProportionX());
+	}
+	else if (ParentMWidget != nullptr)
+	{
+		VRect = new QRect(Rect->x() * ParentMWidget->visualProportionX(), Rect->y() * ParentMWidget->visualProportionY(), Rect->width() * ParentMWidget->visualProportionX(), Rect->height() * ParentMWidget->visualProportionX());
+	}
+	this->setGeometry(*VRect);
 }
 
 void MCell::setRect(qreal lefttopx, qreal lefttopy, qreal width, qreal height)
 {
-	if (Rect != nullptr)
-	{
-		delete Rect;
-	}
+	delete Rect;
 	Rect = new QRect(lefttopx, lefttopy, width, height);
+	if (ParentMMainWindow != nullptr)
+	{
+		VRect = new QRect(Rect->x() * ParentMMainWindow->visualProportionX(), Rect->y() * ParentMMainWindow->visualProportionY(), Rect->width() * ParentMMainWindow->visualProportionX(), Rect->height() * ParentMMainWindow->visualProportionX());
+	}
+	else if (ParentMWidget != nullptr)
+	{
+		VRect = new QRect(Rect->x() * ParentMWidget->visualProportionX(), Rect->y() * ParentMWidget->visualProportionY(), Rect->width() * ParentMWidget->visualProportionX(), Rect->height() * ParentMWidget->visualProportionX());
+	}
+	this->setGeometry(*VRect);
+}
+
+void MCell::setEllpiseCenter(QPoint center)
+{
+	if (EllpiseCenter != nullptr)
+	{
+		delete EllpiseCenter;
+	}
+	EllpiseCenter = new QPoint(center);
+}
+
+void MCell::setEllpiseCenter(qreal x, qreal y)
+{
+	if (EllpiseCenter != nullptr)
+	{
+		delete EllpiseCenter;
+	}
+	EllpiseCenter = new QPoint(x, y);
 }
 
 void MCell::setRadium(qreal xradium, qreal yradium)
@@ -205,19 +230,9 @@ QPixmap MCell::image()
 	return *Image;
 }
 
-QPoint MCell::point()
-{
-	return *Point;
-}
-
 bool MCell::visuable()
 {
 	return *Visuable;
-}
-
-void MCell::draw()
-{
-	//None
 }
 
 MMainWindow*& MCell::MParentMMainWindow()
@@ -232,30 +247,54 @@ MWidget*& MCell::MParentMWidget()
 
 void MCell::setIfLine(bool ifline)
 {
-
+	delete IfLine;
+	IfLine = new bool(ifline);
 }
 
 void MCell::setIfFill(bool iffill)
 {
-
+	delete IfFill;
+	IfFill = new bool(iffill);
 }
 
 void MCell::setLineColor(QColor color)
 {
-
+	if (LineColor != nullptr)
+	{
+		delete LineColor;
+	}
+	LineColor = new QColor(color);
 }
 
 void MCell::setLineColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	if (LineColor != nullptr)
+	{
+		delete LineColor;
+	}
+	LineColor = new QColor(R, G, B, A);
 
 }
 
 void MCell::setFillColor(QColor color)
 {
-
+	if (FillColor != nullptr)
+	{
+		delete FillColor;
+	}
+	FillColor = new QColor(color);
 }
 
 void MCell::setFillColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
+	if (FillColor != nullptr)
+	{
+		delete LineColor;
+	}
+	FillColor = new QColor(R, G, B, A);
+}
 
+QRect* MCell::MRect()
+{
+	return Rect;
 }
