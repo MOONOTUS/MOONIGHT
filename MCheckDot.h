@@ -54,7 +54,7 @@ public slots:
 private:
 	MWidget* Parent;//存储parent指针，用于溯源
 	MCheckDotLine* DotLine;//轨道
-	QMap<qint64, MNote*>* NoteList;//音符容器，可以通过Key值获取对应的音符，一般建议采用音符的判定时间做Key值
+	QMap<qint64, MNote*>* NoteList;//音符容器,Key值为音符的打击时间
 	qint64* NextTime;//下一个音符的判定时间，用于实现音符的判定和绘制
 	QMap<qint64, qint32>* NoteCheckList;//判定结果容器，与音符的Key值一一对应存放判定结果
 	bool* Visuable;//判定点是否可见
