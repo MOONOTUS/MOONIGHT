@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"MCenter.h"
-#include"MCell.h"
+
+class MCell;
 
 class MMainWindow  : public QWidget
 {

@@ -1,6 +1,4 @@
-﻿#include "MFormerCalculator.h"
-#include "MWidget.h"
-#include "MCheckDot.h"
+﻿#include "MPivot.h"
 
 MFormerCalculator::MFormerCalculator(MWidget *parent)
 	: QWidget(parent)

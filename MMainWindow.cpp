@@ -1,4 +1,4 @@
-﻿#include "MMainWindow.h"
+﻿#include "MPivot.h"
 
 QSize* MMainWindow::OriSize = new QSize(WIDTH, HEIGHT);
 

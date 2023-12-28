@@ -1,6 +1,4 @@
-﻿#include"MCell.h"
-#include"MMainWindow.h"
-#include"MWidget.h"
+﻿#include"MPivot.h"
 
 MCell::MCell(MMainWindow* parent)
 	: QPushButton(parent)

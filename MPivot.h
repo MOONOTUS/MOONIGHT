@@ -7,3 +7,4 @@
 #include"MNote.h"
 #include"MFormerCalculator.h"
 #include"MCell.h"
+#include"MMainWindow.h"

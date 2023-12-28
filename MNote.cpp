@@ -1,6 +1,4 @@
-﻿#include"MWidget.h"
-#include"MNote.h"
-#include"MCheckDot.h"
+﻿#include"MPivot.h"
 
 QColor* MNote::AutoNoteColor = new QColor(217, 150, 229, 255);
 qint32* MNote::AutoNoteType = new qint32(click);

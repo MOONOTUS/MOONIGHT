@@ -1,6 +1,4 @@
-﻿#include "MWidget.h"
-#include "MCheckDot.h"
-#include"MFormerCalculator.h"
+﻿#include "MPivot.h"
 
 QSize* MWidget::OriSize = new QSize(WIDTH, HEIGHT);//设定Size=（3200,1800）的原始坐标系
 

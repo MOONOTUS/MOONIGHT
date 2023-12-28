@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include"MCenter.h"
-#include"MCheckDotLine.h"
-#include"MNote.h"
 
 class MWidget;
+class MCheckDotLine;
+class MNote;
 
 class MCheckDot  : public QPushButton //判定点类
 {

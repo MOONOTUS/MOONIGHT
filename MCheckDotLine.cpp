@@ -1,6 +1,4 @@
-﻿#include"MWidget.h"
-#include"MCheckDot.h"
-#include"MCheckDotLine.h"
+﻿#include"MPivot.h"
 
 QColor* MCheckDotLine::AutoLineColor = new QColor(217, 150, 229, 255);
 
