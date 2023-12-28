@@ -18,6 +18,9 @@ class MCell  : public QPushButton //统合元件类
 protected:
 	void paintEvent(QPaintEvent* event);
 
+public slots:
+	void Mupdate();
+
 public:
 	MCell(MMainWindow* parent = nullptr);
 	MCell(MWidget* parent = nullptr);
@@ -33,12 +36,18 @@ private:
 	QRect* VRect;
 
 	QPixmap* Image;
-	QPoint* EllpiseCenter;
+	QPoint* EllipseCenter;
+	QPoint* VEllipseCenter;
 	qreal* XRadium;
+	qreal* VXRadium;
 	qreal* YRadium;
+	qreal* VYRadium;
 	QLine* Line;
+	QLine* VLine;
 	qreal* LineWidth;
+	qreal* VLineWidth;
 	QPainterPath* PainterPath;
+	QPainterPath* VPainterPath;
 	QString* Text;
 
 	bool* Visuable;
@@ -56,8 +65,8 @@ public:
 	void setVisuable(bool visuable);;
 	void setRect(QRect rect);
 	void setRect(qreal lefttopx, qreal lefttopy, qreal width, qreal height);
-	void setEllpiseCenter(QPoint center);
-	void setEllpiseCenter(qreal x, qreal y);
+	void setEllipseCenter(QPoint center);
+	void setEllipseCenter(qreal x, qreal y);
 	void setRadium(qreal xradium, qreal yradium);
 	void setRadium(qreal radium);
 	void setLine(QLine line);

@@ -298,7 +298,7 @@ void TestDemo_InfinityHeaven(MOONIGHT_Qt* w)
 	w->Ui()->central->mainTime()->start();
 	w->Ui()->central->litTime()->start();
 	w->Ui()->central->disTime()->restart();
-	qDebug() << "\tMOONOTUSystem::_Message_::Timer of central start";
+	qDebug() << "\tMOONOTUSYSTEM::_Infinity_Heaven_::_Message_::Timer of central start";
 	w->connect
 	(
 		w->Ui()->central->mainTime(),

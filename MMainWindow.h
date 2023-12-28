@@ -15,6 +15,7 @@ protected:
 public slots:
 	void timeAdd_ms();
 	void UiAnimation();
+	void Test();
 
 private:
 	static QSize* OriSize;
@@ -38,4 +39,5 @@ public:
 	qreal visualProportion() const;//视觉比例
 	qreal visualProportionX() const;//视觉比例
 	qreal visualProportionY() const;//视觉比例
+	QTimer*& uiFlushTime() ;
 };

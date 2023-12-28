@@ -64,6 +64,9 @@
     <ClCompile Include="MCell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MOONIGHT_Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MWidget.h">
@@ -102,6 +105,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MCheckDotLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MOONIGHT_Songs%27List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MOONIGHT_Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

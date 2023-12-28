@@ -11,15 +11,30 @@ MCell::MCell(MMainWindow* parent)
 	Type = new qint32(imagecell);
 	Image = nullptr;
 	Rect = new QRect(0, 0, 0, 0);
-	EllpiseCenter = nullptr;
+	VRect = new QRect(0, 0, 0, 0);
+	EllipseCenter = nullptr;
+	VEllipseCenter = nullptr;
 	XRadium = nullptr;
+	VXRadium = nullptr;
 	YRadium = nullptr;
+	VYRadium = nullptr;
 	Line = nullptr;
+	VLine = nullptr;
 	LineWidth = nullptr;
+	VLineWidth = nullptr;
 	PainterPath = nullptr;
+	VPainterPath = nullptr;
 	Text = nullptr;
 	LineColor = nullptr;
 	FillColor = nullptr;
+
+	connect
+	(
+		ParentMMainWindow->uiFlushTime(),
+		SIGNAL(timeout()),
+		this,
+		SLOT(Mupdate())
+	);
 }
 
 MCell::MCell(MWidget *parent)
@@ -32,16 +47,31 @@ MCell::MCell(MWidget *parent)
 	IfFill = new bool(false);
 	Type = new qint32(imagecell);
 	Rect = new QRect(0, 0, 0, 0);
+	VRect = new QRect(0, 0, 0, 0);
 	Image = nullptr;
-	EllpiseCenter = nullptr;
+	EllipseCenter = nullptr;
+	VEllipseCenter = nullptr;
 	XRadium = nullptr;
+	VXRadium = nullptr;
 	YRadium = nullptr;
+	VYRadium = nullptr;
 	Line = nullptr;
+	VLine = nullptr;
 	LineWidth = nullptr;
+	VLineWidth = nullptr;
 	PainterPath = nullptr;
+	VPainterPath = nullptr;
 	Text = nullptr;
 	LineColor = nullptr;
 	FillColor = nullptr;
+
+	connect
+	(
+		ParentMWidget->mainTime(),
+		SIGNAL(timeout()),
+		this,
+		SLOT(Mupdate())
+	);
 }
 
 MCell::~MCell()
@@ -69,23 +99,32 @@ void MCell::paintEvent(QPaintEvent* event)
 		{
 			if (Image != nullptr)
 			{
+				qDebug() << "MOONOTUSYSTEM::_Message_::ImageCell paints";
 				paint->drawPixmap(this->rect(), *Image);
 			}
 		}
 		if (*Type == ellipsecell)
 		{
-			if (EllpiseCenter != nullptr && XRadium != nullptr && YRadium != nullptr)
+			if (VEllipseCenter != nullptr && VXRadium != nullptr && VYRadium != nullptr)
 			{
+				qDebug() << "MOONOTUSYSTEM::_Message_::EllipseCell paints";
+				this->setEllipseCenter(*EllipseCenter);
+				this->setRadium(*XRadium, *YRadium);
 				if (*IfLine)
 				{
 					if (LineWidth != nullptr)
 					{
-						pen.setWidth(*LineWidth);
+						this->setLineWidth(*LineWidth);
+						pen.setWidth(*VLineWidth);
 					}
 					if (LineColor != nullptr)
 					{
 						pen.setColor(*LineColor);
 					}
+				}
+				else
+				{
+					pen.setColor(Qt::transparent);
 				}
 				paint->setPen(pen);
 				if (*IfFill)
@@ -95,13 +134,38 @@ void MCell::paintEvent(QPaintEvent* event)
 						paint->setBrush(*FillColor);
 					}
 				}
-				paint->drawEllipse(QPointF(*EllpiseCenter), *XRadium, *YRadium);
+				else
+				{
+					paint->setBrush(Qt::transparent);
+				}
+				paint->drawEllipse(QPointF(*VEllipseCenter), *VXRadium, *VYRadium);
 			}
 		}
 	}
 	delete paint;
 
 	event->accept();
+}
+
+void MCell::Mupdate()
+{
+	this->setRect(*Rect);
+	if (*Type == imagecell)
+	{
+
+	}
+	if (*Type == ellipsecell)
+	{
+		if (VEllipseCenter != nullptr && VXRadium != nullptr && VYRadium != nullptr)
+		{
+			this->setEllipseCenter(*EllipseCenter);
+			this->setRadium(*XRadium, *YRadium);
+			if (LineWidth != nullptr)
+			{
+				this->setLineWidth(*LineWidth);
+			}
+		}
+	}
 }
 
 void MCell::setImage(QString path)
@@ -139,15 +203,18 @@ void MCell::setVisuable(bool visuable)
 
 void MCell::setRect(QRect rect)
 {
+	//自适应规则：X坐标依赖visualProportionX()，Y坐标依赖visualProportionY(),长度、范围等均依赖visualProportion()
 	delete Rect;
 	Rect = new QRect(rect);
 	if (ParentMMainWindow != nullptr)
 	{
-		VRect = new QRect(Rect->x() * ParentMMainWindow->visualProportionX(), Rect->y() * ParentMMainWindow->visualProportionY(), Rect->width() * ParentMMainWindow->visualProportionX(), Rect->height() * ParentMMainWindow->visualProportionX());
+		delete VRect;
+		VRect = new QRect(Rect->x() * ParentMMainWindow->visualProportionX(), Rect->y() * ParentMMainWindow->visualProportionY(), Rect->width() * ParentMMainWindow->visualProportion(), Rect->height() * ParentMMainWindow->visualProportion());
 	}
 	else if (ParentMWidget != nullptr)
 	{
-		VRect = new QRect(Rect->x() * ParentMWidget->visualProportionX(), Rect->y() * ParentMWidget->visualProportionY(), Rect->width() * ParentMWidget->visualProportionX(), Rect->height() * ParentMWidget->visualProportionX());
+		delete VRect;
+		VRect = new QRect(Rect->x() * ParentMWidget->visualProportionX(), Rect->y() * ParentMWidget->visualProportionY(), Rect->width() * ParentMWidget->visualProportion(), Rect->height() * ParentMWidget->visualProportion());
 	}
 	this->setGeometry(*VRect);
 }
@@ -158,31 +225,57 @@ void MCell::setRect(qreal lefttopx, qreal lefttopy, qreal width, qreal height)
 	Rect = new QRect(lefttopx, lefttopy, width, height);
 	if (ParentMMainWindow != nullptr)
 	{
-		VRect = new QRect(Rect->x() * ParentMMainWindow->visualProportionX(), Rect->y() * ParentMMainWindow->visualProportionY(), Rect->width() * ParentMMainWindow->visualProportionX(), Rect->height() * ParentMMainWindow->visualProportionX());
+		delete VRect;
+		VRect = new QRect(Rect->x() * ParentMMainWindow->visualProportionX(), Rect->y() * ParentMMainWindow->visualProportionY(), Rect->width() * ParentMMainWindow->visualProportion(), Rect->height() * ParentMMainWindow->visualProportion());
 	}
 	else if (ParentMWidget != nullptr)
 	{
-		VRect = new QRect(Rect->x() * ParentMWidget->visualProportionX(), Rect->y() * ParentMWidget->visualProportionY(), Rect->width() * ParentMWidget->visualProportionX(), Rect->height() * ParentMWidget->visualProportionX());
+		delete VRect;
+		VRect = new QRect(Rect->x() * ParentMWidget->visualProportionX(), Rect->y() * ParentMWidget->visualProportionY(), Rect->width() * ParentMWidget->visualProportion(), Rect->height() * ParentMWidget->visualProportion());
 	}
 	this->setGeometry(*VRect);
 }
 
-void MCell::setEllpiseCenter(QPoint center)
+void MCell::setEllipseCenter(QPoint center)
 {
-	if (EllpiseCenter != nullptr)
+	if (EllipseCenter != nullptr)
 	{
-		delete EllpiseCenter;
+		delete EllipseCenter;
 	}
-	EllpiseCenter = new QPoint(center);
+	EllipseCenter = new QPoint(center);
+	if (VEllipseCenter != nullptr)
+	{
+		delete VEllipseCenter;
+	}
+	if (ParentMMainWindow != nullptr)
+	{
+		VEllipseCenter = new QPoint(EllipseCenter->x() * ParentMMainWindow->visualProportion(), EllipseCenter->y() * ParentMMainWindow->visualProportion());
+	}
+	else if (ParentMWidget != nullptr)
+	{
+		VEllipseCenter = new QPoint(EllipseCenter->x() * ParentMWidget->visualProportion(), EllipseCenter->y() * ParentMWidget->visualProportion());
+	}
 }
 
-void MCell::setEllpiseCenter(qreal x, qreal y)
+void MCell::setEllipseCenter(qreal x, qreal y)
 {
-	if (EllpiseCenter != nullptr)
+	if (EllipseCenter != nullptr)
 	{
-		delete EllpiseCenter;
+		delete EllipseCenter;
 	}
-	EllpiseCenter = new QPoint(x, y);
+	EllipseCenter = new QPoint(x, y);
+	if (VEllipseCenter != nullptr)
+	{
+		delete VEllipseCenter;
+	}
+	if (ParentMMainWindow != nullptr)
+	{
+		VEllipseCenter = new QPoint(EllipseCenter->x() * ParentMMainWindow->visualProportion(), EllipseCenter->y() * ParentMMainWindow->visualProportion());
+	}
+	else if (ParentMWidget != nullptr)
+	{
+		VEllipseCenter = new QPoint(EllipseCenter->x() * ParentMWidget->visualProportion(), EllipseCenter->y() * ParentMWidget->visualProportion());
+	}
 }
 
 void MCell::setRadium(qreal xradium, qreal yradium)
@@ -197,6 +290,24 @@ void MCell::setRadium(qreal xradium, qreal yradium)
 	}
 	XRadium = new qreal(xradium);
 	YRadium = new qreal(yradium);
+	if (VXRadium != nullptr)
+	{
+		delete VXRadium;
+	}
+	if (VYRadium != nullptr)
+	{
+		delete VYRadium;
+	}
+	if (ParentMMainWindow != nullptr)
+	{
+		VXRadium = new qreal(*XRadium * ParentMMainWindow->visualProportion());
+		VYRadium = new qreal(*YRadium * ParentMMainWindow->visualProportion());
+	}
+	else if (ParentMWidget != nullptr)
+	{
+		VXRadium = new qreal(*XRadium * ParentMWidget->visualProportion());
+		VYRadium = new qreal(*YRadium * ParentMWidget->visualProportion());
+	}
 }
 
 void MCell::setRadium(qreal radium)
@@ -211,6 +322,24 @@ void MCell::setRadium(qreal radium)
 	}
 	XRadium = new qreal(radium);
 	YRadium = new qreal(radium);
+	if (VXRadium != nullptr)
+	{
+		delete VXRadium;
+	}
+	if (VYRadium != nullptr)
+	{
+		delete VYRadium;
+	}
+	if (ParentMMainWindow != nullptr)
+	{
+		VXRadium = new qreal(*XRadium * ParentMMainWindow->visualProportion());
+		VYRadium = new qreal(*YRadium * ParentMMainWindow->visualProportion());
+	}
+	else if (ParentMWidget != nullptr)
+	{
+		VXRadium = new qreal(*XRadium * ParentMWidget->visualProportion());
+		VYRadium = new qreal(*YRadium * ParentMWidget->visualProportion());
+	}
 }
 
 void MCell::setLine(QLine line)
@@ -247,6 +376,18 @@ void MCell::setLineWidth(qreal width)
 		delete LineWidth;
 	}
 	LineWidth = new qreal(width);
+	if (VLineWidth != nullptr)
+	{
+		delete VLineWidth;
+	}
+	if (ParentMMainWindow != nullptr)
+	{
+		VLineWidth = new qreal(*LineWidth * ParentMMainWindow->visualProportion());
+	}
+	else if (ParentMWidget != nullptr)
+	{
+		VLineWidth = new qreal(*LineWidth * ParentMWidget->visualProportion());
+	}
 }
 
 void MCell::setPainterPath(QPainterPath painterpath)

@@ -71,21 +71,34 @@ void MMainWindow::UiSetUp()
 	logo->setImage(".\\MOONIGHT_Beta_Little.png");
 	this->addCell("Logo", logo);
 	MCell* touch = new MCell(this);
-	touch->setRect(1570, 1570, 60, 60);
+	touch->setRect(1500, 1500, 200, 200);
 	touch->setType(ellipsecell);
-	touch->setLineWidth(6);
+	touch->setLineWidth(20);
 	touch->setLineColor(QColor(0, 0, 0, 50));
-	touch->setEllpiseCenter(30, 30);
-	touch->setRadium(30);
+	touch->setEllipseCenter(100, 100);
+	touch->setRadium(75);
 	this->addCell("Touch", touch);
+	connect
+	(
+		CellList->value("Touch"),
+		SIGNAL(clicked()),
+		this,
+		SLOT(Test())
+	);
 }
 
 void MMainWindow::UiAnimation()
 {
 	if (*State == startstate)
 	{
-		
+		CellList->value("Touch")->setRadium(75 + 10 * qSin(qreal(*time_ms)/1000));
+		CellList->value("Touch")->setLineWidth(20 + 10 * qCos(qreal(*time_ms)/300));
 	}
+}
+
+void MMainWindow::Test()
+{
+	MOONIGHT_Play(1);
 }
 
 void MMainWindow::addCell(QString key, MCell* cell)
@@ -111,5 +124,10 @@ qreal MMainWindow::visualProportionX() const
 qreal MMainWindow::visualProportionY() const
 {
 	return qreal(qreal(this->height()) / qreal(this->OriSize->height()));
+}
+
+QTimer*& MMainWindow::uiFlushTime()
+{
+	return UiFlushTime;
 }
 
