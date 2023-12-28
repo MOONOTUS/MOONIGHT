@@ -68,53 +68,53 @@ public:
 	MWidget(QWidget* parent = nullptr);
 	~MWidget();
 
-	inline void setBackImage(QString& path);//设定背景图片，同时生成背景的模糊背景
-	inline void setBackImage(QPixmap& image);//设定背景图片，同时生成背景的模糊背景
-	inline void setBackColor(QColor color);//设定背景色
-	inline void setBackColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定背景色
-	inline void setBackCoverColor(QColor color);//设定背景遮罩色
-	inline void setBackCoverColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定背景遮罩色
-	inline void setShowBackImage(bool show);//设定是否显示背景图片
-	inline void setShowBackBackImage(bool show);//设定是否显示背景的背景图片
-	inline void setShowLogo(bool show);//设定是否显示标志
-	inline bool showBackImage();//背景图片的可见性
-	inline bool showBackBackImage();//背景的背景的可见性
-	inline bool showLogo();//标志可见性
-	inline void setCheckDotList(QMap<QString, MCheckDot*>*& checkdotlist);//设定判定点容器
-	inline QMap<QString, MCheckDot*>*& checkDotList();//返回判定点容器的引用
-	inline QSize oriSize() const;//返回*OriSize，用于自适应的实现
-	inline void setTime(qint64 ms);//设定当前时间，通常只在曲谱开始时调用，将时间置零
-	inline qint64 time() const;//返回经修正的当前时间
-	inline qint64 fixtime() const;//返回修正时长
-	inline QElapsedTimer*& disTime();//间隔计时器
-	inline QSet<qint32>*& keyPressingList();//按键列表
-	inline void setGapDelay(qint64 delay);//设定空白延迟
-	inline void setFixDelay(qint64 delay);//设定修正延迟
-	inline qint64 delay() const;//总延迟
-	inline qint64 fixDelay() const;//修正延迟
-	inline qint64 gapDelay() const;//空白延迟
-	inline void setMusicPath(QString path);//设定音乐路径
-	inline QString musicPath() const;//音乐路径
-	inline void setMusicName(QString name);//设定曲谱名称
-	inline QString musicName() const;//曲谱名称
-	inline void playMusic(bool nodelay = false);//播放音乐
-	inline void addCheck(qint32 check, qint64 time, qint64 timems);//添加判定结果
-	inline QVector<qint32>*& checkList();//判定列表
-	inline qreal visualProportion() const;//视觉比例
-	inline qreal visualProportionX() const;//视觉比例
-	inline qreal visualProportionY() const;//视觉比例
-	inline void addToTitle(QString addtitle);//向窗口标题追加文本
-	inline qint64 combo() const;//连击数
-	inline void setFormerCalculator(MFormerCalculator* formercalculator);//设定计数器
-	inline MFormerCalculator*& formerCalculator();//计数器
-	inline qint64 score() const;//分数
-	inline qint64 eachscore() const;//每个音符的striperfect分数
-	inline qreal accuracy() const;//准度
-	inline void pause();//暂停
-	inline void continues();//继续
-	inline bool pausing() const;//暂停状态
-	inline QTimer*& mainTime();//10ms计时器
-	inline QTimer*& litTime();//1ms计时器
-	inline void setover();//曲谱设定结束标志
-	inline QWidget*& MParent();//返回Parent，用于溯源
+	void setBackImage(QString& path);//设定背景图片，同时生成背景的模糊背景
+	void setBackImage(QPixmap& image);//设定背景图片，同时生成背景的模糊背景
+	void setBackColor(QColor color);//设定背景色
+	void setBackColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定背景色
+	void setBackCoverColor(QColor color);//设定背景遮罩色
+	void setBackCoverColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定背景遮罩色
+	void setShowBackImage(bool show);//设定是否显示背景图片
+	void setShowBackBackImage(bool show);//设定是否显示背景的背景图片
+	void setShowLogo(bool show);//设定是否显示标志
+	bool showBackImage();//背景图片的可见性
+	bool showBackBackImage();//背景的背景的可见性
+	bool showLogo();//标志可见性
+	void setCheckDotList(QMap<QString, MCheckDot*>*& checkdotlist);//设定判定点容器
+	QMap<QString, MCheckDot*>*& checkDotList();//返回判定点容器的引用
+	QSize oriSize() const;//返回*OriSize，用于自适应的实现
+	void setTime(qint64 ms);//设定当前时间，通常只在曲谱开始时调用，将时间置零
+	qint64 time() const;//返回经修正的当前时间
+	qint64 fixtime() const;//返回修正时长
+	QElapsedTimer*& disTime();//间隔计时器
+	QSet<qint32>*& keyPressingList();//按键列表
+	void setGapDelay(qint64 delay);//设定空白延迟
+	void setFixDelay(qint64 delay);//设定修正延迟
+	qint64 delay() const;//总延迟
+	qint64 fixDelay() const;//修正延迟
+	qint64 gapDelay() const;//空白延迟
+	void setMusicPath(QString path);//设定音乐路径
+	QString musicPath() const;//音乐路径
+	void setMusicName(QString name);//设定曲谱名称
+	QString musicName() const;//曲谱名称
+	void playMusic(bool nodelay = false);//播放音乐
+	void addCheck(qint32 check, qint64 time, qint64 timems);//添加判定结果
+	QVector<qint32>*& checkList();//判定列表
+	qreal visualProportion() const;//视觉比例
+	qreal visualProportionX() const;//视觉比例
+	qreal visualProportionY() const;//视觉比例
+	void addToTitle(QString addtitle);//向窗口标题追加文本
+	qint64 combo() const;//连击数
+	void setFormerCalculator(MFormerCalculator* formercalculator);//设定计数器
+	MFormerCalculator*& formerCalculator();//计数器
+	qint64 score() const;//分数
+	qint64 eachscore() const;//每个音符的striperfect分数
+	qreal accuracy() const;//准度
+	void pause();//暂停
+	void continues();//继续
+	bool pausing() const;//暂停状态
+	QTimer*& mainTime();//10ms计时器
+	QTimer*& litTime();//1ms计时器
+	void setover();//曲谱设定结束标志
+	QWidget*& MParent();//返回Parent，用于溯源
 };

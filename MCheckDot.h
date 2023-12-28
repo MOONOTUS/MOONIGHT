@@ -1,10 +1,10 @@
 ﻿#pragma once
 
 #include"MCenter.h"
+#include"MNote.h"
 
 class MWidget;
 class MCheckDotLine;
-class MNote;
 
 class MCheckDot  : public QPushButton //判定点类
 {
@@ -84,45 +84,45 @@ public:
 	MCheckDot(MWidget *parent = nullptr);
 	~MCheckDot();
 
-	inline void setDotLine(MCheckDotLine& dotline);//设定轨道线
-	inline MCheckDotLine*& dotLine();//返回轨道线的引用
-	inline void setVisuable(bool visuable);//设定判定点是否可见
-	inline bool visuable() const;//返回*Visuable
-	inline void setPoint(QPoint point);//设定判定点的逻辑坐标
-	inline void setPoint(qreal x, qreal y);//设定判定点的逻辑坐标
-	inline QPoint point() const;//返回判定点的逻辑坐标
-	inline void setRadium(qreal r);//设定判定点的逻辑半径
-	inline qreal radium() const;//返回*Radium
-	inline void setWidth(qreal width);//设定判定点圆圈的逻辑宽度
-	inline qreal width() const;//返回*Width
-	inline void setDotColor(QColor color);//设定判定点颜色
-	inline void setDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定判定点颜色
-	inline QColor dotColor() const;//返回*DotColor
-	inline void setDotKeyColor(QColor color);//设定判定键的颜色
-	inline void setDotKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定判定键的颜色
-	inline QColor dotKeyColor() const;//返回*DotKeyColor
-	inline void setKey(qint32 key, QString keytext);//设定判定键
-	inline qint32 key() const;//返回*Key
-	inline QString keyText() const;//返回*KeyText
-	inline QMap<qint64, MNote*>*& noteList();//返回音符容器的引用
-	inline void setNextTime(qint64 time_ms);//设定下一个音符的判定时间
-	inline qint64 nextTime() const;//返回*NextTime
-	inline QMap<qint64, qint32>*& noteCheckList();//返回判定结果容器的引用
-	inline MWidget*& MParent();//返回Parent，用于溯源
-	inline void setKeyVisuable(bool visuable);//设定判定键文本是否可见
-	inline bool keyVisuable() const;//返回*KeyVisuable
-	inline void setSpeed(qreal speed_px_ps);//设定音符的逻辑速度
-	inline qreal speed() const;//返回音符逻辑速度
-	inline void setLineRadium(qreal lineradium);//设定轨道线的逻辑长度
-	inline qreal lineRadium() const;//返回轨道线逻辑长度
-	inline void addNote(qint64 time = 0, qint32 type = MNote::autoNoteType(), qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
-	inline void addNote(QColor notecolor = MNote::autoNoteColor(), qint64 time = 0, qint32 type = MNote::autoNoteType(), qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
-	inline void addNote(QColor notecolor = MNote::autoNoteColor(), QColor lineColor = MNote::autoLineColor(), qint64 time = 0, qint32 type = MNote::autoNoteType(), qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
-	inline void addNote(QColor notecolor = MNote::autoNoteColor(), QColor lineColor = MNote::autoLineColor(), QColor keyColor = MNote::autoKeyColor(), qint64 time = 0, qint32 type = MNote::autoNoteType(), qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
-	inline static void setAutoDotColor(QColor color);
-	inline static void setAutoDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
-	inline static QColor autoDotColor();
-	inline static void setAutoKeyColor(QColor color);
-	inline static void setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
-	inline static QColor autoKeyColor();
+	void setDotLine(MCheckDotLine& dotline);//设定轨道线
+	MCheckDotLine*& dotLine();//返回轨道线的引用
+	void setVisuable(bool visuable);//设定判定点是否可见
+	bool visuable() const;//返回*Visuable
+	void setPoint(QPoint point);//设定判定点的逻辑坐标
+	void setPoint(qreal x, qreal y);//设定判定点的逻辑坐标
+	QPoint point() const;//返回判定点的逻辑坐标
+	void setRadium(qreal r);//设定判定点的逻辑半径
+	qreal radium() const;//返回*Radium
+	void setWidth(qreal width);//设定判定点圆圈的逻辑宽度
+	qreal width() const;//返回*Width
+	void setDotColor(QColor color);//设定判定点颜色
+	void setDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定判定点颜色
+	QColor dotColor() const;//返回*DotColor
+	void setDotKeyColor(QColor color);//设定判定键的颜色
+	void setDotKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);//设定判定键的颜色
+	QColor dotKeyColor() const;//返回*DotKeyColor
+	void setKey(qint32 key, QString keytext);//设定判定键
+	qint32 key() const;//返回*Key
+	QString keyText() const;//返回*KeyText
+	QMap<qint64, MNote*>*& noteList();//返回音符容器的引用
+	void setNextTime(qint64 time_ms);//设定下一个音符的判定时间
+	qint64 nextTime() const;//返回*NextTime
+	QMap<qint64, qint32>*& noteCheckList();//返回判定结果容器的引用
+	MWidget*& MParent();//返回Parent，用于溯源
+	void setKeyVisuable(bool visuable);//设定判定键文本是否可见
+	bool keyVisuable() const;//返回*KeyVisuable
+	void setSpeed(qreal speed_px_ps);//设定音符的逻辑速度
+	qreal speed() const;//返回音符逻辑速度
+	void setLineRadium(qreal lineradium);//设定轨道线的逻辑长度
+	qreal lineRadium() const;//返回轨道线逻辑长度
+	void addNote(qint64 time = 0, qint32 type = MNote::autoNoteType(), qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
+	void addNote(QColor notecolor = MNote::autoNoteColor(), qint64 time = 0, qint32 type = MNote::autoNoteType(), qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
+	void addNote(QColor notecolor = MNote::autoNoteColor(), QColor lineColor = MNote::autoLineColor(), qint64 time = 0, qint32 type = MNote::autoNoteType(), qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
+	void addNote(QColor notecolor = MNote::autoNoteColor(), QColor lineColor = MNote::autoLineColor(), QColor keyColor = MNote::autoKeyColor(), qint64 time = 0, qint32 type = MNote::autoNoteType(), qint64 timelength = 0, qint32 beatkey = Qt::Key_Escape, QString beatkeytext = "");//快捷添加新Note
+	static void setAutoDotColor(QColor color);
+	static void setAutoDotColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	static QColor autoDotColor();
+	static void setAutoKeyColor(QColor color);
+	static void setAutoKeyColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	static QColor autoKeyColor();
 };

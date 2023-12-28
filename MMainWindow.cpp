@@ -65,18 +65,26 @@ void MMainWindow::timeAdd_ms()
 
 void MMainWindow::UiSetUp()
 {
-	MCell* cell_1 = new MCell(this);
-	cell_1->setRect(400, 0, 2400, 1350);
-	cell_1->setType(imagecell);
-	cell_1->setImage(".\\MOONIGHT_Beta_Little.png");
-	this->addCell("Logo", cell_1);
+	MCell* logo = new MCell(this);
+	logo->setRect(400, 0, 2400, 1350);
+	logo->setType(imagecell);
+	logo->setImage(".\\MOONIGHT_Beta_Little.png");
+	this->addCell("Logo", logo);
+	MCell* touch = new MCell(this);
+	touch->setRect(1570, 1570, 60, 60);
+	touch->setType(ellipsecell);
+	touch->setLineWidth(6);
+	touch->setLineColor(QColor(0, 0, 0, 50));
+	touch->setEllpiseCenter(30, 30);
+	touch->setRadium(30);
+	this->addCell("Touch", touch);
 }
 
 void MMainWindow::UiAnimation()
 {
 	if (*State == startstate)
 	{
-		//CellList->value("Logo")->setRect(CellList->value("Logo")->MRect()->x(), CellList->value("Logo")->MRect()->y(), CellList->value("Logo")->MRect()->width() - 1, CellList->value("Logo")->MRect()->height() - 1);
+		
 	}
 }
 

@@ -10,9 +10,9 @@ class MCell  : public QPushButton //统合元件类
 
 #define imagecell 0x111
 #define rectcell 0x001
-#define ellipcell 0x002
+#define ellipsecell 0x002
 #define linecell 0x003
-#define pathcell 0x004
+#define painterpathcell 0x004
 #define textcell 0x005
 
 protected:
@@ -37,6 +37,7 @@ private:
 	qreal* XRadium;
 	qreal* YRadium;
 	QLine* Line;
+	qreal* LineWidth;
 	QPainterPath* PainterPath;
 	QString* Text;
 
@@ -62,6 +63,7 @@ public:
 	void setLine(QLine line);
 	void setLine(QPoint start, QPoint end);
 	void setLine(qreal x1, qreal y1, qreal x2, qreal y2);
+	void setLineWidth(qreal width);
 	void setPainterPath(QPainterPath painterpath);
 	void setText(QString text);
 	void setIfLine(bool ifline);
@@ -70,10 +72,11 @@ public:
 	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 	void setFillColor(QColor color);
 	void setFillColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
-
-	QPixmap image();
-	bool visuable();
-
+	
+	QPixmap image() const;
+	bool visuable() const;
+	qreal lineWidth() const;
+	
 	QRect* MRect();
 	MMainWindow*& MParentMMainWindow();
 	MWidget*& MParentMWidget();

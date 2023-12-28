@@ -15,6 +15,7 @@ MCell::MCell(MMainWindow* parent)
 	XRadium = nullptr;
 	YRadium = nullptr;
 	Line = nullptr;
+	LineWidth = nullptr;
 	PainterPath = nullptr;
 	Text = nullptr;
 	LineColor = nullptr;
@@ -36,6 +37,7 @@ MCell::MCell(MWidget *parent)
 	XRadium = nullptr;
 	YRadium = nullptr;
 	Line = nullptr;
+	LineWidth = nullptr;
 	PainterPath = nullptr;
 	Text = nullptr;
 	LineColor = nullptr;
@@ -53,7 +55,13 @@ void MCell::setType(qint32 type)
 
 void MCell::paintEvent(QPaintEvent* event)
 {
+//#define rectcell 0x001
+//#define ellipsecell 0x002
+//#define linecell 0x003
+//#define painterpathcell 0x004
+//#define textcell 0x005
 	QPainter* paint = new QPainter(this);
+	QPen pen;
 	this->setRect(*Rect);
 	if (*Visuable)
 	{
@@ -64,7 +72,34 @@ void MCell::paintEvent(QPaintEvent* event)
 				paint->drawPixmap(this->rect(), *Image);
 			}
 		}
+		if (*Type == ellipsecell)
+		{
+			if (EllpiseCenter != nullptr && XRadium != nullptr && YRadium != nullptr)
+			{
+				if (*IfLine)
+				{
+					if (LineWidth != nullptr)
+					{
+						pen.setWidth(*LineWidth);
+					}
+					if (LineColor != nullptr)
+					{
+						pen.setColor(*LineColor);
+					}
+				}
+				paint->setPen(pen);
+				if (*IfFill)
+				{
+					if (FillColor != nullptr)
+					{
+						paint->setBrush(*FillColor);
+					}
+				}
+				paint->drawEllipse(QPointF(*EllpiseCenter), *XRadium, *YRadium);
+			}
+		}
 	}
+	delete paint;
 
 	event->accept();
 }
@@ -205,6 +240,15 @@ void MCell::setLine(qreal x1, qreal y1, qreal x2, qreal y2)
 	Line = new QLine(x1, y1, x2, y2);
 }
 
+void MCell::setLineWidth(qreal width)
+{
+	if (LineWidth != nullptr)
+	{
+		delete LineWidth;
+	}
+	LineWidth = new qreal(width);
+}
+
 void MCell::setPainterPath(QPainterPath painterpath)
 {
 	if (PainterPath != nullptr)
@@ -223,14 +267,19 @@ void MCell::setText(QString text)
 	Text = new QString(text);
 }
 
-QPixmap MCell::image()
+QPixmap MCell::image() const
 {
 	return *Image;
 }
 
-bool MCell::visuable()
+bool MCell::visuable() const
 {
 	return *Visuable;
+}
+
+qreal MCell::lineWidth() const
+{
+	return *LineWidth;
 }
 
 MMainWindow*& MCell::MParentMMainWindow()

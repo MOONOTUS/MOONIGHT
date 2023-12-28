@@ -8,5 +8,5 @@
 #define WIDTH 3200
 #define HEIGHT 1800
 
-inline QImage blurred(const QPixmap& image, const QRect& rect, qint32 radius, bool alphaOnly = false);
-inline void GaussiamBlur(qint32 r, qreal variance, QImage& img);
+QImage blurred(const QPixmap& image, const QRect& rect, qint32 radius, bool alphaOnly = false);
+void GaussiamBlur(qint32 r, qreal variance, QImage& img);
