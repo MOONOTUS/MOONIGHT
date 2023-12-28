@@ -33,21 +33,21 @@ public:
 	MFormerCalculator(MWidget *parent);
 	~MFormerCalculator();
 
-	void setImage(QString path);//设定计数器背景
-	void setImage(QPixmap image);//设定计数器背景
-	void setScore(qint64 score);//设定分数
-	void setMusicName(QString name);//设定曲谱名
-	void setCombo(qint64 combo);//设定连击数
-	void setAccuracy(qreal accuracy);//设定准度
-	void setCheck(qint32 check);//设定判定
-	void setCheckText(QString checktext);//设定判定文本
-	QPoint vMoonPoint();//偏差指示器的视觉位置
-	qreal vMoonRadium();//偏差指示器的视觉半径
-	void setShow(bool show);//设定计数器可见性
-	bool ifShow();//计数器可见性
-	void setDeviation(qreal deviation);//设定偏差
-	qreal deviation();//偏差
-	void setType(QString type);//设定偏差类型
-	QString type();//偏差类型
-	MWidget*& MParent();//返回Parent，用于溯源
+	inline void setImage(QString path);//设定计数器背景
+	inline void setImage(QPixmap image);//设定计数器背景
+	inline void setScore(qint64 score);//设定分数
+	inline void setMusicName(QString name);//设定曲谱名
+	inline void setCombo(qint64 combo);//设定连击数
+	inline void setAccuracy(qreal accuracy);//设定准度
+	inline void setCheck(qint32 check);//设定判定
+	inline void setCheckText(QString checktext);//设定判定文本
+	inline QPoint vMoonPoint() const;//偏差指示器的视觉位置
+	inline qreal vMoonRadium() const;//偏差指示器的视觉半径
+	inline void setShow(bool show);//设定计数器可见性
+	inline bool ifShow() const;//计数器可见性
+	inline void setDeviation(qreal deviation);//设定偏差
+	inline qreal deviation() const;//偏差
+	inline void setType(QString type);//设定偏差类型
+	inline QString type() const;//偏差类型
+	inline constexpr MWidget*& MParent();//返回Parent，用于溯源
 };

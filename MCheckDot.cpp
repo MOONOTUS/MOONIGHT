@@ -741,7 +741,7 @@ void MCheckDot::setVisuable(bool visuable)
 	Visuable = new bool(visuable);
 }
 
-bool MCheckDot::visuable()
+bool MCheckDot::visuable() const
 {
 	return *Visuable;
 }
@@ -762,7 +762,7 @@ void MCheckDot::setPoint(qreal x, qreal y)
 	VPoint = new QPoint(Point->x() * Parent->visualProportion(), Point->y() * Parent->visualProportion());
 }
 
-QPoint MCheckDot::point()
+QPoint MCheckDot::point() const
 {
 	return *Point;
 }
@@ -775,7 +775,7 @@ void MCheckDot::setRadium(qreal r)
 	VRadium = new qreal((*Radium) * Parent->visualProportion());
 }
 
-qreal MCheckDot::radium()
+qreal MCheckDot::radium() const
 {
 	return *Radium;
 }
@@ -788,7 +788,7 @@ void MCheckDot::setWidth(qreal width)
 	VWidth = new qreal((*Width) * Parent->visualProportion());
 }
 
-qreal MCheckDot::width()
+qreal MCheckDot::width() const
 {
 	return *Width;
 }
@@ -805,7 +805,7 @@ void MCheckDot::setDotColor(qint32 R, qint32 G, qint32 B, qint32 A)
 	DotColor = new QColor(R, G, B, A);
 }
 
-QColor MCheckDot::dotColor()
+QColor MCheckDot::dotColor() const
 {
 	return *DotColor;
 }
@@ -822,7 +822,7 @@ void MCheckDot::setDotKeyColor(qint32 R, qint32 G, qint32 B, qint32 A)
 	DotKeyColor = new QColor(R, G, B, A);
 }
 
-QColor MCheckDot::dotKeyColor()
+QColor MCheckDot::dotKeyColor() const
 {
 	return *DotKeyColor;
 }
@@ -835,12 +835,12 @@ void MCheckDot::setKey(qint32 key, QString keytext)
 	KeyText = new QString(keytext);
 }
 
-qint32 MCheckDot::key()
+qint32 MCheckDot::key() const
 {
 	return *Key;
 }
 
-QString MCheckDot::keyText()
+QString MCheckDot::keyText() const
 {
 	return *KeyText;
 }
@@ -856,7 +856,7 @@ void MCheckDot::setNextTime(qint64 time_ms)
 	NextTime = new qint64(time_ms);
 }
 
-qint64 MCheckDot::nextTime()
+qint64 MCheckDot::nextTime() const
 {
 	return *NextTime;
 }
@@ -877,7 +877,7 @@ void MCheckDot::setKeyVisuable(bool visuable)
 	KeyVisuable = new bool(visuable);
 }
 
-bool MCheckDot::keyVisuable()
+bool MCheckDot::keyVisuable() const
 {
 	return *KeyVisuable;
 }
@@ -890,7 +890,7 @@ void MCheckDot::setSpeed(qreal speed_px_ps)
 	VSpeed = new qreal(*Speed * Parent->visualProportion());
 }
 
-qreal MCheckDot::speed()
+qreal MCheckDot::speed() const
 {
 	return *Speed;
 }
@@ -903,7 +903,7 @@ void MCheckDot::setLineRadium(qreal lineradium)
 	VLineRadium = new qreal(*LineRadium * Parent->visualProportion());
 }
 
-qreal MCheckDot::lineRadium()
+qreal MCheckDot::lineRadium() const
 {
 	return *LineRadium;
 }

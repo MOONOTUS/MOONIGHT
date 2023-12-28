@@ -30,11 +30,11 @@ public:
 	MMainWindow(QWidget *parent);
 	~MMainWindow();
 
-	void UiSetUp();
+	inline void UiSetUp();
 
-	void addCell(QString key, MCell* cell);
-	QMap<QString, MCell*>*& cellList();
-	qreal visualProportion();//视觉比例
-	qreal visualProportionX();//视觉比例
-	qreal visualProportionY();//视觉比例
+	inline void addCell(QString key, MCell* cell);
+	inline QMap<QString, MCell*>*& cellList();
+	inline qreal visualProportion() const;//视觉比例
+	inline qreal visualProportionX() const;//视觉比例
+	inline qreal visualProportionY() const;//视觉比例
 };

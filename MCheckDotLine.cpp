@@ -37,7 +37,7 @@ void MCheckDotLine::setVisuable(bool visuable)
 	DownVisuable = new bool(*Visuable);
 }
 
-bool MCheckDotLine::visuable()
+bool MCheckDotLine::visuable() const
 {
 	return *Visuable;
 }
@@ -48,7 +48,7 @@ void MCheckDotLine::setUpVisuable(bool visuable)
 	UpVisuable = new bool(visuable);
 }
 
-bool MCheckDotLine::upVisuable()
+bool MCheckDotLine::upVisuable() const
 {
 	return *UpVisuable;
 }
@@ -59,7 +59,7 @@ void MCheckDotLine::setDownVisuable(bool visuable)
 	DownVisuable = new bool(visuable);
 }
 
-bool MCheckDotLine::downVisuable()
+bool MCheckDotLine::downVisuable() const
 {
 	return *DownVisuable;
 }
@@ -71,7 +71,7 @@ void MCheckDotLine::setWidth(qreal width)
 	delete VWidth;
 	VWidth = new qreal(*Width * Parent->MParent()->width() / Parent->MParent()->oriSize().width());
 }
-qreal MCheckDotLine::width()
+qreal MCheckDotLine::width() const
 {
 	return *Width;
 }
@@ -86,7 +86,7 @@ void MCheckDotLine::setAngle(qreal angle)
 	DownAngle = new qreal(*Angle - 180);
 }
 
-qreal MCheckDotLine::angle()
+qreal MCheckDotLine::angle() const
 {
 	return *Angle;
 }
@@ -97,7 +97,7 @@ void MCheckDotLine::setUpAngle(qreal angle)
 	UpAngle = new qreal(angle);
 }
 
-qreal MCheckDotLine::upAngle()
+qreal MCheckDotLine::upAngle() const
 {
 	return *UpAngle;
 }
@@ -108,7 +108,7 @@ void MCheckDotLine::setDownAngle(qreal angle)
 	DownAngle = new qreal(angle);
 }
 
-qreal MCheckDotLine::downAngle()
+qreal MCheckDotLine::downAngle() const
 {
 	return *DownAngle;
 }
@@ -125,12 +125,12 @@ void MCheckDotLine::setDotLineColor(qint32 R, qint32 G, qint32 B, qint32 A)
 	DotLineColor = new QColor(R, G, B, A);
 }
 
-QColor MCheckDotLine::dotLineColor()
+QColor MCheckDotLine::dotLineColor() const
 {
 	return *DotLineColor;
 }
 
-qreal MCheckDotLine::vWidth()
+qreal MCheckDotLine::vWidth() const
 {
 	return *VWidth;
 }

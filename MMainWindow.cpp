@@ -90,17 +90,17 @@ QMap<QString, MCell*>*& MMainWindow::cellList()
 	return CellList;
 }
 
-qreal MMainWindow::visualProportion()
+qreal MMainWindow::visualProportion() const
 {
 	return qreal(qreal(this->width()) / qreal(this->OriSize->width()));
 }
 
-qreal MMainWindow::visualProportionX()
+qreal MMainWindow::visualProportionX() const
 {
 	return qreal(qreal(this->width()) / qreal(this->OriSize->width()));
 }
 
-qreal MMainWindow::visualProportionY()
+qreal MMainWindow::visualProportionY() const
 {
 	return qreal(qreal(this->height()) / qreal(this->OriSize->height()));
 }

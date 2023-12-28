@@ -187,12 +187,12 @@ void MFormerCalculator::setCheckText(QString checktext)
 	CheckText = new QString(checktext);
 }
 
-QPoint MFormerCalculator::vMoonPoint()
+QPoint MFormerCalculator::vMoonPoint() const
 {
 	return *VMoonPoint;
 }
 
-qreal MFormerCalculator::vMoonRadium()
+qreal MFormerCalculator::vMoonRadium() const
 {
 	return *VMoonRadium;
 }
@@ -203,7 +203,7 @@ void MFormerCalculator::setShow(bool show)
 	Show = new bool(show);
 }
 
-bool MFormerCalculator::ifShow()
+bool MFormerCalculator::ifShow() const
 {
 	return *Show;
 }
@@ -214,7 +214,7 @@ void MFormerCalculator::setDeviation(qreal deviation)
 	Deviation = new qreal(deviation);
 }
 
-qreal MFormerCalculator::deviation()
+qreal MFormerCalculator::deviation() const
 {
 	return *Deviation;
 }
@@ -225,12 +225,12 @@ void MFormerCalculator::setType(QString type)
 	Type = new QString(type);
 }
 
-QString MFormerCalculator::type()
+QString MFormerCalculator::type() const
 {
 	return *Type;
 }
 
-MWidget*& MFormerCalculator::MParent()
+constexpr MWidget*& MFormerCalculator::MParent()
 {
 	return Parent;
 }

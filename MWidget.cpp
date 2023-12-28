@@ -163,7 +163,7 @@ void MWidget::keyReleaseEvent(QKeyEvent* event)//重写的键盘释放事件函�
 		if (!*Pausing)
 		{
 			qDebug() << "\tMOONOTUSYSTEM::_Message_::Keyboard Release " << event->key();
-			KeyPressingList->remove(event->key());//向按键列表中添加按下的键
+			KeyPressingList->remove(event->key());//从按键列表中释放释放的键
 			emit(keyReleaseUp(event));
 		}
 	}
@@ -318,7 +318,7 @@ QMap<QString, MCheckDot*>*& MWidget::checkDotList()
 	return CheckDotList;
 }
 
-QSize MWidget::oriSize()
+QSize MWidget::oriSize() const
 {
 	return *OriSize;
 }
@@ -334,12 +334,12 @@ void MWidget::setTime(qint64 ms)
 	time_ms = new qint64(ms);
 }
 
-qint64 MWidget::time()
+qint64 MWidget::time() const
 {
 	return (*time_ms + *FixDelay - *fixtime_ms);
 }
 
-qint64 MWidget::fixtime()
+qint64 MWidget::fixtime() const
 {
 	return *fixtime_ms;
 }
@@ -376,17 +376,17 @@ void MWidget::setFixDelay(qint64 delay)
 	Delay = new qint64(*GapDelay + *FixDelay);
 }
 
-qint64 MWidget::gapDelay()
+qint64 MWidget::gapDelay() const
 {
 	return *GapDelay;
 }
 
-qint64 MWidget::fixDelay()
+qint64 MWidget::fixDelay() const
 {
 	return *FixDelay;
 }
 
-qint64 MWidget::delay()
+qint64 MWidget::delay() const
 {
 	return *Delay;
 }
@@ -397,7 +397,7 @@ void MWidget::setMusicPath(QString path)
 	MusicPath = new QString(path);
 }
 
-QString MWidget::musicPath()
+QString MWidget::musicPath() const
 {
 	return *MusicPath;
 }
@@ -408,7 +408,7 @@ void MWidget::setMusicName(QString name)
 	MusicName = new QString(name);
 }
 
-QString MWidget::musicName()
+QString MWidget::musicName() const
 {
 	return *MusicName;
 }
@@ -539,19 +539,19 @@ QVector<qint32>*& MWidget::checkList()
 	return CheckList;
 }
 
-qreal MWidget::visualProportion()
+qreal MWidget::visualProportion() const
 {
 	qreal returnout = qreal(qreal(this->width()) / qreal(this->oriSize().width()));
 	return returnout;
 }
 
-qreal MWidget::visualProportionX()
+qreal MWidget::visualProportionX() const
 {
 	qreal returnout = qreal(qreal(this->width()) / qreal(this->oriSize().width()));
 	return returnout;
 }
 
-qreal MWidget::visualProportionY()
+qreal MWidget::visualProportionY() const
 {
 	qreal returnout = qreal(qreal(this->height()) / qreal(this->oriSize().height()));
 	return returnout;
@@ -564,7 +564,7 @@ void MWidget::addToTitle(QString addtitle)
 	delete Title;
 }
 
-qint64 MWidget::combo()
+qint64 MWidget::combo() const
 {
 	return *Combo;
 }
@@ -578,17 +578,17 @@ MFormerCalculator*& MWidget::formerCalculator()
 	return Calculator;
 }
 
-qint64 MWidget::score()
+qint64 MWidget::score() const
 {
 	return *Score;
 }
 
-qint64 MWidget::eachscore()
+qint64 MWidget::eachscore() const
 {
 	return *EachScore;
 }
 
-qreal MWidget::accuracy()
+qreal MWidget::accuracy() const
 {
 	return *Accuracy;
 }
@@ -643,7 +643,7 @@ void MWidget::continues()
 	this->Player->play();
 }
 
-bool MWidget::pausing()
+bool MWidget::pausing() const
 {
 	return *Pausing;
 }

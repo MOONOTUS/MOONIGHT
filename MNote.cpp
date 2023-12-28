@@ -122,7 +122,7 @@ void MNote::setVisuable(bool visuable)
 	Visuable = new bool(visuable);
 }
 
-bool MNote::visuable()
+bool MNote::visuable() const
 {
 	return *Visuable;
 }
@@ -135,12 +135,12 @@ void MNote::setRadium(qreal r)
 	VRadium = new qreal(*Radium * Parent->MParent()->width() / Parent->MParent()->oriSize().width());
 }
 
-qreal MNote::radium()
+qreal MNote::radium() const
 {
 	return *Radium;
 }
 
-qreal MNote::vRadium()
+qreal MNote::vRadium() const
 {
 	return *VRadium;
 }
@@ -153,12 +153,12 @@ void MNote::setWidth(qreal width)
 	VWidth = new qreal(*Width * Parent->MParent()->width() / Parent->MParent()->oriSize().width());
 }
 
-qreal MNote::width()
+qreal MNote::width() const
 {
 	return *Width;
 }
 
-qreal MNote::vWidth()
+qreal MNote::vWidth() const
 {
 	return *VWidth;
 }
@@ -175,7 +175,7 @@ void MNote::setNoteColor(qint32 R, qint32 G, qint32 B, qint32 A)
 	NoteColor = new QColor(R, G, B, A);
 }
 
-QColor MNote::noteColor()
+QColor MNote::noteColor() const
 {
 	return *NoteColor;
 }
@@ -192,7 +192,7 @@ void MNote::setLineColor(qint32 R, qint32 G, qint32 B, qint32 A)
 	LineColor = new QColor(R, G, B, A);
 }
 
-QColor MNote::lineColor()
+QColor MNote::lineColor() const
 {
 	return *LineColor;
 }
@@ -209,7 +209,7 @@ void MNote::setKeyColor(qint32 R, qint32 G, qint32 B, qint32 A)
 	KeyColor = new QColor(R, G, B, A);
 }
 
-QColor MNote::keyColor()
+QColor MNote::keyColor() const
 {
 	return *KeyColor;
 }
@@ -228,17 +228,17 @@ void MNote::setBeatKey(qint32 key, QString keytext)
 	BeatKeyText = new QString(keytext);
 }
 
-qint32 MNote::beatKey()
+qint32 MNote::beatKey() const
 {
 	return *BeatKey;
 }
 
-QString MNote::beatKeyText()
+QString MNote::beatKeyText() const
 {
 	return *BeatKeyText;
 }
 
-qint32 MNote::type()
+qint32 MNote::type() const
 {
 	return *Type;
 }
@@ -255,7 +255,7 @@ void MNote::setTime(qint64 time_ms)
 	VEndTime = new qint64(*VTime + *VTimeLength);
 }
 
-qint64 MNote::time()
+qint64 MNote::time() const
 {
 	return *Time;
 }
@@ -272,12 +272,12 @@ void MNote::setTimeLength(qint64 time_ms)
 	VEndTime = new qint64(*VTime + *VTimeLength);
 }
 
-qint64 MNote::timeLength()
+qint64 MNote::timeLength() const
 {
 	return *TimeLength;
 }
 
-qint64 MNote::endTime()
+qint64 MNote::endTime() const
 {
 	return *EndTime;
 }
@@ -288,7 +288,7 @@ void MNote::setVTime(qint64 time_ms)
 	VTime = new qint64(time_ms);
 }
 
-qint64 MNote::vTime()
+qint64 MNote::vTime() const
 {
 	return *VTime;
 }
@@ -301,12 +301,12 @@ void MNote::setVTimeLength(qint64 time_ms)
 	VEndTime = new qint64(*VTime + *VTimeLength);
 }
 
-qint64 MNote::vTimeLength()
+qint64 MNote::vTimeLength() const
 {
 	return *VTimeLength;
 }
 
-qint64 MNote::vEndTime()
+qint64 MNote::vEndTime() const
 {
 	return *VEndTime;
 }
@@ -322,7 +322,7 @@ void MNote::setNextTime(qint64 time_ms)
 	NextTime = new qint64(time_ms);
 }
 
-qint64 MNote::nextTime()
+qint64 MNote::nextTime() const
 {
 	return *NextTime;
 }
@@ -338,12 +338,12 @@ void MNote::setSpeed(qreal speed)
 	}
 }
 
-qreal MNote::speed()
+qreal MNote::speed() const
 {
 	return *Speed;
 }
 
-qreal MNote::vSpeed()
+qreal MNote::vSpeed() const
 {
 	return *VSpeed;
 }
