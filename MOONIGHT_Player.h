@@ -1,7 +1,8 @@
 #pragma once
-#include"Mcenter.h"
+#include"MCenter.h"
 
 class MOONIGHT_Qt;
+class MMainWindow;
 
 class MOONIGHT_QtClass_Pivot
 {
@@ -16,4 +17,4 @@ private:
 	static MOONIGHT_Qt* w;
 };
 
-void MOONIGHT_Play(qint64 ID);
+void MOONIGHT_Play(qint64 ID, MMainWindow* linkmain);

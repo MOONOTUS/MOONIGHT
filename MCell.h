@@ -36,6 +36,7 @@ private:
 	QRect* VRect;
 
 	QPixmap* Image;
+	QPixmap* PathImage;
 	QPoint* EllipseCenter;
 	QPoint* VEllipseCenter;
 	qreal* XRadium;

@@ -22,8 +22,11 @@ void MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Set(MOONIGHT_Qt* w)
 	MOONIGHT_QtClass_Pivot::w = w;
 }
 
-void MOONIGHT_Play(qint64 ID)
+void MOONIGHT_Play(qint64 ID, MMainWindow* linkmain)
 {
+	MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Saved()->Ui()->central = new MWidget(nullptr);
+	MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Saved()->Ui()->central->setLinkMain(linkmain);
+	MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Saved()->Ui()->central->resize(linkmain->size());
 	switch (ID)
 	{
 	case 1:

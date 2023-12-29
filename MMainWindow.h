@@ -40,4 +40,5 @@ public:
 	qreal visualProportionX() const;//视觉比例
 	qreal visualProportionY() const;//视觉比例
 	QTimer*& uiFlushTime() ;
+	QWidget*& MParent();
 };

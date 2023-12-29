@@ -93,6 +93,13 @@ MWidget::~MWidget()
 
 void MWidget::paintEvent(QPaintEvent* event)
 {
+	if (LinkMain != nullptr)
+	{
+		if (LinkMain->MParent()->isVisible())
+		{
+			LinkMain->MParent()->hide();
+		}
+	}
 	this->setFocus();
 	qDebug() << "\tMOONOTUSYSTEM::_Data::_*time_ms_::" << *time_ms;
 	QPainter* paint = new QPainter(this);
@@ -190,6 +197,13 @@ void MWidget::mouseDoubleClickEvent(QMouseEvent* event)
 void MWidget::closeEvent(QCloseEvent* event)
 {
 	this->Player->stop();
+	if (this->LinkMain != nullptr)
+	{
+		if (!(this->LinkMain->MParent()->isVisible()))
+		{
+			this->LinkMain->MParent()->show();
+		}
+	}
 }
 
 void MWidget::setBackImage(QPixmap& image)
@@ -319,6 +333,16 @@ QMap<QString, MCheckDot*>*& MWidget::checkDotList()
 QSize MWidget::oriSize() const
 {
 	return *OriSize;
+}
+
+void MWidget::setLinkMain(MMainWindow* linkmain)
+{
+	LinkMain = linkmain;
+}
+
+MMainWindow*& MWidget::linkMain()
+{
+	return LinkMain;
 }
 
 QWidget*& MWidget::MParent()

@@ -12,8 +12,6 @@ class Ui_MOONIGHT_QtClass
 public:
     MMainWindow* main;//主界面
     MWidget *central;//提供给谱面编辑师的窗口
-    QTimer* mainTime;//以10ms为周期的主计时器，用于实现动效
-    QElapsedTimer* disTime;
 
     void setupUi(QMainWindow *MOONIGHT_QtClass)
     {
@@ -24,19 +22,6 @@ public:
         main->setObjectName("mainWidget");
         MOONIGHT_QtClass->setCentralWidget(main);
 
-        central = new MWidget();
-        central->setObjectName("centralWidget");
-        central->resize(960, 540);
-        central->close();
-
-        mainTime = new QTimer(central);
-        mainTime->stop();
-        mainTime->setSingleShot(false);
-        mainTime->setInterval(10);
-
-        disTime = new QElapsedTimer();
-        disTime->start();
-
         retranslateUi(MOONIGHT_QtClass);
 
         QMetaObject::connectSlotsByName(MOONIGHT_QtClass);
@@ -45,7 +30,7 @@ public:
     void retranslateUi(QMainWindow *MOONIGHT_QtClass)
     {
         MOONIGHT_QtClass->setWindowTitle(QCoreApplication::translate("MOONIGHT_QtClass", "MOONIGHT", nullptr));
-        central->setWindowTitle(QCoreApplication::translate("MOONIGHT_QtClass", "MOONIGHT", nullptr));
+        main->setWindowTitle(QCoreApplication::translate("MOONIGHT_QtClass", "MOONIGHT", nullptr));
     } // retranslateUi
 
 };

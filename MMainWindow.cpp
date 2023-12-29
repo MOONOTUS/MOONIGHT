@@ -5,6 +5,7 @@ QSize* MMainWindow::OriSize = new QSize(WIDTH, HEIGHT);
 MMainWindow::MMainWindow(QWidget *parent)
 	: QWidget(parent)
 {
+	Parent = parent;
 	State = new qint32(startstate);
 	UiTimeFlush = new QTimer(this);
 	UiTimeFlush->stop();
@@ -19,7 +20,6 @@ MMainWindow::MMainWindow(QWidget *parent)
 	UiTime = new QElapsedTimer();
 	time_ms = new qint64(0);
 	CellList = new QMap<QString, MCell*>;
-	Parent = parent;
 	UiSetUp();
 	UiTime->start();
 
@@ -71,13 +71,20 @@ void MMainWindow::UiSetUp()
 	logo->setImage(".\\MOONIGHT_Beta_Little.png");
 	this->addCell("Logo", logo);
 	MCell* touch = new MCell(this);
-	touch->setRect(1500, 1500, 200, 200);
+	touch->setRect(1490, 1490, 210, 210);
 	touch->setType(ellipsecell);
 	touch->setLineWidth(20);
 	touch->setLineColor(QColor(0, 0, 0, 50));
-	touch->setEllipseCenter(100, 100);
-	touch->setRadium(75);
+	touch->setEllipseCenter(105, 105);
+	touch->setRadium(80);
 	this->addCell("Touch", touch);
+	MCell* tip = new MCell(this);
+	tip->setRect(1300, 1400, 600, 60);
+	tip->setType(textcell);
+	tip->setFont(QFont("Microsoft YaHei Ui", 50, -1));
+	tip->setLineColor(QColor(0, 0, 0, 50));
+	tip->setText("Touch To Start");
+	this->addCell("Tip", tip);
 	connect
 	(
 		CellList->value("Touch"),
@@ -91,14 +98,15 @@ void MMainWindow::UiAnimation()
 {
 	if (*State == startstate)
 	{
-		CellList->value("Touch")->setRadium(75 + 10 * qSin(qreal(*time_ms)/1000));
+		CellList->value("Touch")->setRadium(80 + 10 * qSin(qreal(*time_ms)/1000));
 		CellList->value("Touch")->setLineWidth(20 + 10 * qCos(qreal(*time_ms)/300));
+		CellList->value("Tip")->setRect(1300, 1400 - 10 * qSin(qreal(*time_ms) / 1000) - 10 * qCos(qreal(*time_ms) / 300), CellList->value("Tip")->MRect()->width(), CellList->value("Tip")->MRect()->height());
 	}
 }
 
 void MMainWindow::Test()
 {
-	MOONIGHT_Play(1);
+	MOONIGHT_Play(1, this);
 }
 
 void MMainWindow::addCell(QString key, MCell* cell)
@@ -131,3 +139,7 @@ QTimer*& MMainWindow::uiFlushTime()
 	return UiFlushTime;
 }
 
+QWidget*& MMainWindow::MParent()
+{
+	return Parent;
+}

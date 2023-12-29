@@ -4,6 +4,7 @@
 
 class MCheckDot;
 class MFormerCalculator;
+class MMainWindow;
 
 class MWidget : public QWidget
 {
@@ -29,6 +30,7 @@ public slots:
 private:
 	static QSize* OriSize;//原始尺寸，固有值，用于自适应的实现
 	QWidget* Parent;//存储父对象的指针
+	MMainWindow* LinkMain;
 	QPixmap* backImage;//背景图片
 	QPixmap* backBackImage;//填充背景空白的模糊背景图片（在设置背景图片时自动生成）
 	QColor* backCoverColor;//背景遮罩色（RGBA）
@@ -116,5 +118,7 @@ public:
 	QTimer*& mainTime();//10ms计时器
 	QTimer*& litTime();//1ms计时器
 	void setover();//曲谱设定结束标志
+	void setLinkMain(MMainWindow* linkmain);
+	MMainWindow*& linkMain();
 	QWidget*& MParent();//返回Parent，用于溯源
 };
