@@ -9,6 +9,7 @@ MCell::MCell(MMainWindow* parent)
 	IfLine = new bool(true);
 	IfFill = new bool(false);
 	Type = new qint32(imagecell);
+	LinkState = nullptr;
 	Image = nullptr;
 	PathImage = nullptr;
 	Rect = new QRect(0, 0, 0, 0);
@@ -28,6 +29,8 @@ MCell::MCell(MMainWindow* parent)
 	Text = nullptr;
 	LineColor = nullptr;
 	FillColor = nullptr;
+	ChapterKey = nullptr;
+	Pressing = new bool(false);
 
 	connect
 	(
@@ -47,6 +50,7 @@ MCell::MCell(MWidget *parent)
 	IfLine = new bool(true);
 	IfFill = new bool(false);
 	Type = new qint32(imagecell);
+	LinkState = nullptr;
 	Rect = new QRect(0, 0, 0, 0);
 	VRect = new QRect(0, 0, 0, 0);
 	Image = nullptr;
@@ -66,6 +70,8 @@ MCell::MCell(MWidget *parent)
 	Text = nullptr;
 	LineColor = nullptr;
 	FillColor = nullptr;
+	ChapterKey = nullptr;
+	Pressing = new bool(false);
 
 	connect
 	(
@@ -174,7 +180,7 @@ void MCell::paintEvent(QPaintEvent* event)
 		}
 		else if (*Type == textcell)
 		{
-			qDebug() << "MOONOTUSYSTEM::_Message_::Text paints";
+			qDebug() << "MOONOTUSYSTEM::_Message_::TextCell paints";
 			if (Text != nullptr)
 			{
 				if (ParentMMainWindow != nullptr)
@@ -197,10 +203,74 @@ void MCell::paintEvent(QPaintEvent* event)
 				paint->drawText(this->rect(), Qt::AlignHCenter | Qt::AlignVCenter, *Text);
 			}
 		}
+		else if (*Type == chaptercell)
+		{
+			qDebug() << "MOONOTUSYSTEM::_Message_::ChapterCell paints";
+			if (Image != nullptr)
+			{
+				paint->drawPixmap(this->rect(), *Image);
+			}
+			if (Text != nullptr)
+			{
+				if (ParentMMainWindow != nullptr)
+				{
+					paint->setFont(QFont(this->font().family(), this->font().pointSizeF() * ParentMMainWindow->visualProportion(), -1));
+				}
+				else if (ParentMWidget != nullptr)
+				{
+					paint->setFont(QFont(this->font().family(), this->font().pointSizeF() * ParentMWidget->visualProportion(), -1));
+				}
+				if (LineColor != nullptr)
+				{
+					pen.setColor(*LineColor);
+				}
+				else
+				{
+					pen.setColor(Qt::transparent);
+				}
+				paint->setPen(pen);
+				if (ParentMMainWindow != nullptr)
+				{
+					paint->drawText(this->rect().x(), this->rect().y() - this->font().pointSizeF() * ParentMMainWindow->visualProportion(), this->rect().width(), this->font().pointSizeF()* ParentMMainWindow->visualProportion(), Qt::AlignLeft | Qt::AlignVCenter, *Text);
+				}
+				else if (ParentMWidget != nullptr)
+				{
+					paint->drawText(this->rect().x(), this->rect().y() - this->font().pointSizeF() * ParentMWidget->visualProportion(), this->rect().width(), this->font().pointSizeF()* ParentMWidget->visualProportion(), Qt::AlignLeft | Qt::AlignVCenter, *Text);
+				}
+			}
+			if (*Pressing)
+			{
+				pen.setColor(Qt::transparent);
+				paint->setBrush(QColor(0, 0, 0, 50));
+				paint->drawRect(this->rect());
+			}
+		}
 	}
 	delete paint;
 
 	event->accept();
+}
+
+void MCell::MousePressEvent(QMouseEvent* event)
+{
+	if (!*Pressing)
+	{
+		delete Pressing;
+		Pressing = new bool(true);
+	}
+}
+
+void MCell::MouseReleaseEvent(QMouseEvent* event)
+{
+	if (*Pressing)
+	{
+		if (*Type == chaptercell)
+		{
+			emit(Mclicked(*ChapterKey));
+		}
+		delete Pressing;
+		Pressing = new bool(false);
+	}
 }
 
 void MCell::Mupdate()
@@ -622,4 +692,32 @@ void MCell::setFillColor(qint32 R, qint32 G, qint32 B, qint32 A)
 QRect* MCell::MRect()
 {
 	return Rect;
+}
+
+void MCell::setLinkState(qint32 linkstate)
+{
+	if (LinkState != nullptr)
+	{
+		delete LinkState;
+	}
+	LinkState = new qint32(linkstate);
+}
+
+qint32 MCell::linkState()
+{
+	return *LinkState;
+}
+
+void MCell::setChapterKey(QString chapterkey)
+{
+	if (ChapterKey != nullptr)
+	{
+		delete ChapterKey;
+	}
+	ChapterKey = new QString(chapterkey);
+}
+
+QString MCell::chapterKey()
+{
+	return *ChapterKey;
 }

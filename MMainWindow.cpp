@@ -1,6 +1,8 @@
 ﻿#include "MPivot.h"
 
 QSize* MMainWindow::OriSize = new QSize(WIDTH, HEIGHT);
+qint32* MMainWindow::StateNowSetUp = new qint32(startstate);
+qint64* MMainWindow::ChapterSum = new qint64(0);
 
 MMainWindow::MMainWindow(QWidget *parent)
 	: QWidget(parent)
@@ -20,6 +22,9 @@ MMainWindow::MMainWindow(QWidget *parent)
 	UiTime = new QElapsedTimer();
 	time_ms = new qint64(0);
 	CellList = new QMap<QString, MCell*>;
+	ChapterList = new QMap<QString, MCell*>;
+	ChapterNumList = new QMap< qint64, QString>;
+	Chapter = new QString("");
 	UiSetUp();
 	UiTime->start();
 
@@ -54,7 +59,17 @@ MMainWindow::~MMainWindow()
 
 void MMainWindow::paintEvent(QPaintEvent* event)
 {
-
+	for (QMap<QString, MCell*>::iterator ptr = CellList->begin(); ptr != CellList->end(); ++ptr)
+	{
+		if (ptr.value()->linkState() != *State && ptr.value()->isVisible())
+		{
+			ptr.value()->hide();
+		}
+		else if (ptr.value()->linkState() == *State && !ptr.value()->isVisible())
+		{
+			ptr.value()->show();
+		}
+	}
 }
 
 void MMainWindow::timeAdd_ms()
@@ -65,6 +80,7 @@ void MMainWindow::timeAdd_ms()
 
 void MMainWindow::UiSetUp()
 {
+	nowSetUp(startstate);
 	MCell* logo = new MCell(this);
 	logo->setRect(400, 0, 2400, 1350);
 	logo->setType(imagecell);
@@ -90,8 +106,10 @@ void MMainWindow::UiSetUp()
 		CellList->value("Touch"),
 		SIGNAL(clicked()),
 		this,
-		SLOT(Test())
+		SLOT(statechange_start_to_chapter())
 	);
+	nowSetUp(chapterstate);
+	this->addChapter("Spirit", "摇光", QPixmap(".\\MOONIGHT_Beta_Little.png"));
 }
 
 void MMainWindow::UiAnimation()
@@ -104,14 +122,47 @@ void MMainWindow::UiAnimation()
 	}
 }
 
-void MMainWindow::Test()
+void MMainWindow::statechange_start_to_chapter()
 {
-	MOONIGHT_Play(1, this);
+	delete State;
+	State = new qint32(chapterstate);
 }
 
-void MMainWindow::addCell(QString key, MCell* cell)
+void MMainWindow::statechange_chapter_to_songlist(QString chapterkey)
 {
+	delete State;
+	State = new qint32(songliststate);
+	Chapter = new QString(chapterkey);
+}
+
+void MMainWindow::addCell(QString key, MCell* cell, qint32 linkstate)
+{
+	cell->setLinkState(linkstate);
 	CellList->insert(key, cell);
+}
+
+void MMainWindow::addChapter(QString key, QString chaptername, QPixmap chaptercover)
+{
+	MCell* newchapter = new MCell(this);
+	newchapter->setType(chaptercell);
+	//newchapter->setRect(-1000, -1000, -1000, -1000);
+	newchapter->setRect(0, 0, 1000, 1000);
+	newchapter->setImage(chaptercover);
+	newchapter->setText(chaptername);
+	newchapter->setLineColor(QColor(255, 255, 255, 150));
+	qint64 ChapterSum_ = *MMainWindow::ChapterSum;
+	delete MMainWindow::ChapterSum;
+	MMainWindow::ChapterSum = new qint64(ChapterSum_ + 1);
+	this->addCell(key, newchapter, chapterstate);
+	ChapterList->insert(key, newchapter);
+	ChapterNumList->insert(*MMainWindow::ChapterSum, key);
+	connect
+	(
+		newchapter,
+		SIGNAL(Mclicked(QString)),
+		this,
+		SLOT(statechange_chapter_to_songlist(QString))
+	);
 }
 
 QMap<QString, MCell*>*& MMainWindow::cellList()
@@ -142,4 +193,10 @@ QTimer*& MMainWindow::uiFlushTime()
 QWidget*& MMainWindow::MParent()
 {
 	return Parent;
+}
+
+void MMainWindow::nowSetUp(qint32 nowsetup)
+{
+	delete StateNowSetUp;
+	MMainWindow::StateNowSetUp = new qint32 (nowsetup);
 }

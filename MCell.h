@@ -14,9 +14,15 @@ class MCell  : public QPushButton //统合元件类
 #define linecell 0x003
 #define painterpathcell 0x004
 #define textcell 0x005
+#define chaptercell 0x006
 
 protected:
 	void paintEvent(QPaintEvent* event);
+	void MousePressEvent(QMouseEvent* event);
+	void MouseReleaseEvent(QMouseEvent* event);
+
+signals:
+	void Mclicked(QString chapterkey);
 
 public slots:
 	void Mupdate();
@@ -31,6 +37,7 @@ private:
 	MWidget* ParentMWidget;
 
 	qint32* Type;
+	qint32* LinkState;
 
 	QRect* Rect;
 	QRect* VRect;
@@ -50,16 +57,19 @@ private:
 	QPainterPath* PainterPath;
 	QPainterPath* VPainterPath;
 	QString* Text;
+	QString* ChapterKey;
 
 	bool* Visuable;
 	bool* IfLine;
 	bool* IfFill;
+	bool* Pressing;
 
 	QColor* LineColor;
 	QColor* FillColor;
 
 public:
 	void setType(qint32 type);
+	void setLinkState(qint32 linkstate);
 	void setImage(QString path);
 	void setImage(QPixmap image);
 	void setImage(QPixmap* image);
@@ -82,10 +92,13 @@ public:
 	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 	void setFillColor(QColor color);
 	void setFillColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	void setChapterKey(QString key);
 	
 	QPixmap image() const;
 	bool visuable() const;
 	qreal lineWidth() const;
+	qint32 linkState();
+	QString chapterKey();
 	
 	QRect* MRect();
 	MMainWindow*& MParentMMainWindow();
