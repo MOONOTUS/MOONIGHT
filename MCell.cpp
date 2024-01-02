@@ -212,13 +212,15 @@ void MCell::paintEvent(QPaintEvent* event)
 			}
 			if (Text != nullptr)
 			{
+				QFont font_ = this->font();
+				this->setFont(QFont(this->font().family(), 50, -1));
 				if (ParentMMainWindow != nullptr)
 				{
-					paint->setFont(QFont(this->font().family(), this->font().pointSizeF() * ParentMMainWindow->visualProportion(), -1));
+					paint->setFont(QFont(this->font().family(), this->font().pointSize() * ParentMMainWindow->visualProportion(), -1));
 				}
 				else if (ParentMWidget != nullptr)
 				{
-					paint->setFont(QFont(this->font().family(), this->font().pointSizeF() * ParentMWidget->visualProportion(), -1));
+					paint->setFont(QFont(this->font().family(), this->font().pointSize() * ParentMWidget->visualProportion(), -1));
 				}
 				if (LineColor != nullptr)
 				{
@@ -231,12 +233,13 @@ void MCell::paintEvent(QPaintEvent* event)
 				paint->setPen(pen);
 				if (ParentMMainWindow != nullptr)
 				{
-					paint->drawText(this->rect().x(), this->rect().y() - this->font().pointSizeF() * ParentMMainWindow->visualProportion(), this->rect().width(), this->font().pointSizeF()* ParentMMainWindow->visualProportion(), Qt::AlignLeft | Qt::AlignVCenter, *Text);
+					paint->drawText(this->rect().x(), this->rect().y() + this->rect().height() - 2 * this->font().pointSize() * ParentMMainWindow->visualProportion(), this->rect().width(), this->font().pointSize() * 2 * ParentMMainWindow->visualProportion(), Qt::AlignLeft | Qt::AlignVCenter, *Text);
 				}
 				else if (ParentMWidget != nullptr)
 				{
-					paint->drawText(this->rect().x(), this->rect().y() - this->font().pointSizeF() * ParentMWidget->visualProportion(), this->rect().width(), this->font().pointSizeF()* ParentMWidget->visualProportion(), Qt::AlignLeft | Qt::AlignVCenter, *Text);
+					paint->drawText(this->rect().x(), this->rect().y() + this->rect().height() - 2 * this->font().pointSize() * ParentMWidget->visualProportion(), this->rect().width(), this->font().pointSize() * 2 * ParentMWidget->visualProportion(), Qt::AlignLeft | Qt::AlignVCenter, *Text);
 				}
+				this->setFont(font_);
 			}
 			if (*Pressing)
 			{

@@ -35,6 +35,7 @@ private:
 	QMap<QString, MCell*>* ChapterList;
 	QMap<qint64, QString>* ChapterNumList;
 	QString* Chapter;
+	qint64* CenterChapter;
 
 public:
 	MMainWindow(QWidget *parent);

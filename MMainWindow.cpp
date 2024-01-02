@@ -25,6 +25,7 @@ MMainWindow::MMainWindow(QWidget *parent)
 	ChapterList = new QMap<QString, MCell*>;
 	ChapterNumList = new QMap< qint64, QString>;
 	Chapter = new QString("");
+	CenterChapter = new qint64(1);
 	UiSetUp();
 	UiTime->start();
 
@@ -46,7 +47,7 @@ MMainWindow::MMainWindow(QWidget *parent)
 	);
 	connect
 	(
-		UiTimeFlush,
+		UiFlushTime,
 		SIGNAL(timeout()),
 		this,
 		SLOT(repaint()),
@@ -68,6 +69,24 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 		else if (ptr.value()->linkState() == *State && !ptr.value()->isVisible())
 		{
 			ptr.value()->show();
+		}
+	}
+	if (*State == chapterstate)
+	{
+		for (qint64 i = -2; i <= 2; i++)
+		{
+			for (QMap<qint64,QString>::iterator ptr = ChapterNumList->begin(); ptr != ChapterNumList->end() && !((*CenterChapter + ptr.key() < 1) || (*CenterChapter + ptr.key() > *MMainWindow::ChapterSum)) && ChapterList->value(ptr.value())->isVisible(); ++ptr)
+			{
+				ChapterList->value(ptr.value())->hide();
+			}
+			if (*CenterChapter + i >= 1 && *CenterChapter + i <= *MMainWindow::ChapterSum)
+			{
+				ChapterList->value(ChapterNumList->value(*CenterChapter + i))->setRect((i + 3) * WIDTH / 7, HEIGHT / 3, WIDTH / 3, HEIGHT / 3);
+				if (!ChapterList->value(ChapterNumList->value(*CenterChapter + i))->isVisible())
+				{
+					ChapterList->value(ChapterNumList->value(*CenterChapter + i))->show();
+				}
+			}
 		}
 	}
 }
@@ -109,7 +128,8 @@ void MMainWindow::UiSetUp()
 		SLOT(statechange_start_to_chapter())
 	);
 	nowSetUp(chapterstate);
-	this->addChapter("Spirit", "摇光", QPixmap(".\\MOONIGHT_Beta_Little.png"));
+	this->addChapter("Spirit", "摇光 | Spirit", QPixmap(".\\Grass.png"));
+	this->addChapter("Test", "摇光 | Spirit", QPixmap(".\\Grass.png"));
 }
 
 void MMainWindow::UiAnimation()
@@ -145,11 +165,10 @@ void MMainWindow::addChapter(QString key, QString chaptername, QPixmap chapterco
 {
 	MCell* newchapter = new MCell(this);
 	newchapter->setType(chaptercell);
-	//newchapter->setRect(-1000, -1000, -1000, -1000);
-	newchapter->setRect(0, 0, 1000, 1000);
+	newchapter->setRect(0, 0, 0, 0);
 	newchapter->setImage(chaptercover);
 	newchapter->setText(chaptername);
-	newchapter->setLineColor(QColor(255, 255, 255, 150));
+	newchapter->setLineColor(QColor(255, 255, 255, 200));
 	qint64 ChapterSum_ = *MMainWindow::ChapterSum;
 	delete MMainWindow::ChapterSum;
 	MMainWindow::ChapterSum = new qint64(ChapterSum_ + 1);
