@@ -4,14 +4,14 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	: QObject(parent)
 {
 	parent->addToTitle("Infinity Heaven");
-	QPixmap backImage(".\\Infinity_Heaven_Phigros.png");
+	QPixmap backImage(".\\resource\\MOONOTUSYSTEM\\Infinity_Heaven_Phigros.png");
 	parent->setShowLogo(false);
 	parent->setBackImage(backImage);
 	parent->setShowBackImage(true);
 	parent->setShowBackBackImage(true);
 	parent->setBackCoverColor(QColor(0, 0, 0, 196));
 
-	parent->setMusicPath(".\\InfinityHeaven.ogg");
+	parent->setMusicPath(".\\music\\sound\\InfinityHeaven.ogg");
 
 	parent->checkDotList()->insert("V2", new MCheckDot(parent));
 	parent->checkDotList()->value("V2")->setKey(Qt::Key_V, "V");

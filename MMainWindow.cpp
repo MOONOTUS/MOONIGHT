@@ -26,6 +26,12 @@ MMainWindow::MMainWindow(QWidget *parent)
 	ChapterNumList = new QMap< qint64, QString>;
 	Chapter = new QString("");
 	CenterChapter = new qint64(1);
+	MaskList = new QMap<QString, QPixmap*>;
+	MaskList->insert("MOON_1", new QPixmap(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Mask_Moon_1.png"));
+	MaskList->insert("MOON_2", new QPixmap(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Mask_Moon_2.png"));
+	MaskList->insert("MOON_3", new QPixmap(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Mask_Moon_3.png"));
+	MaskList->insert("MOON_4", new QPixmap(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Mask_Moon_4.png"));
+	MaskList->insert("MOON_5", new QPixmap(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Mask_Moon_5.png"));
 	UiSetUp();
 	UiTime->start();
 
@@ -60,6 +66,8 @@ MMainWindow::~MMainWindow()
 
 void MMainWindow::paintEvent(QPaintEvent* event)
 {
+	QPainter* paint = new QPainter(this);
+	QPen pen;
 	for (QMap<QString, MCell*>::iterator ptr = CellList->begin(); ptr != CellList->end(); ++ptr)
 	{
 		if (ptr.value()->linkState() != *State && ptr.value()->isVisible())
@@ -77,18 +85,53 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 		{
 			ChapterList->value(ptr.value())->hide();
 		}
-		for (qint64 i = -2; i <= 2; i++)
+		if (ChapterList->contains(ChapterNumList->value(*CenterChapter)))
 		{
-			if (*CenterChapter + i >= 1 && *CenterChapter + i <= *MMainWindow::ChapterSum)
-			{
-				ChapterList->value(ChapterNumList->value(*CenterChapter + i))->setRect(WIDTH * (i + 3) / 7, HEIGHT / 3, WIDTH / 3, HEIGHT / 3);
-				if (!(ChapterList->value(ChapterNumList->value(*CenterChapter + i))->isVisible()))
-				{
-					ChapterList->value(ChapterNumList->value(*CenterChapter + i))->show();
-				}
-			}
+			ChapterList->value(ChapterNumList->value(*CenterChapter))->setMMask(*MaskList->value("MOON_1"));
+			ChapterList->value(ChapterNumList->value(*CenterChapter))->setRect(1200, 400, 800, 800);
+			ChapterList->value(ChapterNumList->value(*CenterChapter))->show();
+			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion(), -1));
+			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter))->lineColor());
+			paint->drawText(QRect(1200 * this->visualProportionX(), 1250 * this->visualProportionY(), 800 * this->visualProportionX(), 550 * this->visualProportionY()), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter))->text());
+		}
+		if (ChapterList->contains(ChapterNumList->value(*CenterChapter + 1)))
+		{
+			ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->setMMask(*MaskList->value("MOON_2"));
+			ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->setRect(2015, 425, 515, 750);
+			ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->show();
+			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion() * 2 / 3, -1));
+			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->lineColor());
+			paint->drawText(QRect(2015 * this->visualProportionX(), 1205 * this->visualProportionY(), 515 * this->visualProportionX(), 495 * this->visualProportionY()), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->text());
+		}
+		if (ChapterList->contains(ChapterNumList->value(*CenterChapter + 2)))
+		{
+			ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->setMMask(*MaskList->value("MOON_3"));
+			ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->setRect(2455, 450, 415, 700);
+			ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->show();
+			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion() / 2, -1));
+			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->lineColor());
+			paint->drawText(QRect(2455 * this->visualProportionX(),1170 * this->visualProportionY(), 415 * this->visualProportionX(), 530 * this->visualProportionY()), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->text());
+		}
+		if (ChapterList->contains(ChapterNumList->value(*CenterChapter - 1)))
+		{
+			ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->setMMask(*MaskList->value("MOON_4"));
+			ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->setRect(670, 425, 515, 750);
+			ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->show();
+			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion() * 2 / 3, -1));
+			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->lineColor());
+			paint->drawText(QRect(670 * this->visualProportionX(), 1205 * this->visualProportionY(), 515 * this->visualProportionX(), 495 * this->visualProportionY()), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->text());
+		}
+		if (ChapterList->contains(ChapterNumList->value(*CenterChapter - 2)))
+		{
+			ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->setMMask(*MaskList->value("MOON_5"));
+			ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->setRect(330, 450, 415, 700);
+			ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->show();
+			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion() / 2, -1));
+			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->lineColor());
+			paint->drawText(QRect(330 * this->visualProportionX(), 1170 * this->visualProportionY(), 415 * this->visualProportionX(), 530 * this->visualProportionY()), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->text());
 		}
 	}
+	delete paint;
 }
 
 void MMainWindow::wheelEvent(QWheelEvent* event)
@@ -122,7 +165,7 @@ void MMainWindow::UiSetUp()
 	MCell* logo = new MCell(this);
 	logo->setRect(400, 0, 2400, 1350);
 	logo->setType(imagecell);
-	logo->setImage(".\\MOONIGHT_Beta_Little.png");
+	logo->setImage(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Beta_Little.png");
 	this->addCell("Logo", logo);
 	MCell* touch = new MCell(this);
 	touch->setRect(1490, 1490, 210, 210);
@@ -147,23 +190,23 @@ void MMainWindow::UiSetUp()
 		SLOT(statechange_start_to_chapter())
 	);
 	nowSetUp(chapterstate);
-	this->addChapter("Spirit", "摇光 | Spirit", QPixmap(".\\Grass.png"));
-	this->addChapter("Test1", "Test1", QPixmap(".\\Grass.png"));
-	this->addChapter("Test2", "Test2", QPixmap(".\\Grass.png"));
-	this->addChapter("Test3", "Test3", QPixmap(".\\Grass.png"));
-	this->addChapter("Test4", "Test4", QPixmap(".\\Grass.png"));
-	this->addChapter("Test5", "Test5", QPixmap(".\\Grass.png"));
-	this->addChapter("Test6", "Test6", QPixmap(".\\Grass.png"));
-	this->addChapter("Test7", "Test7", QPixmap(".\\Grass.png"));
-	this->addChapter("Test8", "Test8", QPixmap(".\\Grass.png"));
-	this->addChapter("Test9", "Test9", QPixmap(".\\Grass.png"));
-	this->addChapter("Test10", "Test10", QPixmap(".\\Grass.png"));
-	this->addChapter("Test11", "Test11", QPixmap(".\\Grass.png"));
-	this->addChapter("Test12", "Test12", QPixmap(".\\Grass.png"));
-	this->addChapter("Test13", "Test13", QPixmap(".\\Grass.png"));
-	this->addChapter("Test14", "Test14", QPixmap(".\\Grass.png"));
-	this->addChapter("Test15", "Test15", QPixmap(".\\Grass.png"));
-	this->addChapter("Test16", "Test16", QPixmap(".\\Grass.png"));
+	this->addChapter("Spirit", "摇光 | Spirit", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test1", "Test1", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test2", "Test2", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test3", "Test3", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test4", "Test4", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test5", "Test5", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test6", "Test6", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test7", "Test7", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test8", "Test8", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test9", "Test9", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test10", "Test10", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test11", "Test11", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test12", "Test12", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test13", "Test13", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test14", "Test14", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test15", "Test15", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	this->addChapter("Test16", "Test16", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
 }
 
 void MMainWindow::UiAnimation()
@@ -202,7 +245,8 @@ void MMainWindow::addChapter(QString key, QString chaptername, QPixmap chapterco
 	newchapter->setRect(0, 0, 0, 0);
 	newchapter->setImage(chaptercover);
 	newchapter->setText(chaptername);
-	newchapter->setLineColor(QColor(255, 255, 255, 200));
+	newchapter->setLineColor(QColor(0, 0, 0, 255));
+	newchapter->setIfMask(true);
 	qint64 ChapterSum_ = *MMainWindow::ChapterSum;
 	delete MMainWindow::ChapterSum;
 	MMainWindow::ChapterSum = new qint64(ChapterSum_ + 1);

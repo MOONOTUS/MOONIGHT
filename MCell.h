@@ -18,8 +18,9 @@ class MCell  : public QPushButton //统合元件类
 
 protected:
 	void paintEvent(QPaintEvent* event);
-	void MousePressEvent(QMouseEvent* event);
-	void MouseReleaseEvent(QMouseEvent* event);
+	void mousePressEvent(QMouseEvent* event);
+	void mouseReleaseEvent(QMouseEvent* event);
+	void resizeEvent(QResizeEvent* event);
 
 signals:
 	void Mclicked(QString chapterkey);
@@ -44,6 +45,8 @@ private:
 
 	QPixmap* Image;
 	QPixmap* PathImage;
+	QPixmap* Mask;
+	QPixmap* VMask;
 	QPoint* EllipseCenter;
 	QPoint* VEllipseCenter;
 	qreal* XRadium;
@@ -63,6 +66,7 @@ private:
 	bool* IfLine;
 	bool* IfFill;
 	bool* Pressing;
+	bool* IfMask;
 
 	QColor* LineColor;
 	QColor* FillColor;
@@ -72,7 +76,6 @@ public:
 	void setLinkState(qint32 linkstate);
 	void setImage(QString path);
 	void setImage(QPixmap image);
-	void setImage(QPixmap* image);
 	void setVisuable(bool visuable);;
 	void setRect(QRect rect);
 	void setRect(qreal lefttopx, qreal lefttopy, qreal width, qreal height);
@@ -93,12 +96,17 @@ public:
 	void setFillColor(QColor color);
 	void setFillColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 	void setChapterKey(QString key);
+	void setMMask(QString path);
+	void setMMask(QPixmap mask);
+	void setIfMask(bool ifmask);
 	
 	QPixmap image() const;
 	bool visuable() const;
 	qreal lineWidth() const;
 	qint32 linkState();
 	QString chapterKey();
+	QString text();
+	QColor lineColor();
 	
 	QRect* MRect();
 	MMainWindow*& MParentMMainWindow();

@@ -5,7 +5,7 @@ MFormerCalculator::MFormerCalculator(MWidget *parent)
 {
 	Parent = parent;
 	Show = new bool(true);
-	Image = new QPixmap(".\\MOONIGHT_Front_Little.png");
+	Image = new QPixmap(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Front_Little.png");
 	Score = new qint64(0);
 	ScoreText = new QString("0");
 	MusicName = new QString("Unkown");

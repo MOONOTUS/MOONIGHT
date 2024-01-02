@@ -35,6 +35,7 @@ private:
 	QMap<QString, MCell*>* CellList;
 	QMap<QString, MCell*>* ChapterList;
 	QMap<qint64, QString>* ChapterNumList;
+	QMap<QString, QPixmap*>* MaskList;
 	QString* Chapter;
 	qint64* CenterChapter;
 

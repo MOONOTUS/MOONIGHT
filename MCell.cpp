@@ -31,6 +31,9 @@ MCell::MCell(MMainWindow* parent)
 	FillColor = nullptr;
 	ChapterKey = nullptr;
 	Pressing = new bool(false);
+	Mask = nullptr;
+	VMask = nullptr;
+	IfMask = new bool(false);
 
 	connect
 	(
@@ -72,6 +75,9 @@ MCell::MCell(MWidget *parent)
 	FillColor = nullptr;
 	ChapterKey = nullptr;
 	Pressing = new bool(false);
+	Mask = nullptr;
+	VMask = nullptr;
+	IfMask = new bool(false);
 
 	connect
 	(
@@ -210,37 +216,6 @@ void MCell::paintEvent(QPaintEvent* event)
 			{
 				paint->drawPixmap(this->rect(), *Image);
 			}
-			if (Text != nullptr)
-			{
-				QFont font_ = this->font();
-				this->setFont(QFont(this->font().family(), 50, -1));
-				if (ParentMMainWindow != nullptr)
-				{
-					paint->setFont(QFont(this->font().family(), this->font().pointSize() * ParentMMainWindow->visualProportion(), -1));
-				}
-				else if (ParentMWidget != nullptr)
-				{
-					paint->setFont(QFont(this->font().family(), this->font().pointSize() * ParentMWidget->visualProportion(), -1));
-				}
-				if (LineColor != nullptr)
-				{
-					pen.setColor(*LineColor);
-				}
-				else
-				{
-					pen.setColor(Qt::transparent);
-				}
-				paint->setPen(pen);
-				if (ParentMMainWindow != nullptr)
-				{
-					paint->drawText(this->rect().x(), this->rect().y() + this->rect().height() - 2 * this->font().pointSize() * ParentMMainWindow->visualProportion(), this->rect().width(), this->font().pointSize() * 2 * ParentMMainWindow->visualProportion(), Qt::AlignLeft | Qt::AlignVCenter, *Text);
-				}
-				else if (ParentMWidget != nullptr)
-				{
-					paint->drawText(this->rect().x(), this->rect().y() + this->rect().height() - 2 * this->font().pointSize() * ParentMWidget->visualProportion(), this->rect().width(), this->font().pointSize() * 2 * ParentMWidget->visualProportion(), Qt::AlignLeft | Qt::AlignVCenter, *Text);
-				}
-				this->setFont(font_);
-			}
 			if (*Pressing)
 			{
 				pen.setColor(Qt::transparent);
@@ -254,26 +229,65 @@ void MCell::paintEvent(QPaintEvent* event)
 	event->accept();
 }
 
-void MCell::MousePressEvent(QMouseEvent* event)
+void MCell::mousePressEvent(QMouseEvent* event)
 {
+	qDebug() << "MOONOTUSYSTEM::_Debug_::Point 1";
 	if (!*Pressing)
 	{
 		delete Pressing;
 		Pressing = new bool(true);
 	}
+	grabMouse();
+
+	event->accept();
 }
 
-void MCell::MouseReleaseEvent(QMouseEvent* event)
+void MCell::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (*Pressing)
 	{
+		qDebug() << "MOONOTUSYSTEM::_Debug_::Point 2";
 		if (*Type == chaptercell)
 		{
-			emit(Mclicked(*ChapterKey));
+			//emit(Mclicked(*ChapterKey));
+		}
+		else
+		{
+			emit(clicked());
 		}
 		delete Pressing;
 		Pressing = new bool(false);
 	}
+	releaseMouse();
+
+	event->accept();
+}
+
+void MCell::resizeEvent(QResizeEvent* event)
+{
+	if (Mask != nullptr)
+	{
+		if (VMask != nullptr)
+		{
+			delete VMask;
+		}
+		VMask = new QPixmap(this->rect().width(), this->rect().height());
+		QPainter vmaskpaint(VMask);
+		vmaskpaint.drawPixmap(VMask->rect(), *Mask);
+	}
+	if (*IfMask)
+	{
+		if (VMask != nullptr)
+		{
+			this->QWidget::setMask(QBitmap(*VMask));
+		}
+	}
+	else
+	{
+		this->clearMask();
+	}
+
+	event->accept();
 }
 
 void MCell::Mupdate()
@@ -324,15 +338,6 @@ void MCell::setImage(QPixmap image)
 		delete Image;
 	}
 	Image = new QPixmap(image);
-}
-
-void MCell::setImage(QPixmap* image)
-{
-	if (Image != nullptr)
-	{
-		delete Image;
-	}
-	Image = image;
 }
 
 void MCell::setVisuable(bool visuable)
@@ -723,4 +728,91 @@ void MCell::setChapterKey(QString chapterkey)
 QString MCell::chapterKey()
 {
 	return *ChapterKey;
+}
+
+void MCell::setMMask(QString path)
+{
+	if (Mask != nullptr)
+	{
+		delete Mask;
+	}
+	Mask = new QPixmap(path);
+	if (VMask != nullptr)
+	{
+		delete VMask;
+	}
+	VMask = new QPixmap(this->rect().width(),this->rect().height());
+	QPainter vmaskpaint(VMask);
+	vmaskpaint.drawPixmap(VMask->rect(), *Mask);
+	if (*IfMask)
+	{
+		if (VMask != nullptr)
+		{
+			this->QWidget::setMask(QBitmap(*VMask));
+		}
+	}
+	else
+	{
+		this->clearMask();
+	}
+}
+
+void MCell::setMMask(QPixmap image)
+{
+	if (Mask != nullptr)
+	{
+		delete Mask;
+	}
+	Mask = new QPixmap(image);
+	if (VMask != nullptr)
+	{
+		delete VMask;
+	}
+	VMask = new QPixmap(this->rect().width(), this->rect().height());
+	QPainter vmaskpaint(VMask);
+	vmaskpaint.drawPixmap(VMask->rect(), *Mask);
+	if (*IfMask)
+	{
+		if (VMask != nullptr)
+		{
+			this->QWidget::setMask(QBitmap(*VMask));
+		}
+	}
+	else
+	{
+		this->clearMask();
+	}
+}
+
+void MCell::setIfMask(bool ifmask)
+{
+	delete IfMask;
+	IfMask = new bool(ifmask);
+	if (*IfMask)
+	{
+		if (VMask != nullptr)
+		{
+			this->QWidget::setMask(QBitmap(*VMask));
+		}
+	}
+	else
+	{
+		this->clearMask();
+	}
+}
+
+QString MCell::text()
+{
+	if (Text != nullptr)
+	{
+		return *Text;
+	}
+}
+
+QColor MCell::lineColor()
+{
+	if (LineColor != nullptr)
+	{
+		return *LineColor;
+	}
 }
