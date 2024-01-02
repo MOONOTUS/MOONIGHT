@@ -12,7 +12,8 @@ class MMainWindow  : public QWidget
 	Q_OBJECT
 
 protected:
-	void paintEvent(QPaintEvent* event);
+	void paintEvent(QPaintEvent* event) override;
+	void wheelEvent(QWheelEvent* event) override;
 
 public slots:
 	void timeAdd_ms();

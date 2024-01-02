@@ -73,20 +73,39 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 	}
 	if (*State == chapterstate)
 	{
+		for (QMap<qint64, QString>::iterator ptr = ChapterNumList->begin(); ptr != ChapterNumList->end() && ChapterList->value(ptr.value())->isVisible(); ++ptr)
+		{
+			ChapterList->value(ptr.value())->hide();
+		}
 		for (qint64 i = -2; i <= 2; i++)
 		{
-			for (QMap<qint64,QString>::iterator ptr = ChapterNumList->begin(); ptr != ChapterNumList->end() && !((*CenterChapter + ptr.key() < 1) || (*CenterChapter + ptr.key() > *MMainWindow::ChapterSum)) && ChapterList->value(ptr.value())->isVisible(); ++ptr)
-			{
-				ChapterList->value(ptr.value())->hide();
-			}
 			if (*CenterChapter + i >= 1 && *CenterChapter + i <= *MMainWindow::ChapterSum)
 			{
-				ChapterList->value(ChapterNumList->value(*CenterChapter + i))->setRect((i + 3) * WIDTH / 7, HEIGHT / 3, WIDTH / 3, HEIGHT / 3);
-				if (!ChapterList->value(ChapterNumList->value(*CenterChapter + i))->isVisible())
+				ChapterList->value(ChapterNumList->value(*CenterChapter + i))->setRect(WIDTH * (i + 3) / 7, HEIGHT / 3, WIDTH / 3, HEIGHT / 3);
+				if (!(ChapterList->value(ChapterNumList->value(*CenterChapter + i))->isVisible()))
 				{
 					ChapterList->value(ChapterNumList->value(*CenterChapter + i))->show();
 				}
 			}
+		}
+	}
+}
+
+void MMainWindow::wheelEvent(QWheelEvent* event)
+{
+	if (*State == chapterstate)
+	{
+		if (event->angleDelta().y() > 0 || event->angleDelta().x() > 0)
+		{
+			qint64 CenterChapter_ = *CenterChapter;
+			delete CenterChapter;
+			CenterChapter = new qint64(CenterChapter_ + 1);
+		}
+		else if (event->angleDelta().y() < 0 || event->angleDelta().x() < 0)
+		{
+			qint64 CenterChapter_ = *CenterChapter;
+			delete CenterChapter;
+			CenterChapter = new qint64(CenterChapter_ - 1);
 		}
 	}
 }
@@ -129,7 +148,22 @@ void MMainWindow::UiSetUp()
 	);
 	nowSetUp(chapterstate);
 	this->addChapter("Spirit", "摇光 | Spirit", QPixmap(".\\Grass.png"));
-	this->addChapter("Test", "摇光 | Spirit", QPixmap(".\\Grass.png"));
+	this->addChapter("Test1", "Test1", QPixmap(".\\Grass.png"));
+	this->addChapter("Test2", "Test2", QPixmap(".\\Grass.png"));
+	this->addChapter("Test3", "Test3", QPixmap(".\\Grass.png"));
+	this->addChapter("Test4", "Test4", QPixmap(".\\Grass.png"));
+	this->addChapter("Test5", "Test5", QPixmap(".\\Grass.png"));
+	this->addChapter("Test6", "Test6", QPixmap(".\\Grass.png"));
+	this->addChapter("Test7", "Test7", QPixmap(".\\Grass.png"));
+	this->addChapter("Test8", "Test8", QPixmap(".\\Grass.png"));
+	this->addChapter("Test9", "Test9", QPixmap(".\\Grass.png"));
+	this->addChapter("Test10", "Test10", QPixmap(".\\Grass.png"));
+	this->addChapter("Test11", "Test11", QPixmap(".\\Grass.png"));
+	this->addChapter("Test12", "Test12", QPixmap(".\\Grass.png"));
+	this->addChapter("Test13", "Test13", QPixmap(".\\Grass.png"));
+	this->addChapter("Test14", "Test14", QPixmap(".\\Grass.png"));
+	this->addChapter("Test15", "Test15", QPixmap(".\\Grass.png"));
+	this->addChapter("Test16", "Test16", QPixmap(".\\Grass.png"));
 }
 
 void MMainWindow::UiAnimation()
