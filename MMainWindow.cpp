@@ -140,15 +140,61 @@ void MMainWindow::wheelEvent(QWheelEvent* event)
 	{
 		if (event->angleDelta().y() > 0 || event->angleDelta().x() > 0)
 		{
+			if (ChapterNumList->contains(*CenterChapter) && ChapterList->contains(ChapterNumList->value(*CenterChapter)))
+			{
+				if (connect(ChapterList->value(ChapterNumList->value(*CenterChapter)), SIGNAL(Mclicked(QString)), this, SLOT(statechange_chapter_to_songlist(QString))))
+				{
+					disconnect
+					(
+						ChapterList->value(ChapterNumList->value(*CenterChapter)),
+						SIGNAL(Mclicked(QString)),
+						this,
+						SLOT(statechange_chapter_to_songlist(QString))
+					);
+				}
+			}
 			qint64 CenterChapter_ = *CenterChapter;
 			delete CenterChapter;
 			CenterChapter = new qint64(CenterChapter_ + 1);
+			if (ChapterNumList->contains(*CenterChapter) && ChapterList->contains(ChapterNumList->value(*CenterChapter)))
+			{
+				connect
+				(
+					ChapterList->value(ChapterNumList->value(*CenterChapter)),
+					SIGNAL(Mclicked(QString)),
+					this,
+					SLOT(statechange_chapter_to_songlist(QString))
+				);
+			}
 		}
 		else if (event->angleDelta().y() < 0 || event->angleDelta().x() < 0)
 		{
+			if (ChapterNumList->contains(*CenterChapter) && ChapterList->contains(ChapterNumList->value(*CenterChapter)))
+			{
+				if (connect(ChapterList->value(ChapterNumList->value(*CenterChapter)), SIGNAL(Mclicked(QString)), this, SLOT(statechange_chapter_to_songlist(QString))))
+				{
+					disconnect
+					(
+						ChapterList->value(ChapterNumList->value(*CenterChapter)),
+						SIGNAL(Mclicked(QString)),
+						this,
+						SLOT(statechange_chapter_to_songlist(QString))
+					);
+				}
+			}
 			qint64 CenterChapter_ = *CenterChapter;
 			delete CenterChapter;
 			CenterChapter = new qint64(CenterChapter_ - 1);
+			if (ChapterNumList->contains(*CenterChapter) && ChapterList->contains(ChapterNumList->value(*CenterChapter)))
+			{
+				connect
+				(
+					ChapterList->value(ChapterNumList->value(*CenterChapter)),
+					SIGNAL(Mclicked(QString)),
+					this,
+					SLOT(statechange_chapter_to_songlist(QString))
+				);
+			}
 		}
 	}
 }
@@ -221,12 +267,14 @@ void MMainWindow::UiAnimation()
 
 void MMainWindow::statechange_start_to_chapter()
 {
+	qDebug() << "MOONOTUSYSTEM::_Message_::State changes <startstate to chapterstate>";
 	delete State;
 	State = new qint32(chapterstate);
 }
 
 void MMainWindow::statechange_chapter_to_songlist(QString chapterkey)
 {
+	qDebug() << "MOONOTUSYSTEM::_Message_::State changes <chapterstate to songliststate>" << chapterkey;
 	delete State;
 	State = new qint32(songliststate);
 	Chapter = new QString(chapterkey);
@@ -247,6 +295,7 @@ void MMainWindow::addChapter(QString key, QString chaptername, QPixmap chapterco
 	newchapter->setText(chaptername);
 	newchapter->setLineColor(QColor(0, 0, 0, 255));
 	newchapter->setIfMask(true);
+	newchapter->setChapterKey(key);
 	qint64 ChapterSum_ = *MMainWindow::ChapterSum;
 	delete MMainWindow::ChapterSum;
 	MMainWindow::ChapterSum = new qint64(ChapterSum_ + 1);

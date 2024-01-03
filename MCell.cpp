@@ -231,7 +231,6 @@ void MCell::paintEvent(QPaintEvent* event)
 
 void MCell::mousePressEvent(QMouseEvent* event)
 {
-	qDebug() << "MOONOTUSYSTEM::_Debug_::Point 1";
 	if (!*Pressing)
 	{
 		delete Pressing;
@@ -246,10 +245,9 @@ void MCell::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (*Pressing)
 	{
-		qDebug() << "MOONOTUSYSTEM::_Debug_::Point 2";
 		if (*Type == chaptercell)
 		{
-			//emit(Mclicked(*ChapterKey));
+			emit(Mclicked(*ChapterKey));
 		}
 		else
 		{
