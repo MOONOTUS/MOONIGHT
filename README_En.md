@@ -28,9 +28,9 @@ Honestly speaking, open is the result of many reasons, one of those are most imp
 
 ---
 
-#####Update Log
+##### Update Log
 
-######2023/12/29
+###### 2023/12/29
 
 1. Implemented counter
 
@@ -49,7 +49,7 @@ Honestly speaking, open is the result of many reasons, one of those are most imp
 
 2. Narrowed check area
 
-3.  Implemented check animation
+3. Implemented check animation
 
 ###### 2023/12/15
 
@@ -59,7 +59,7 @@ Honestly speaking, open is the result of many reasons, one of those are most imp
 
 ---
 
-#####Next Updates
+##### Next Updates
 
 1. Implement main window
 
@@ -67,7 +67,7 @@ Honestly speaking, open is the result of many reasons, one of those are most imp
 
 ---
 
-#####Introduction for pioneer
+##### Introduction for pioneer
 
 ---
 
@@ -95,7 +95,7 @@ Complain is being completed.
 
 ---
 
-#####Introduction for designer
+##### Introduction for designer
 
 ---
 

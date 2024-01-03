@@ -291,6 +291,18 @@ void MMainWindow::addChapter(QString key, QString chaptername, QPixmap chapterco
 	MCell* newchapter = new MCell(this);
 	newchapter->setType(chaptercell);
 	newchapter->setRect(0, 0, 0, 0);
+	if (qreal(qreal(backImage->width()) / qreal(backImage->height())) > qreal(qreal(16.0) / qreal(9.0)))//自适应模块，自动以合适的方案将图片裁剪为16：9的比例
+	{
+		QPixmap backImage_(*backImage);
+		delete backImage;
+		backImage = new QPixmap(backImage_.copy((backImage_.width() - backImage_.height() * 16 / 9) / 2, 0, backImage_.height() * 16 / 9, backImage_.height()));
+	}
+	else if (qreal(qreal(backImage->width()) / qreal(backImage->height())) < qreal(qreal(16.0) / qreal(9.0)))
+	{
+		QPixmap backImage_(*backImage);
+		delete backImage;
+		backImage = new QPixmap(backImage_.copy(0, (backImage_.height() - backImage_.width() * 9 / 16) / 2, backImage_.width(), backImage_.width() * 9 / 16));
+	}
 	newchapter->setImage(chaptercover);
 	newchapter->setText(chaptername);
 	newchapter->setLineColor(QColor(0, 0, 0, 255));
