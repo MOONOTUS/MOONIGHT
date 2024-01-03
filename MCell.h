@@ -3,6 +3,7 @@
 
 class MMainWindow;
 class MWidget;
+class MSong;
 
 class MCell  : public QPushButton //统合元件类
 {
@@ -27,6 +28,7 @@ signals:
 
 public slots:
 	void Mupdate();
+	void CenterChapterChangeTo();
 
 public:
 	MCell(MMainWindow* parent = nullptr);
@@ -60,16 +62,20 @@ private:
 	QPainterPath* PainterPath;
 	QPainterPath* VPainterPath;
 	QString* Text;
+	QMap<QString, MSong*>* SongList;
+	QMap<qint64, QString>* SongNumList;
 	QString* ChapterKey;
 
 	bool* Visuable;
 	bool* IfLine;
 	bool* IfFill;
+	bool* IfCover;
 	bool* Pressing;
 	bool* IfMask;
 
 	QColor* LineColor;
 	QColor* FillColor;
+	QColor* CoverColor;
 
 public:
 	void setType(qint32 type);
@@ -91,14 +97,18 @@ public:
 	void setText(QString text);
 	void setIfLine(bool ifline);
 	void setIfFill(bool iffill);
+	void setIfCover(bool ifcover);
 	void setLineColor(QColor color);
 	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 	void setFillColor(QColor color);
 	void setFillColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
+	void setCoverColor(QColor color);
+	void setCoverColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 	void setChapterKey(QString key);
 	void setMMask(QString path);
 	void setMMask(QPixmap mask);
 	void setIfMask(bool ifmask);
+	//void addSong(QString key);
 	
 	QPixmap image() const;
 	bool visuable() const;
@@ -109,6 +119,7 @@ public:
 	QColor lineColor();
 	
 	QRect* MRect();
+	QRect* MVRect();
 	MMainWindow*& MParentMMainWindow();
 	MWidget*& MParentMWidget();
 };

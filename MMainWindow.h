@@ -45,10 +45,15 @@ public:
 
 	void UiSetUp();
 	static void nowSetUp(qint32 nowsetup);
+	void ChapterSetUp();
 
 	void addCell(QString key, MCell* cell, qint32 linkstate = *MMainWindow::StateNowSetUp);
 	void addChapter(QString key, QString chaptername, QPixmap chaptercover);
+	void setCenterChapter(qint64 centerchapter);
+
+	qint64 centerChapter();
 	QMap<QString, MCell*>*& cellList();
+	QMap<qint64, QString>*& chapterNumList();
 	qreal visualProportion() const;//视觉比例
 	qreal visualProportionX() const;//视觉比例
 	qreal visualProportionY() const;//视觉比例

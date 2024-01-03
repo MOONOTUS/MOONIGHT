@@ -29,11 +29,15 @@ MCell::MCell(MMainWindow* parent)
 	Text = nullptr;
 	LineColor = nullptr;
 	FillColor = nullptr;
+	CoverColor = nullptr;
 	ChapterKey = nullptr;
 	Pressing = new bool(false);
 	Mask = nullptr;
 	VMask = nullptr;
 	IfMask = new bool(false);
+	IfCover = new bool(false);
+	SongList = new QMap<QString, MSong*>;
+	SongNumList = new QMap<qint64, QString>;
 
 	connect
 	(
@@ -73,11 +77,15 @@ MCell::MCell(MWidget *parent)
 	Text = nullptr;
 	LineColor = nullptr;
 	FillColor = nullptr;
+	CoverColor = nullptr;
 	ChapterKey = nullptr;
 	Pressing = new bool(false);
 	Mask = nullptr;
 	VMask = nullptr;
 	IfMask = new bool(false);
+	IfCover = new bool(false);
+	SongList = new QMap<QString, MSong*>;
+	SongNumList = new QMap<qint64, QString>;
 
 	connect
 	(
@@ -223,6 +231,16 @@ void MCell::paintEvent(QPaintEvent* event)
 				paint->drawRect(this->rect());
 			}
 		}
+		if (*IfCover)
+		{
+			if (CoverColor != nullptr)
+			{
+				pen.setColor(Qt::transparent);
+				pen.setWidth(1);
+				paint->setBrush(*CoverColor);
+				paint->drawRect(this->rect());
+			}
+		}
 	}
 	delete paint;
 
@@ -245,9 +263,16 @@ void MCell::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (*Pressing)
 	{
-		if (*Type == chaptercell)
+		if (ParentMMainWindow != nullptr)
 		{
-			emit(Mclicked(*ChapterKey));
+			if (*Type == chaptercell && ParentMMainWindow->chapterNumList()->key(*this->ChapterKey) == ParentMMainWindow->centerChapter())
+			{
+				emit(Mclicked(*ChapterKey));
+			}
+			else
+			{
+				emit(clicked());
+			}
 		}
 		else
 		{
@@ -316,6 +341,17 @@ void MCell::Mupdate()
 		if (LineWidth != nullptr)
 		{
 			this->setLineWidth(*LineWidth);
+		}
+	}
+}
+
+void MCell::CenterChapterChangeTo()
+{
+	if (*Type == chaptercell)
+	{
+		if (ParentMMainWindow != nullptr)
+		{
+			ParentMMainWindow->setCenterChapter(ParentMMainWindow->chapterNumList()->key(*this->ChapterKey));
 		}
 	}
 }
@@ -658,6 +694,12 @@ void MCell::setIfFill(bool iffill)
 	IfFill = new bool(iffill);
 }
 
+void MCell::setIfCover(bool ifcover)
+{
+	delete IfCover;
+	IfCover = new bool(ifcover);
+}
+
 void MCell::setLineColor(QColor color)
 {
 	if (LineColor != nullptr)
@@ -690,14 +732,37 @@ void MCell::setFillColor(qint32 R, qint32 G, qint32 B, qint32 A)
 {
 	if (FillColor != nullptr)
 	{
-		delete LineColor;
+		delete FillColor;
 	}
 	FillColor = new QColor(R, G, B, A);
+}
+
+void MCell::setCoverColor(QColor color)
+{
+	if (CoverColor != nullptr)
+	{
+		delete CoverColor;
+	}
+	CoverColor = new QColor(color);
+}
+
+void MCell::setCoverColor(qint32 R, qint32 G, qint32 B, qint32 A)
+{
+	if (CoverColor != nullptr)
+	{
+		delete CoverColor;
+	}
+	CoverColor = new QColor(R, G, B, A);
 }
 
 QRect* MCell::MRect()
 {
 	return Rect;
+}
+
+QRect* MCell::MVRect()
+{
+	return VRect;
 }
 
 void MCell::setLinkState(qint32 linkstate)
@@ -805,6 +870,10 @@ QString MCell::text()
 	{
 		return *Text;
 	}
+	else
+	{
+		return "N/A";
+	}
 }
 
 QColor MCell::lineColor()
@@ -812,5 +881,9 @@ QColor MCell::lineColor()
 	if (LineColor != nullptr)
 	{
 		return *LineColor;
+	}
+	else
+	{
+		return Qt::transparent;
 	}
 }
