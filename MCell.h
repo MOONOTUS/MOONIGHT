@@ -3,7 +3,6 @@
 
 class MMainWindow;
 class MWidget;
-class MSong;
 
 class MCell  : public QPushButton //统合元件类
 {
@@ -16,6 +15,7 @@ class MCell  : public QPushButton //统合元件类
 #define painterpathcell 0x004
 #define textcell 0x005
 #define chaptercell 0x006
+#define songcell 0x007
 
 protected:
 	void paintEvent(QPaintEvent* event);
@@ -25,6 +25,7 @@ protected:
 
 signals:
 	void Mclicked(QString chapterkey);
+	void Mclicked(qint64 id);
 
 public slots:
 	void Mupdate();
@@ -62,9 +63,12 @@ private:
 	QPainterPath* PainterPath;
 	QPainterPath* VPainterPath;
 	QString* Text;
-	QMap<QString, MSong*>* SongList;
+	QMap<QString, MCell*>* SongList;
 	QMap<qint64, QString>* SongNumList;
 	QString* ChapterKey;
+	QString* SongName;
+	qint64* SongID;
+	qint64* SongSum;
 
 	bool* Visuable;
 	bool* IfLine;
@@ -108,7 +112,11 @@ public:
 	void setMMask(QString path);
 	void setMMask(QPixmap mask);
 	void setIfMask(bool ifmask);
-	//void addSong(QString key);
+	void setSongName(QString songname);
+	void setSongID(qint64 songid);
+
+	void addSong(qint64 songid, QString key, QString songname, QPixmap songcover);
+	void addSong(qint64 songid, QString key, QString songname, QString songcoverpath);
 	
 	QPixmap image() const;
 	bool visuable() const;
@@ -117,9 +125,13 @@ public:
 	QString chapterKey();
 	QString text();
 	QColor lineColor();
+	QString songName();
+	qint64 songID();
 	
 	QRect* MRect();
 	QRect* MVRect();
 	MMainWindow*& MParentMMainWindow();
 	MWidget*& MParentMWidget();
+	QMap<QString, MCell*>*& songList();
+	QMap<qint64, QString>*& songNumList();
 };

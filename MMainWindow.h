@@ -20,6 +20,7 @@ public slots:
 	void UiAnimation();
 	void statechange_start_to_chapter();
 	void statechange_chapter_to_songlist(QString chapterkey);
+	void play(qint64 id);
 
 private:
 	static QSize* OriSize;

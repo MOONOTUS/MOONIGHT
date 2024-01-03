@@ -118,7 +118,6 @@
     <ClCompile Include="MMainWindow.cpp" />
     <ClCompile Include="MNote.cpp" />
     <ClCompile Include="MOONIGHT_Player.cpp" />
-    <ClCompile Include="MSong.cpp" />
     <ClCompile Include="MWidget.cpp" />
     <QtRcc Include="MOONIGHT_Qt.qrc" />
     <QtMoc Include="MOONIGHT_Qt.h" />
@@ -139,7 +138,6 @@
     <QtMoc Include="MMainWindow.h" />
     <ClInclude Include="MOONIGHT_Player.h" />
     <ClInclude Include="MOONIGHT_Songs%27List.h" />
-    <ClInclude Include="MSong.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ui_MOONIGHT_Qt.h" />
     <ClInclude Include="MCheckDotLine.h" />

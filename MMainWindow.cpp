@@ -78,6 +78,13 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 		{
 			ptr.value()->show();
 		}
+		if (*State == songliststate)
+		{
+			//if (ptr.value()->chapterKey() != *Chapter)
+			//{
+			//	ptr.value()->hide();
+			//}
+		}
 	}
 	if (*State == chapterstate)
 	{
@@ -168,6 +175,11 @@ void MMainWindow::timeAdd_ms()
 	time_ms = new qint64(UiTime->elapsed());
 }
 
+void MMainWindow::play(qint64 id)
+{
+	MOONIGHT_Play(id, this);
+}
+
 void MMainWindow::UiSetUp()
 {
 	nowSetUp(startstate);
@@ -216,6 +228,7 @@ void MMainWindow::UiSetUp()
 	this->addChapter("Test14", "Test14", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
 	this->addChapter("Test15", "Test15", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
 	this->addChapter("Test16", "Test16", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
+	ChapterSetUp();
 }
 
 void MMainWindow::UiAnimation()
@@ -230,7 +243,16 @@ void MMainWindow::UiAnimation()
 
 void MMainWindow::ChapterSetUp()
 {
-
+	nowSetUp(songliststate);
+	ChapterList->value("Spirit")->addSong(1000000000000, "Infinity Heaven", "无限天堂 | Infinity Heaven", ".\\music\\image\\Infinity_Heaven_Phigros.png");
+	ChapterList->value("Spirit")->songList()->value("Infinity Heaven")->setRect(0, 0, 160, 90);
+	connect
+	(
+		ChapterList->value("Spirit")->songList()->value("Infinity Heaven"),
+		SIGNAL(Mclicked(qint64)),
+		this,
+		SLOT(play(qint64))
+	);
 }
 
 void MMainWindow::statechange_start_to_chapter()

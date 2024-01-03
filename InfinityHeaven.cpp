@@ -4,7 +4,7 @@ InfinityHeaven_Class::InfinityHeaven_Class(MWidget* parent)
 	: QObject(parent)
 {
 	parent->addToTitle("Infinity Heaven");
-	QPixmap backImage(".\\resource\\MOONOTUSYSTEM\\Infinity_Heaven_Phigros.png");
+	QPixmap backImage(".\\music\\image\\Infinity_Heaven_Phigros.png");
 	parent->setShowLogo(false);
 	parent->setBackImage(backImage);
 	parent->setShowBackImage(true);

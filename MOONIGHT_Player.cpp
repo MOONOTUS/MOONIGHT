@@ -29,7 +29,7 @@ void MOONIGHT_Play(qint64 ID, MMainWindow* linkmain)
 	MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Saved()->Ui()->central->resize(linkmain->size());
 	switch (ID)
 	{
-	case 1:
+	case 1000000000000:
 		TestDemo_InfinityHeaven(MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Saved());
 		break;
 	default:
