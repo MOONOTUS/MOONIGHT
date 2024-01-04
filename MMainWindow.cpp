@@ -185,6 +185,7 @@ void MMainWindow::timeAdd_ms()
 
 void MMainWindow::play(qint64 id)
 {
+	qDebug() << "Song plays <ID = " << id << " >";
 	MOONIGHT_Play(id, this);
 }
 
