@@ -66,6 +66,13 @@ MMainWindow::~MMainWindow()
 
 void MMainWindow::paintEvent(QPaintEvent* event)
 {
+	QPainter* clean = new QPainter(this);
+	QPen cleanpen;
+	cleanpen.setColor(QColor(245, 245, 245, 245));
+	clean->setPen(cleanpen);
+	clean->setBrush(QColor(245, 245, 245, 245));
+	clean->drawRect(this->rect());
+	delete clean;
 	QPainter* paint = new QPainter(this);
 	QPen pen;
 	for (QMap<QString, MCell*>::iterator ptr = CellList->begin(); ptr != CellList->end(); ++ptr)
@@ -98,7 +105,7 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 			ChapterList->value(ChapterNumList->value(*CenterChapter))->setRect(1200, 400, 800, 800);
 			ChapterList->value(ChapterNumList->value(*CenterChapter))->setCoverColor(Qt::transparent);
 			ChapterList->value(ChapterNumList->value(*CenterChapter))->show();
-			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion(), -1));
+			paint->setFont(QFont(FONT_1, 50 * this->visualProportion(), -1));
 			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter))->lineColor());
 			paint->drawText(QRect(ChapterList->value(ChapterNumList->value(*CenterChapter))->MVRect()->x(), (ChapterList->value(ChapterNumList->value(*CenterChapter))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter))->MVRect()->height() + 10), ChapterList->value(ChapterNumList->value(*CenterChapter))->MVRect()->width(), this->OriSize->height() * this->visualProportionY() - (ChapterList->value(ChapterNumList->value(*CenterChapter))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter))->MVRect()->height() + 10)), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter))->text());
 		}
@@ -108,7 +115,7 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 			ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->setRect(2015, 425, 515, 750);
 			ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->setCoverColor(QColor(0, 0, 0, 100));
 			ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->show();
-			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion() * 2 / 3, -1));
+			paint->setFont(QFont(FONT_1, 50 * this->visualProportion() * 2 / 3, -1));
 			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->lineColor());
 			paint->drawText(QRect(ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->MVRect()->x(), (ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->MVRect()->height() + 10), ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->MVRect()->width(), this->OriSize->height() * this->visualProportionY() - (ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->MVRect()->height() + 10)), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter + 1))->text());
 		}
@@ -118,7 +125,7 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 			ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->setRect(2455, 450, 415, 700);
 			ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->setCoverColor(QColor(0, 0, 0, 175));
 			ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->show();
-			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion() / 2, -1));
+			paint->setFont(QFont(FONT_1, 50 * this->visualProportion() / 2, -1));
 			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->lineColor());
 			paint->drawText(QRect(ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->MVRect()->x(), (ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->MVRect()->height() + 10), ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->MVRect()->width(), this->OriSize->height() * this->visualProportionY() - (ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->MVRect()->height() + 10)), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter + 2))->text());
 		}
@@ -128,7 +135,7 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 			ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->setRect(670, 425, 515, 750);
 			ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->setCoverColor(QColor(0, 0, 0, 100));
 			ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->show();
-			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion() * 2 / 3, -1));
+			paint->setFont(QFont(FONT_1, 50 * this->visualProportion() * 2 / 3, -1));
 			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->lineColor());
 			paint->drawText(QRect(ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->MVRect()->x(), (ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->MVRect()->height() + 10), ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->MVRect()->width(), this->OriSize->height() * this->visualProportionY() - (ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->MVRect()->height() + 10)), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter - 1))->text());
 		}
@@ -138,14 +145,15 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 			ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->setRect(330, 450, 415, 700);
 			ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->setCoverColor(QColor(0, 0, 0, 175));
 			ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->show();
-			paint->setFont(QFont("Microsoft YaHei Ui", 50 * this->visualProportion() / 2, -1));
+			paint->setFont(QFont(FONT_1, 50 * this->visualProportion() / 2, -1));
 			pen.setColor(ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->lineColor());
 			paint->drawText(QRect(ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->MVRect()->x(), (ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->MVRect()->height() + 10), ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->MVRect()->width(), this->OriSize->height() * this->visualProportionY() - (ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->MVRect()->y() + ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->MVRect()->height() + 10)), Qt::AlignTop | Qt::AlignHCenter, ChapterList->value(ChapterNumList->value(*CenterChapter - 2))->text());
 		}
 	}
 	if (*State == songliststate)
 	{
-
+		CellList->value("SongCheck")->setImage(ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(1))->image());
+		CellList->value("SongCheck")->setSongID(ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(1))->songID());
 	}
 	delete paint;
 }
@@ -184,22 +192,23 @@ void MMainWindow::UiSetUp()
 {
 	nowSetUp(startstate);
 	MCell* logo = new MCell(this);
-	logo->setRect(400, 0, 2400, 1350);
 	logo->setType(imagecell);
+	logo->setRect(400, 0, 2400, 1350);
 	logo->setImage(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Beta_Little.png");
 	this->addCell("Logo", logo);
 	MCell* touch = new MCell(this);
-	touch->setRect(1490, 1490, 210, 210);
 	touch->setType(ellipsecell);
+	touch->setRect(1490, 1490, 210, 210);
+	touch->setPressable(true);
 	touch->setLineWidth(20);
 	touch->setLineColor(QColor(0, 0, 0, 50));
 	touch->setEllipseCenter(105, 105);
 	touch->setRadium(80);
 	this->addCell("Touch", touch);
 	MCell* tip = new MCell(this);
-	tip->setRect(1300, 1400, 600, 60);
 	tip->setType(textcell);
-	tip->setFont(QFont("Microsoft YaHei Ui", 50, -1));
+	tip->setRect(1300, 1400, 600, 60);
+	tip->setFont(QFont(FONT_2, 50, -1));
 	tip->setLineColor(QColor(0, 0, 0, 50));
 	tip->setText("Touch To Start");
 	this->addCell("Tip", tip);
@@ -229,6 +238,24 @@ void MMainWindow::UiSetUp()
 	this->addChapter("Test15", "Test15", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
 	this->addChapter("Test16", "Test16", QPixmap(".\\resource\\MOONOTUSYSTEM\\Grass.png"));
 	ChapterSetUp();
+	nowSetUp(songliststate);
+	MCell* songstart = new MCell(this);
+	songstart->setRect(800, 350, 2900, 1630);
+	songstart->setPressable(true);
+	songstart->setType(imagecell);
+	songstart->setMMask(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Mask_Night.png");
+	songstart->setIfMask(true);
+	songstart->setImage(".\\resource\\MOONOTUSYSTEM\\Grass.png");
+	songstart->setCoverImage(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Cover_Night.png");
+	songstart->setIfImageCover(true);
+	connect
+	(
+		songstart,
+		SIGNAL(Mclicked(qint64)),
+		this,
+		SLOT(play(qint64))
+	);
+	this->addCell("SongCheck", songstart);
 }
 
 void MMainWindow::UiAnimation()
@@ -245,14 +272,7 @@ void MMainWindow::ChapterSetUp()
 {
 	nowSetUp(songliststate);
 	ChapterList->value("Spirit")->addSong(1000000000000, "Infinity Heaven", "无限天堂 | Infinity Heaven", ".\\music\\image\\Infinity_Heaven_Phigros.png");
-	ChapterList->value("Spirit")->songList()->value("Infinity Heaven")->setRect(0, 0, 160, 90);
-	connect
-	(
-		ChapterList->value("Spirit")->songList()->value("Infinity Heaven"),
-		SIGNAL(Mclicked(qint64)),
-		this,
-		SLOT(play(qint64))
-	);
+	ChapterList->value("Spirit")->songList()->value("Infinity Heaven")->setRect(0, 70, 3200, 270);
 }
 
 void MMainWindow::statechange_start_to_chapter()
@@ -281,6 +301,7 @@ void MMainWindow::addChapter(QString key, QString chaptername, QPixmap chapterco
 	MCell* newchapter = new MCell(this);
 	newchapter->setType(chaptercell);
 	newchapter->setRect(0, 0, 0, 0);
+	newchapter->setPressable(true);
 	if (qreal(qreal(chaptercover.width()) / qreal(chaptercover.height())) > qreal(1.0))//自适应模块，自动以合适的方案将图片裁剪为1：1的比例
 	{
 		chaptercover = chaptercover.copy((chaptercover.width() - chaptercover.height()) / 2, 0, chaptercover.height(), chaptercover.height());

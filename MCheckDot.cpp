@@ -36,7 +36,7 @@ MCheckDot::MCheckDot(MWidget *parent)
 	KeyText = new QString("N/A");
 	this->setGeometry(0,0,parent->width(),parent->height());//设定初始绘制区域
 	this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);//设定尺寸可变性
-	this->setFont(QFont("Microsoft YaHei Ui", *Radium, *Width - 2));//设定文本字体
+	this->setFont(QFont(FONT_1, *Radium, *Width - 2));//设定文本字体
 
 	parent->MParent()->connect//连接触发信号和判定槽
 	(
@@ -124,7 +124,7 @@ void MCheckDot::paintEvent(QPaintEvent* event)
 	this->setRadium(*Radium);
 	this->setSpeed(*Speed);
 	this->setLineRadium(*LineRadium);
-	this->setFont(QFont("Microsoft YaHei Ui", *VRadium, *VWidth - 2));//刷新字体视觉样式
+	this->setFont(QFont(FONT_1, *VRadium, *VWidth - 2));//刷新字体视觉样式
 	QPainter* paint = new QPainter(this);
 	paint->setRenderHint(QPainter::Antialiasing);
 	paint->setRenderHint(QPainter::TextAntialiasing);

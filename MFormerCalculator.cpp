@@ -39,10 +39,10 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 		QPen textpen;
 		textpen.setColor(QColor(255, 255, 255, 255));
 		text->setPen(textpen);
-		text->setFont(QFont("Microsoft YaHei Ui", 48 * (Parent->visualProportion()), -1));
+		text->setFont(QFont(FONT_1, 48 * (Parent->visualProportion()), -1));
 		text->drawText(QRect(qint32(985 * (Parent->visualProportion())), qint32(52 * (Parent->visualProportion())), qint32(500 * (Parent->visualProportion())), qint32(96 * (Parent->visualProportion()))), Qt::AlignRight | Qt::AlignBottom, *ScoreText);
 		text->drawText(QRect(qint32(1715 * (Parent->visualProportion())), qint32(52 * (Parent->visualProportion())), qint32(500 * (Parent->visualProportion())), qint32(96 * (Parent->visualProportion()))), Qt::AlignLeft | Qt::AlignBottom, *ComboText);
-		text->setFont(QFont("Microsoft YaHei Ui", ((36 * (Parent->visualProportion()) < 1.5 * 351 * (Parent->visualProportion()) / MusicName->size()) ? (36 * (Parent->visualProportion())) : (1.5 * 351 * (Parent->visualProportion()) / MusicName->size())), -1));
+		text->setFont(QFont(FONT_1, ((36 * (Parent->visualProportion()) < 1.5 * 351 * (Parent->visualProportion()) / MusicName->size()) ? (36 * (Parent->visualProportion())) : (1.5 * 351 * (Parent->visualProportion()) / MusicName->size())), -1));
 		text->drawText(QRect(qint32(1135 * (Parent->visualProportion())), qint32(164 * (Parent->visualProportion())), qint32(351 * (Parent->visualProportion())), qint32(72 * (Parent->visualProportion()))), Qt::AlignRight | Qt::AlignTop, *MusicName);
 		text->drawText(QRect(qint32(1714 * (Parent->visualProportion())), qint32(164 * (Parent->visualProportion())), qint32(351 * (Parent->visualProportion())), qint32(72 * (Parent->visualProportion()))), Qt::AlignLeft | Qt::AlignTop, *AccuracyText);
 		QPainter* moon = new QPainter(this);
@@ -103,7 +103,7 @@ void MFormerCalculator::paintEvent(QPaintEvent* event)
 		}
 		textpen.setColor(QColor(255, 255, 255, 255));
 		text->setPen(textpen);
-		text->setFont(QFont("Microsoft YaHei Ui", 36 * (Parent->visualProportion()), -1));
+		text->setFont(QFont(FONT_1, 36 * (Parent->visualProportion()), -1));
 		text->drawText(QRect(qint32(1480 * (Parent->visualProportion())), qint32(225 * (Parent->visualProportion())), qint32(240 * (Parent->visualProportion())), qint32(50 * (Parent->visualProportion()))), Qt::AlignHCenter | Qt::AlignVCenter, *CheckText);
 		delete text;
 		delete moon;

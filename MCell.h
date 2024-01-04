@@ -50,6 +50,7 @@ private:
 	QPixmap* PathImage;
 	QPixmap* Mask;
 	QPixmap* VMask;
+	QPixmap* CoverImage;
 	QPoint* EllipseCenter;
 	QPoint* VEllipseCenter;
 	qreal* XRadium;
@@ -66,14 +67,15 @@ private:
 	QMap<QString, MCell*>* SongList;
 	QMap<qint64, QString>* SongNumList;
 	QString* ChapterKey;
-	QString* SongName;
 	qint64* SongID;
 	qint64* SongSum;
 
 	bool* Visuable;
 	bool* IfLine;
 	bool* IfFill;
+	bool* IfImageCover;
 	bool* IfCover;
+	bool* Pressable;
 	bool* Pressing;
 	bool* IfMask;
 
@@ -86,6 +88,8 @@ public:
 	void setLinkState(qint32 linkstate);
 	void setImage(QString path);
 	void setImage(QPixmap image);
+	void setCoverImage(QString path);
+	void setCoverImage(QPixmap coverimage);
 	void setVisuable(bool visuable);;
 	void setRect(QRect rect);
 	void setRect(qreal lefttopx, qreal lefttopy, qreal width, qreal height);
@@ -102,6 +106,8 @@ public:
 	void setIfLine(bool ifline);
 	void setIfFill(bool iffill);
 	void setIfCover(bool ifcover);
+	void setIfImageCover(bool ifimagecover);
+	void setPressable(bool pressable);
 	void setLineColor(QColor color);
 	void setLineColor(qint32 R, qint32 G, qint32 B, qint32 A = 255);
 	void setFillColor(QColor color);
