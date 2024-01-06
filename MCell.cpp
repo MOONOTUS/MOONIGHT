@@ -871,7 +871,14 @@ void MCell::setChapterKey(QString chapterkey)
 
 QString MCell::chapterKey()
 {
-	return *ChapterKey;
+	if (ChapterKey != nullptr)
+	{
+		return *ChapterKey;
+	}
+	else
+	{
+		return "";
+	}
 }
 
 void MCell::setMMask(QString path)

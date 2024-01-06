@@ -26,6 +26,7 @@ signals:
 
 public slots:
 	void timeAdd_ms();//计时槽，与parent->litTime的信号timeout()连接
+	void end();
 
 private:
 	static QSize* OriSize;//原始尺寸，固有值，用于自适应的实现

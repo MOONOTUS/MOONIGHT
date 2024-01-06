@@ -67,6 +67,18 @@ MWidget::MWidget(QWidget* parent)
 		SLOT(repaint()),
 		Qt::DirectConnection
 	);
+	connect
+	(
+		Player,
+		&QMediaPlayer::mediaStatusChanged,
+		[=]
+		{
+			if (Player->mediaStatus() == QMediaPlayer::EndOfMedia)
+			{
+				this->end();
+			}
+		}
+	);
 
 	DisTime->start();
 	FixTime->start();
@@ -204,6 +216,11 @@ void MWidget::closeEvent(QCloseEvent* event)
 			this->LinkMain->MParent()->show();
 		}
 	}
+}
+
+void MWidget::end()
+{
+	this -> close();
 }
 
 void MWidget::setBackImage(QPixmap& image)

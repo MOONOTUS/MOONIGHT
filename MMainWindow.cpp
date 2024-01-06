@@ -87,10 +87,14 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 		}
 		if (*State == songliststate)
 		{
-			//if (ptr.value()->chapterKey() != *Chapter)
-			//{
-			//	ptr.value()->hide();
-			//}
+			if (ptr.value()->chapterKey() != *Chapter && ptr.value() != CellList->value("SongCheck"))
+			{
+				ptr.value()->hide();
+			}
+			if (!CellList->value("SongCheck")->isVisible())
+			{
+				CellList->value("SongCheck")->show();
+			}
 		}
 	}
 	if (*State == chapterstate)
