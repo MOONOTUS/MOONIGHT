@@ -13,7 +13,7 @@ MWidget::MWidget(QWidget* parent)
 	backColor = new  QColor(245, 245, 245);//初始化背景色为（245，245，245，255）的亮灰白色
 	backImage = nullptr;
 	backBackImage = nullptr;
-	Logo = new QPixmap(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Beta_Little.png");//读取Logo图片，稍后改为相对路径
+	Logo = new QPixmap(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Beta_Little.png");//读取Logo图片
 	backCoverColor = new QColor(255, 255, 255, 0);//初始化背景遮罩色为全透明白色，即不显示遮罩
 	time_ms = new qint64(0);//时间置零
 	fixtime_ms = new qint64(0);

@@ -26,10 +26,12 @@ protected:
 signals:
 	void Mclicked(QString chapterkey);
 	void Mclicked(qint64 id);
+	void Mclicked();
 
 public slots:
 	void Mupdate();
 	void CenterChapterChangeTo();
+	void CenterSongChangeTo();
 
 public:
 	MCell(MMainWindow* parent = nullptr);
@@ -69,6 +71,8 @@ private:
 	QString* ChapterKey;
 	qint64* SongID;
 	qint64* SongSum;
+	qint64* SongNum;
+	qint64* CenterSong;
 
 	bool* Visuable;
 	bool* IfLine;
@@ -120,6 +124,8 @@ public:
 	void setIfMask(bool ifmask);
 	void setSongName(QString songname);
 	void setSongID(qint64 songid);
+	void setCenterSong(qint64 centersong);
+	void setSongNum(qint64 songnum);
 
 	void addSong(qint64 songid, QString key, QString songname, QPixmap songcover);
 	void addSong(qint64 songid, QString key, QString songname, QString songcoverpath);
@@ -133,6 +139,9 @@ public:
 	QColor lineColor();
 	QString songName();
 	qint64 songID();
+	qint64 centerSong();
+	qint64 songSum();
+	qint64 songNum();
 	
 	QRect* MRect();
 	QRect* MVRect();

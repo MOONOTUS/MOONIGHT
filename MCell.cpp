@@ -43,6 +43,8 @@ MCell::MCell(MMainWindow* parent)
 	SongNumList = new QMap<qint64, QString>;
 	SongID = nullptr;
 	SongSum = new qint64(0);
+	SongNum = nullptr;
+	CenterSong = nullptr;
 
 	connect
 	(
@@ -96,6 +98,8 @@ MCell::MCell(MWidget *parent)
 	SongNumList = new QMap<qint64, QString>;
 	SongID = nullptr;
 	SongSum = new qint64(0);
+	SongNum = nullptr;
+	CenterSong = nullptr;
 
 	connect
 	(
@@ -126,7 +130,7 @@ void MCell::paintEvent(QPaintEvent* event)
 		{
 			if (Image != nullptr)
 			{
-				qDebug() << "MOONOTUSYSTEM::_Message_::ImageCell paints";
+				qDebug() << "\tMOONOTUSYSTEM::_Message_::ImageCell paints";
 				paint->drawPixmap(this->rect(), *Image);
 			}
 			if (*IfImageCover)
@@ -148,7 +152,7 @@ void MCell::paintEvent(QPaintEvent* event)
 		{
 			if (VEllipseCenter != nullptr && VXRadium != nullptr && VYRadium != nullptr)
 			{
-				qDebug() << "MOONOTUSYSTEM::_Message_::EllipseCell paints";
+				qDebug() << "\tMOONOTUSYSTEM::_Message_::EllipseCell paints";
 				this->setEllipseCenter(*EllipseCenter);
 				this->setRadium(*XRadium, *YRadium);
 				if (*IfLine)
@@ -184,7 +188,7 @@ void MCell::paintEvent(QPaintEvent* event)
 		}
 		else if (*Type == linecell)
 		{
-			qDebug() << "MOONOTUSYSTEM::_Message_::LineCell paints";
+			qDebug() << "\tMOONOTUSYSTEM::_Message_::LineCell paints";
 			if (*IfLine)
 			{
 				if (Line != nullptr)
@@ -210,7 +214,7 @@ void MCell::paintEvent(QPaintEvent* event)
 		}
 		else if (*Type == painterpathcell)
 		{
-			qDebug() << "MOONOTUSYSTEM::_Message_::PainterPathCell paints";
+			qDebug() << "\tMOONOTUSYSTEM::_Message_::PainterPathCell paints";
 			if (PathImage != nullptr)
 			{
 				paint->drawPixmap(this->rect(), *PathImage);
@@ -218,7 +222,7 @@ void MCell::paintEvent(QPaintEvent* event)
 		}
 		else if (*Type == textcell)
 		{
-			qDebug() << "MOONOTUSYSTEM::_Message_::TextCell paints";
+			qDebug() << "\tMOONOTUSYSTEM::_Message_::TextCell paints";
 			if (Text != nullptr)
 			{
 				if (ParentMMainWindow != nullptr)
@@ -243,7 +247,7 @@ void MCell::paintEvent(QPaintEvent* event)
 		}
 		else if (*Type == chaptercell)
 		{
-			qDebug() << "MOONOTUSYSTEM::_Message_::ChapterCell paints";
+			qDebug() << "\tMOONOTUSYSTEM::_Message_::ChapterCell paints";
 			if (Image != nullptr)
 			{
 				paint->drawPixmap(this->rect(), *Image);
@@ -258,7 +262,7 @@ void MCell::paintEvent(QPaintEvent* event)
 		}
 		else if (*Type == songcell)
 		{
-			qDebug() << "MOONOTUSYSTEM::_Message_::SongCell paints";
+			qDebug() << "\tMOONOTUSYSTEM::_Message_::SongCell paints";
 			if (Text != nullptr)
 			{
 
@@ -274,13 +278,13 @@ void MCell::paintEvent(QPaintEvent* event)
 				{
 					pen.setColor(QColor(0, 0, 0, 255));
 					paint->setPen(pen);
-					paint->drawText(this->rect(), Qt::AlignLeft | Qt::AlignVCenter, "   " + * Text);
+					paint->drawText(this->rect(), Qt::AlignLeft | Qt::AlignVCenter, * Text);
 				}
 				else
 				{
 					pen.setColor(QColor(0, 0, 0, 200));
 					paint->setPen(pen);
-					paint->drawText(this->rect(), Qt::AlignLeft | Qt::AlignBottom, "   " + * Text);
+					paint->drawText(this->rect(), Qt::AlignLeft | Qt::AlignBottom, * Text);
 				}
 			}
 		}
@@ -325,17 +329,22 @@ void MCell::mouseReleaseEvent(QMouseEvent* event)
 					emit(Mclicked(*ChapterKey));
 				}
 			}
-			else if (*Type == songcell || *Type == imagecell)
+			else if (*Type == songcell)
+			{
+				if (SongNum != nullptr)
+				{
+					emit(Mclicked(*SongNum));
+				}
+			}
+			else if (*Type == imagecell)
 			{
 				if (SongID != nullptr)
 				{
 					emit(Mclicked(*SongID));
 				}
 			}
-			else
-			{
-				emit(clicked());
-			}
+			emit(Mclicked());
+			emit(clicked());
 		}
 		else
 		{
@@ -416,6 +425,14 @@ void MCell::CenterChapterChangeTo()
 		{
 			ParentMMainWindow->setCenterChapter(ParentMMainWindow->chapterNumList()->key(*this->ChapterKey));
 		}
+	}
+}
+
+void MCell::CenterSongChangeTo()
+{
+	if (ParentMMainWindow != nullptr && SongNum != nullptr )
+	{
+		ParentMMainWindow->cellList()->value(ParentMMainWindow->chapterNumList()->value(ParentMMainWindow->centerChapter()))->setCenterSong(*this->SongNum);
 	}
 }
 
@@ -1032,6 +1049,9 @@ void MCell::addSong(qint64 songid, QString key, QString songname, QPixmap songco
 {
 	if (ParentMMainWindow != nullptr)
 	{
+		qint64 SongSum_ = *SongSum;
+		delete SongSum;
+		SongSum = new qint64(SongSum_ + 1);
 		MCell* newsong = new MCell(this->ParentMMainWindow);
 		newsong->setType(songcell);
 		newsong->setPressable(true);
@@ -1040,15 +1060,23 @@ void MCell::addSong(qint64 songid, QString key, QString songname, QPixmap songco
 		newsong->setImage(songcover);
 		newsong->setChapterKey(*this->ChapterKey);
 		newsong->setFont(QFont(FONT_1, 150, -1));
+		newsong->setSongNum(*SongSum);
 		SongList->insert(key, newsong);
-		qint64 SongSum_ = *SongSum;
-		delete SongSum;
-		SongSum = new qint64(SongSum_ + 1);
 		SongNumList->insert(*SongSum, key);
 		ParentMMainWindow->addCell(key, newsong, songliststate);
+		connect
+		(
+			SongList->value(key),
+			SIGNAL(clicked()),
+			SongList->value(key),
+			SLOT(CenterSongChangeTo())
+		);
 	}
 	else if (ParentMWidget != nullptr)
 	{
+		qint64 SongSum_ = *SongSum;
+		delete SongSum;
+		SongSum = new qint64(SongSum_ + 1);
 		MCell* newsong = new MCell(this->ParentMWidget);
 		newsong->setType(songcell);
 		newsong->setPressable(true);
@@ -1057,10 +1085,8 @@ void MCell::addSong(qint64 songid, QString key, QString songname, QPixmap songco
 		newsong->setImage(songcover);
 		newsong->setChapterKey(*this->ChapterKey);
 		newsong->setFont(QFont(FONT_1, 150, -1));
+		newsong->setSongNum(*SongSum);
 		SongList->insert(key, newsong);
-		qint64 SongSum_ = *SongSum;
-		delete SongSum;
-		SongSum = new qint64(SongSum_ + 1);
 		SongNumList->insert(*SongSum, key);
 	}
 }
@@ -1069,6 +1095,9 @@ void MCell::addSong(qint64 songid, QString key, QString songname, QString songco
 {
 	if (ParentMMainWindow != nullptr)
 	{
+		qint64 SongSum_ = *SongSum;
+		delete SongSum;
+		SongSum = new qint64(SongSum_ + 1);
 		MCell* newsong = new MCell(this->ParentMMainWindow);
 		newsong->setType(songcell);
 		newsong->setPressable(true);
@@ -1078,14 +1107,22 @@ void MCell::addSong(qint64 songid, QString key, QString songname, QString songco
 		newsong->setChapterKey(*this->ChapterKey);
 		SongList->insert(key, newsong);
 		newsong->setFont(QFont(FONT_1, 150, -1));
-		qint64 SongSum_ = *SongSum;
-		delete SongSum;
-		SongSum = new qint64(SongSum_ + 1);
+		newsong->setSongNum(*SongSum);
 		SongNumList->insert(*SongSum, key);
 		ParentMMainWindow->addCell(key, newsong, songliststate);
+		connect
+		(
+			SongList->value(key),
+			SIGNAL(clicked()),
+			SongList->value(key),
+			SLOT(CenterSongChangeTo())
+		);
 	}
 	else if (ParentMWidget != nullptr)
 	{
+		qint64 SongSum_ = *SongSum;
+		delete SongSum;
+		SongSum = new qint64(SongSum_ + 1);
 		MCell* newsong = new MCell(this->ParentMWidget);
 		newsong->setType(songcell);
 		newsong->setPressable(true);
@@ -1095,9 +1132,7 @@ void MCell::addSong(qint64 songid, QString key, QString songname, QString songco
 		newsong->setChapterKey(*this->ChapterKey);
 		SongList->insert(key, newsong);
 		newsong->setFont(QFont(FONT_1, 150, -1));
-		qint64 SongSum_ = *SongSum;
-		delete SongSum;
-		SongSum = new qint64(SongSum_ + 1);
+		newsong->setSongNum(*SongSum);
 		SongNumList->insert(*SongSum, key);
 	}
 }
@@ -1112,4 +1147,51 @@ void MCell::setPressable(bool pressable)
 {
 	delete Pressable;
 	Pressable = new bool(pressable);
+}
+
+void MCell::setCenterSong(qint64 centersong)
+{
+	if (CenterSong != nullptr)
+	{
+		delete CenterSong;
+	}
+	CenterSong = new qint64(centersong);
+}
+
+qint64 MCell::centerSong()
+{
+	if (CenterSong != nullptr)
+	{
+		return *CenterSong;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+qint64 MCell::songSum()
+{
+	return *SongSum;
+}
+
+void MCell::setSongNum(qint64 songnum)
+{
+	if (SongNum != nullptr)
+	{
+		delete SongNum;
+	}
+	SongNum = new qint64(songnum);
+}
+
+qint64 MCell::songNum()
+{
+	if (SongNum != nullptr)
+	{
+		return *SongNum;
+	}
+	else
+	{
+		return -1;
+	}
 }

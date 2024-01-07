@@ -33,7 +33,7 @@ void MOONIGHT_Play(qint64 ID, MMainWindow* linkmain)
 		TestDemo_InfinityHeaven(MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Saved());
 		break;
 	default:
-		qDebug() << "MOONOTUSYSTEM::_Error_::There is no such song that ID = " << ID;
+		qDebug() << "\tMOONOTUSYSTEM::_Error_::There is no such song that ID = " << ID;
 		break;
 	}
 }
