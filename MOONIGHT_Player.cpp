@@ -24,6 +24,7 @@ void MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Set(MOONIGHT_Qt* w)
 
 void MOONIGHT_Play(qint64 ID, MMainWindow* linkmain)
 {
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Song palys <ID = " << ID << ">";
 	MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Saved()->Ui()->central = new MWidget(nullptr);
 	MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Saved()->Ui()->central->setLinkMain(linkmain);
 	MOONIGHT_QtClass_Pivot::MOONIGHT_QtClass_Saved()->Ui()->central->resize(linkmain->size());

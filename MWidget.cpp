@@ -208,6 +208,9 @@ void MWidget::mouseDoubleClickEvent(QMouseEvent* event)
 
 void MWidget::closeEvent(QCloseEvent* event)
 {
+	this->MainTime->stop();
+	this->LitTime->stop();
+	this->FlushTime->stop();
 	this->Player->stop();
 	if (this->LinkMain != nullptr)
 	{
@@ -242,6 +245,7 @@ void MWidget::setBackImage(QPixmap& image)
 		delete backImage;
 		backImage = new QPixmap(backImage_.copy(0, (backImage_.height() - backImage_.width() * 9 / 16) / 2, backImage_.width(), backImage_.width() * 9 / 16));
 	}
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Begin to generate MWidget's blur image";
 	QImage backBack = backImage->toImage();
 	GaussiamBlur(36, 2000, backBack);//生成背景图片的模糊拷贝
 	backBack = backBack.copy(1 * qreal(backBack.width()) / 30, 1 * qreal(backBack.height()) / 30, 28 * qreal(backBack.width()) / 30, 28 * qreal(backBack.height()) / 30);
@@ -250,6 +254,7 @@ void MWidget::setBackImage(QPixmap& image)
 		delete backBackImage;
 	}
 	backBackImage = new QPixmap(QPixmap::fromImage(backBack));//存储背景的背景图片
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::MWidget's blur image generated";
 }
 
 void MWidget::setBackImage(QString& path)
@@ -271,6 +276,7 @@ void MWidget::setBackImage(QString& path)
 		delete backImage;
 		backImage = new QPixmap(backImage_.copy(0, (backImage_.height() - backImage_.width() * 9 / 16) / 2, backImage_.width(), backImage_.width() * 9 / 16));
 	}
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::Begin to generate MWidget's blur image";
 	QImage backBack = backImage->toImage();
 	GaussiamBlur(36, 2000, backBack);//生成背景图片的模糊拷贝
 	if (backBackImage != nullptr)
@@ -278,6 +284,7 @@ void MWidget::setBackImage(QString& path)
 		delete backBackImage;
 	}
 	backBackImage = new QPixmap(QPixmap::fromImage(backBack));//存储背景的背景图片
+	qDebug() << "\tMOONOTUSYSTEM::_Message_::MWidget's blur image generated";
 }
 
 void MWidget::setBackColor(QColor color)

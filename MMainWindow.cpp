@@ -87,7 +87,7 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 		}
 		if (*State == songliststate)
 		{
-			if (ptr.value()->chapterKey() != *Chapter && ptr.value() != CellList->value("SongCheck") )
+			if (ptr.value()->chapterKey() != *Chapter && ptr.value() != CellList->value("SongCheck") && ptr.value() != CellList->value("SongText"))
 			{
 				ptr.value()->hide();
 			}
@@ -161,105 +161,37 @@ void MMainWindow::paintEvent(QPaintEvent* event)
 	{
 		for (int i = 1;(i <= (ChapterList->value(*Chapter)->songSum())); ++i)
 		{
-			if (((i < ChapterList->value(*Chapter)->centerSong()) || (i > (ChapterList->value(*Chapter)->centerSong() + 9))) && (ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(i))->isVisible()))
+			if (((i < ChapterList->value(*Chapter)->centerSong() - 2) || (i > (ChapterList->value(*Chapter)->centerSong() + 2))) && (ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(i))->isVisible()))
 			{
 				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(i))->hide();
 			}
 		}
 		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong()))
 		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->setRect(430, 25, 2770, 300);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->setFont(QFont(FONT_1, 200 < 2770 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->songName().size() ? 200 : 2770 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->songName().size(), -1));
+			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->setRect(1200, 140, 800, 800);
 		}
 		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() + 1))
 		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 1))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 1))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 1))->setRect(50, 350, 1125, 260);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 1))->setFont(QFont(FONT_1, 180 < 1125 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 1))->songName().size() ? 180 : 1125 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 1))->songName().size(), -1));
+			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 1))->setRect(2200, 400, 800, 800);
 		}
 		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() + 2))
 		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 2))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 2))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 2))->setRect(50, 650, 940, 230);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 2))->setFont(QFont(FONT_1, 160 < 940 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 2))->songName().size() ? 160 : 940 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 2))->songName().size(), -1));
+			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 2))->setRect(2940, 1140, 800, 800);
 		}
-		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() + 3))
+		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() - 1))
 		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 3))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 3))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 3))->setRect(50, 840, 845, 210);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 3))->setFont(QFont(FONT_1, 140 < 845 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 3))->songName().size() ? 140 : 845 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 3))->songName().size(), -1));
+			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() - 1))->setRect(200, 400, 800, 800);
 		}
-		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() + 4))
+		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() - 2))
 		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 4))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 4))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 4))->setRect(50, 1050, 805, 200);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 4))->setFont(QFont(FONT_1, 130 < 805 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 4))->songName().size() ? 130 : 805 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 4))->songName().size(), -1));
-		}
-		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() + 5))
-		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 5))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 5))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 5))->setRect(50, 1250, 800, 170);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 5))->setFont(QFont(FONT_1, 120 < 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 5))->songName().size() ? 120 : 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 5))->songName().size(), -1));
-		}
-		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() + 6))
-		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 6))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 6))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 6))->setRect(50, 1420, 800, 140);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 6))->setFont(QFont(FONT_1, 100 < 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 6))->songName().size() ? 100 : 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 6))->songName().size(), -1));
-		}
-		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() + 7))
-		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 7))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 7))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 7))->setRect(50, 1560, 800, 100);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 7))->setFont(QFont(FONT_1, 70 < 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 7))->songName().size() ? 70 : 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 7))->songName().size(), -1));
-		}
-		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() + 8))
-		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 8))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 8))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 8))->setRect(50, 1660, 800, 80);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 8))->setFont(QFont(FONT_1, 50 < 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 8))->songName().size() ? 50 : 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 8))->songName().size(), -1));
-		}
-		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong() + 9))
-		{
-			if (!ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 9))->isVisible())
-			{
-				ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 9))->show();
-			}
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 9))->setRect(50, 1740, 800, 60);
-			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 9))->setFont(QFont(FONT_1, 30 < 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 9))->songName().size() ? 30 : 800 / ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() + 9))->songName().size(), -1));
+			ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong() - 2))->setRect(-540, 1140, 800, 800);
 		}
 		if (ChapterList->value(*Chapter)->songNumList()->contains(ChapterList->value(*Chapter)->centerSong()))
 		{
-			CellList->value("SongCheck")->setImage(ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->image());
+			CellList->value("SongCheck")->setImage(QPixmap::fromImage(QImage((ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->image()).toImage()).mirrored(false, true)));
 			CellList->value("SongCheck")->setSongID(ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->songID());
+			CellList->value("SongText")->setText(ChapterList->value(*Chapter)->songList()->value(ChapterList->value(*Chapter)->songNumList()->value(ChapterList->value(*Chapter)->centerSong()))->songName());
+			CellList->value("SongText")->setFont(QFont(FONT_1, (75 < 2 * this->width()/ CellList->value("SongText")->text().size() ? 75 : 2 * this->width() / CellList->value("SongText")->text().size()), -1));
 		}
 	}
 	delete paint;
@@ -303,7 +235,6 @@ void MMainWindow::timeAdd_ms()
 
 void MMainWindow::play(qint64 id)
 {
-	qDebug() << "Song plays <ID = " << id << " >";
 	MOONIGHT_Play(id, this);
 }
 
@@ -359,14 +290,25 @@ void MMainWindow::UiSetUp()
 	ChapterSetUp();
 	nowSetUp(songliststate);
 	MCell* songstart = new MCell(this);
-	songstart->setRect(800, 350, 2900, 1630);
+	MCell* songtext = new MCell(this);
+	songstart->setRect(200,1100,2800,2800);
 	songstart->setPressable(true);
 	songstart->setType(imagecell);
-	songstart->setMMask(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Mask_Night.png");
+	songstart->setMMask(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Mask_Round_Giant.png");
 	songstart->setIfMask(true);
 	songstart->setImage(".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	songstart->setCoverImage(".\\resource\\MOONOTUSYSTEM\\MOONIGHT_Cover_Night.png");
-	songstart->setIfImageCover(true);
+	songstart->setCoverColor(QColor(0, 0, 0, 150));
+	songstart->setIfCover(true);
+	songtext->setRect(800, 1625, 1600, 150);
+	songtext->setPressable(true);
+	songtext->setType(textcell);
+	songtext->setLineColor(QColor(255, 255, 255, 200));
+	songtext->setFont(QFont(FONT_1, 75, -1));
+	//QGraphicsBlurEffect* blur = new QGraphicsBlurEffect(songstart);
+	//blur->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
+	//blur->setBlurRadius(10);
+	//blur->setEnabled(true);
+	//songstart->setGraphicsEffect(blur);//性能开销过大
 	connect
 	(
 		songstart,
@@ -375,6 +317,7 @@ void MMainWindow::UiSetUp()
 		SLOT(play(qint64))
 	);
 	this->addCell("SongCheck", songstart);
+	this->addCell("SongText", songtext);
 }
 
 void MMainWindow::UiAnimation()
@@ -392,16 +335,16 @@ void MMainWindow::ChapterSetUp()
 	nowSetUp(songliststate);
 	ChapterList->value("Spirit")->addSong(1000000000000, "Infinity Heaven", "无限天堂 | Infinity Heaven", ".\\music\\image\\Infinity_Heaven_Phigros.png");
 	ChapterList->value("Spirit")->addSong(1000000000001, "Test_1", "Test1_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_2", "Test2_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_3", "Test3_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_4", "Test4_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_5", "Test5_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_6", "Test6_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_7", "Test7_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_8", "Test8_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_9", "Test9_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_10", "Test10_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
-	ChapterList->value("Spirit")->addSong(1000000000000, "Test_11", "Test11_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_2", "Test2_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_3", "Test3_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_4", "Test4_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_5", "Test5_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_6", "Test6_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_7", "Test7_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_8", "Test8_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_9", "Test9_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_10", "Test10_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
+	ChapterList->value("Spirit")->addSong(1000000000001, "Test_11", "Test11_________", ".\\resource\\MOONOTUSYSTEM\\TheMoonInThePool_Little.png");
 }
 
 void MMainWindow::statechange_start_to_chapter()
@@ -428,7 +371,7 @@ void MMainWindow::addCell(QString key, MCell* cell, qint32 linkstate)
 void MMainWindow::addChapter(QString key, QString chaptername, QPixmap chaptercover)
 {
 	MCell* newchapter = new MCell(this);
-	newchapter->setType(chaptercell);
+	newchapter->setType(imagecell);
 	newchapter->setRect(0, 0, 0, 0);
 	newchapter->setPressable(true);
 	if (qreal(qreal(chaptercover.width()) / qreal(chaptercover.height())) > qreal(1.0))//自适应模块，自动以合适的方案将图片裁剪为1：1的比例
@@ -519,4 +462,9 @@ QMap<qint64, QString>*& MMainWindow::chapterNumList()
 qint64 MMainWindow::centerChapter()
 {
 	return *CenterChapter;
+}
+
+qint32 MMainWindow::state()
+{
+	return *State;
 }

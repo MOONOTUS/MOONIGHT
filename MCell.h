@@ -8,14 +8,15 @@ class MCell  : public QPushButton //统合元件类
 {
 	Q_OBJECT
 
+#define ShowCellEdge true
+#define ShowCellCenter false
+
 #define imagecell 0x111
 #define rectcell 0x001
 #define ellipsecell 0x002
 #define linecell 0x003
 #define painterpathcell 0x004
 #define textcell 0x005
-#define chaptercell 0x006
-#define songcell 0x007
 
 protected:
 	void paintEvent(QPaintEvent* event);
@@ -49,6 +50,7 @@ private:
 	QRect* VRect;
 
 	QPixmap* Image;
+	QPixmap* BlurImage;
 	QPixmap* PathImage;
 	QPixmap* Mask;
 	QPixmap* VMask;
@@ -92,6 +94,7 @@ public:
 	void setLinkState(qint32 linkstate);
 	void setImage(QString path);
 	void setImage(QPixmap image);
+	void generateBlurImage(qint32 radium, qreal variance);
 	void setCoverImage(QString path);
 	void setCoverImage(QPixmap coverimage);
 	void setVisuable(bool visuable);;
@@ -131,6 +134,8 @@ public:
 	void addSong(qint64 songid, QString key, QString songname, QString songcoverpath);
 	
 	QPixmap image() const;
+	QPixmap blurImage() const;
+	QPixmap pathImage() const;
 	bool visuable() const;
 	qreal lineWidth() const;
 	qint32 linkState();

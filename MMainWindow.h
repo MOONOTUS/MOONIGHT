@@ -53,6 +53,7 @@ public:
 	void setCenterChapter(qint64 centerchapter);
 
 	qint64 centerChapter();
+	qint32 state();
 	QMap<QString, MCell*>*& cellList();
 	QMap<qint64, QString>*& chapterNumList();
 	qreal visualProportion() const;//视觉比例
